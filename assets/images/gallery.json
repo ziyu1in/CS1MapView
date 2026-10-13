@@ -1,0 +1,139 @@
+{
+  "SourceMap": "Springdale-20261012-141026.cslmap.gz",
+  "SourceSHA256": "8E540B7FFFC5B2AF37E1A5767241A0B5D7AF64E462E0BCFC1571E58A0D292208",
+  "Style": "apple-light",
+  "OutputLongestDimension": 1000,
+  "RotationDegrees": 0,
+  "CropCoordinates": "x east, y negative game Z, width, height; metres",
+  "AllViewsHaveStationAreas": true,
+  "AllViewsHaveMapNameLabels": false,
+  "Views": [
+    {
+      "Slug": "station-area",
+      "Screenshot": "Station area.png",
+      "Crop": "500,1480,980,960",
+      "Routes": false,
+      "Stations": false,
+      "Rail": false,
+      "Split": true,
+      "HiddenRouteIds": [],
+      "TrainStations": true
+    },
+    {
+      "Slug": "rail-station-area",
+      "Screenshot": "Rail, Station area.png",
+      "Crop": "500,1480,980,960",
+      "Routes": false,
+      "Stations": false,
+      "Rail": true,
+      "Split": true,
+      "HiddenRouteIds": [],
+      "TrainStations": true
+    },
+    {
+      "Slug": "combined-badges-rail-station-area",
+      "Screenshot": "Uni-tag, Rail, Station area.png",
+      "Crop": "500,1480,980,960",
+      "Routes": false,
+      "Stations": true,
+      "Rail": true,
+      "Split": false,
+      "HiddenRouteIds": [],
+      "TrainStations": true
+    },
+    {
+      "Slug": "routes-combined-badges-rail-station-area",
+      "Screenshot": "Routes, Uni-tag, Rail, Station area.png",
+      "Crop": "500,1480,980,960",
+      "Routes": true,
+      "Stations": true,
+      "Rail": true,
+      "Split": false,
+      "HiddenRouteIds": [],
+      "TrainStations": true
+    },
+    {
+      "Slug": "routes-split-badges-rail-station-area",
+      "Screenshot": "Routes, Multi-tag, Rail, Station area.png",
+      "Crop": "500,1480,980,960",
+      "Routes": true,
+      "Stations": true,
+      "Rail": true,
+      "Split": true,
+      "HiddenRouteIds": [],
+      "TrainStations": true
+    },
+    {
+      "Slug": "complex-linking-combined-badges",
+      "Screenshot": "Complex linking, Uni-tag.png",
+      "Crop": "1070,2300,650,640",
+      "Routes": true,
+      "Stations": true,
+      "Rail": true,
+      "Split": false,
+      "HiddenRouteIds": [],
+      "TrainStations": true
+    },
+    {
+      "Slug": "complex-linking-split-badges",
+      "Screenshot": "Complex linking, Multi-tag.png",
+      "Crop": "1070,2300,650,640",
+      "Routes": true,
+      "Stations": true,
+      "Rail": true,
+      "Split": true,
+      "HiddenRouteIds": [],
+      "TrainStations": true
+    },
+    {
+      "Slug": "complex-linking-1-1",
+      "Screenshot": "Complex linking 1-1.png",
+      "Crop": "-2490,65,650,580",
+      "Routes": true,
+      "Stations": true,
+      "Rail": true,
+      "Split": true,
+      "HiddenRouteIds": [],
+      "TrainStations": true
+    },
+    {
+      "Slug": "complex-linking-1-2",
+      "Screenshot": "Complex linking 1-2.png",
+      "Crop": "-2490,65,650,580",
+      "Routes": true,
+      "Stations": true,
+      "Rail": true,
+      "Split": true,
+      "HiddenRouteIds": [
+        183
+      ],
+      "TrainStations": true
+    },
+    {
+      "Slug": "complex-linking-1-3",
+      "Screenshot": "Complex linking 1-3.png",
+      "Crop": "-2490,65,650,580",
+      "Routes": true,
+      "Stations": true,
+      "Rail": true,
+      "Split": true,
+      "HiddenRouteIds": [
+        88
+      ],
+      "TrainStations": true
+    },
+    {
+      "Slug": "complex-linking-1-4",
+      "Screenshot": "Complex linking 1-4.png",
+      "Crop": "-2490,65,650,580",
+      "Routes": true,
+      "Stations": true,
+      "Rail": true,
+      "Split": true,
+      "HiddenRouteIds": [],
+      "TrainStations": false
+    }
+  ],
+  "ClusterSearchRadiusMetres": 90,
+  "TransferLinkLimitMetres": 150
+}

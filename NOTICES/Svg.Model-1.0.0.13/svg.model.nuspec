@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Svg.Model</id>
+    <version>1.0.0.13</version>
+    <authors>Wiesław Šoltés</authors>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <projectUrl>https://github.com/wieslawsoltes/Svg.Skia</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/wieslawsoltes/Svg.Skia/master/icon/SvgToPng.png</iconUrl>
+    <description>An SVG rendering object model library.</description>
+    <copyright>Copyright © Wiesław Šoltés 2024</copyright>
+    <tags>svg vector graphics rendering 2d graphics geometry shapes skiasharp skia model</tags>
+    <repository type="git" url="https://github.com/wieslawsoltes/Svg.Skia" commit="80a53b33bf5b52ffe0be85085820fdcc608e63a3" />
+    <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="ShimSkiaSharp" version="1.0.0.13" exclude="Build,Analyzers" />
+        <dependency id="Svg.Custom" version="1.0.0.13" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="net8.0">
+        <dependency id="ShimSkiaSharp" version="1.0.0.13" exclude="Build,Analyzers" />
+        <dependency id="Svg.Custom" version="1.0.0.13" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="ShimSkiaSharp" version="1.0.0.13" exclude="Build,Analyzers" />
+        <dependency id="Svg.Custom" version="1.0.0.13" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

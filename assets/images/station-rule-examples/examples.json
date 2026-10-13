@@ -1,0 +1,842 @@
+{
+  "SourceGallery": "../gallery.json",
+  "SourceSHA256": "8E540B7FFFC5B2AF37E1A5767241A0B5D7AF64E462E0BCFC1571E58A0D292208",
+  "Style": "apple-light",
+  "OutputLongestDimension": 1000,
+  "RotationDegrees": 0,
+  "AllViewsHaveRoutes": false,
+  "AllViewsHaveStationMarkers": true,
+  "AllViewsHaveRail": true,
+  "AllViewsHaveStationAreas": true,
+  "AllViewsHaveMapNameLabels": false,
+  "Cases": [
+    {
+      "Slug": "collinearity-accepted",
+      "Crop": "-3680,-2360,220,220",
+      "VisibleRouteIds": [
+        76,
+        105
+      ],
+      "Labels": [
+        {
+          "Label": "A",
+          "SourceNode": 9581,
+          "X": -3591.18408203125,
+          "South": -2289.5322265625,
+          "Modes": [
+            "Train"
+          ],
+          "Members": [
+            {
+              "Node": 9581,
+              "Route": 76,
+              "Mode": "Train",
+              "Heading": [
+                -0.22559142351858355,
+                -0.9742220022329916
+              ]
+            }
+          ]
+        },
+        {
+          "Label": "B",
+          "SourceNode": 9729,
+          "X": -3595.0810546875,
+          "South": -2288.6298828125,
+          "Modes": [
+            "Train"
+          ],
+          "Members": [
+            {
+              "Node": 9729,
+              "Route": 76,
+              "Mode": "Train",
+              "Heading": [
+                0.22559086459935032,
+                0.9742221316564912
+              ]
+            }
+          ]
+        },
+        {
+          "Label": "C",
+          "SourceNode": 9986,
+          "X": -3551.26904296875,
+          "South": -2212.9033203125,
+          "Modes": [
+            "Train"
+          ],
+          "Members": [
+            {
+              "Node": 9986,
+              "Route": 105,
+              "Mode": "Train",
+              "Heading": [
+                0.22561078147105276,
+                0.9742175194914229
+              ]
+            }
+          ]
+        }
+      ],
+      "SelectedClusters": [
+        {
+          "Points": [
+            {
+              "Id": 1,
+              "X": -3591.18408203125,
+              "South": -2289.5322265625,
+              "Nodes": [
+                9581
+              ],
+              "Modes": [
+                "Train"
+              ]
+            },
+            {
+              "Id": 4,
+              "X": -3595.0810546875,
+              "South": -2288.6298828125,
+              "Nodes": [
+                9729
+              ],
+              "Modes": [
+                "Train"
+              ]
+            },
+            {
+              "Id": 15,
+              "X": -3551.26904296875,
+              "South": -2212.9033203125,
+              "Nodes": [
+                9986
+              ],
+              "Modes": [
+                "Train"
+              ]
+            }
+          ],
+          "A": [
+            -3593.405231538407,
+            -2289.5517395629167
+          ],
+          "B": [
+            -3551.247941744939,
+            -2212.9149279249277
+          ],
+          "Error": 1.9367261148799013,
+          "Tolerance": 6.0,
+          "Span": 87.46678215623943,
+          "OppositePairs": 1,
+          "SameModePairs": 3
+        }
+      ],
+      "Candidate": {
+        "Labels": [
+          "A",
+          "B",
+          "C"
+        ],
+        "A": [
+          -3593.405231538407,
+          -2289.5517395629167
+        ],
+        "B": [
+          -3551.247941744939,
+          -2212.9149279249277
+        ],
+        "Error": 1.9367261148799013,
+        "Tolerance": 6.0,
+        "Span": 87.46678215623943,
+        "OppositePairs": 1,
+        "SameModePairs": 3,
+        "PassesAlignment": true
+      },
+      "AlternativeSingletons": [],
+      "AlternativeAxisGap": null,
+      "ClusterRadiusMetres": 90,
+      "LinkDistanceMetres": 0
+    },
+    {
+      "Slug": "collinearity-rejected",
+      "Crop": "-2330,120,400,400",
+      "VisibleRouteIds": [
+        8,
+        27,
+        29,
+        32,
+        44,
+        49,
+        65,
+        76,
+        77,
+        88,
+        103,
+        105,
+        107,
+        119,
+        123,
+        133,
+        139,
+        151,
+        160,
+        162,
+        167,
+        171,
+        183,
+        189,
+        221,
+        229,
+        232,
+        234
+      ],
+      "Labels": [
+        {
+          "Label": "A",
+          "SourceNode": 7010,
+          "X": -2132.69384765625,
+          "South": 316.49249267578125,
+          "Modes": [
+            "Metro"
+          ],
+          "Members": [
+            {
+              "Node": 7010,
+              "Route": 183,
+              "Mode": "Metro",
+              "Heading": [
+                0.47887976088800427,
+                -0.87788050132797
+              ]
+            },
+            {
+              "Node": 32692,
+              "Route": 183,
+              "Mode": "Metro",
+              "Heading": [
+                -0.47888157113172675,
+                0.8778795138459542
+              ]
+            }
+          ]
+        },
+        {
+          "Label": "B",
+          "SourceNode": 14282,
+          "X": -2186.456298828125,
+          "South": 351.885498046875,
+          "Modes": [
+            "Metro"
+          ],
+          "Members": [
+            {
+              "Node": 14282,
+              "Route": 88,
+              "Mode": "Metro",
+              "Heading": [
+                0.47888228343888234,
+                -0.8778791252834083
+              ]
+            },
+            {
+              "Node": 14285,
+              "Route": 88,
+              "Mode": "Metro",
+              "Heading": [
+                -0.4788821053619147,
+                0.8778792224242126
+              ]
+            }
+          ]
+        },
+        {
+          "Label": "C",
+          "SourceNode": 2727,
+          "X": -2140.969482421875,
+          "South": 355.92449951171875,
+          "Modes": [
+            "Train"
+          ],
+          "Members": [
+            {
+              "Node": 2727,
+              "Route": 29,
+              "Mode": "Train",
+              "Heading": [
+                0.5180124373702268,
+                0.8553730851095075
+              ]
+            },
+            {
+              "Node": 32766,
+              "Route": 119,
+              "Mode": "Train",
+              "Heading": [
+                0.5180124373702268,
+                0.8553730851095075
+              ]
+            }
+          ]
+        }
+      ],
+      "SelectedClusters": [
+        {
+          "Points": [
+            {
+              "Id": 2,
+              "X": -2140.969482421875,
+              "South": 355.92449951171875,
+              "Nodes": [
+                2727,
+                32766
+              ],
+              "Modes": [
+                "Train"
+              ]
+            },
+            {
+              "Id": 6,
+              "X": -2131.743408203125,
+              "South": 350.3369140625,
+              "Nodes": [
+                4383,
+                32758
+              ],
+              "Modes": [
+                "Train"
+              ]
+            },
+            {
+              "Id": 36,
+              "X": -2144.39111328125,
+              "South": 357.9964599609375,
+              "Nodes": [
+                9728
+              ],
+              "Modes": [
+                "Train"
+              ]
+            },
+            {
+              "Id": 102,
+              "X": -2128.32177734375,
+              "South": 348.2655029296875,
+              "Nodes": [
+                32694
+              ],
+              "Modes": [
+                "Train"
+              ]
+            }
+          ],
+          "A": [
+            -2144.3911130731844,
+            357.99646030451913
+          ],
+          "B": [
+            -2128.3218992492825,
+            348.2653016251836
+          ],
+          "Error": 0.0003227576954656364,
+          "Tolerance": 6.0,
+          "Span": 18.786034231861912,
+          "OppositePairs": 2,
+          "SameModePairs": 6
+        },
+        {
+          "Points": [
+            {
+              "Id": 15,
+              "X": -2132.69384765625,
+              "South": 316.49249267578125,
+              "Nodes": [
+                7010,
+                32692
+              ],
+              "Modes": [
+                "Metro"
+              ]
+            },
+            {
+              "Id": 59,
+              "X": -2186.456298828125,
+              "South": 351.885498046875,
+              "Nodes": [
+                14282,
+                14285
+              ],
+              "Modes": [
+                "Metro"
+              ]
+            }
+          ],
+          "A": [
+            -2186.456298828125,
+            351.885498046875
+          ],
+          "B": [
+            -2132.69384765625,
+            316.49249267578125
+          ],
+          "Error": 0.0,
+          "Tolerance": 6.0,
+          "Span": 64.36665274197901,
+          "OppositePairs": 0,
+          "SameModePairs": 1
+        }
+      ],
+      "Candidate": {
+        "Labels": [
+          "A",
+          "B",
+          "C"
+        ],
+        "A": [
+          -2182.3611648995743,
+          358.74358668652224
+        ],
+        "B": [
+          -2127.1504810505617,
+          325.77592520989754
+        ],
+        "Error": 18.800249954497282,
+        "Tolerance": 5.0,
+        "Span": 64.30463680258951,
+        "OppositePairs": 0,
+        "SameModePairs": 1,
+        "PassesAlignment": false
+      },
+      "AlternativeSingletons": [],
+      "AlternativeAxisGap": null,
+      "ClusterRadiusMetres": 90,
+      "LinkDistanceMetres": 0
+    },
+    {
+      "Slug": "same-mode-priority",
+      "Crop": "-2330,120,400,400",
+      "VisibleRouteIds": [
+        8,
+        27,
+        29,
+        32,
+        44,
+        49,
+        65,
+        77,
+        88,
+        103,
+        105,
+        107,
+        119,
+        123,
+        133,
+        139,
+        151,
+        160,
+        162,
+        167,
+        171,
+        183,
+        189,
+        221,
+        229,
+        232,
+        234
+      ],
+      "Labels": [
+        {
+          "Label": "A",
+          "SourceNode": 7010,
+          "X": -2132.69384765625,
+          "South": 316.49249267578125,
+          "Modes": [
+            "Metro"
+          ],
+          "Members": [
+            {
+              "Node": 7010,
+              "Route": 183,
+              "Mode": "Metro",
+              "Heading": [
+                0.47887976088800427,
+                -0.87788050132797
+              ]
+            },
+            {
+              "Node": 32692,
+              "Route": 183,
+              "Mode": "Metro",
+              "Heading": [
+                -0.47888157113172675,
+                0.8778795138459542
+              ]
+            }
+          ]
+        },
+        {
+          "Label": "B",
+          "SourceNode": 14282,
+          "X": -2186.456298828125,
+          "South": 351.885498046875,
+          "Modes": [
+            "Metro"
+          ],
+          "Members": [
+            {
+              "Node": 14282,
+              "Route": 88,
+              "Mode": "Metro",
+              "Heading": [
+                0.47888228343888234,
+                -0.8778791252834083
+              ]
+            },
+            {
+              "Node": 14285,
+              "Route": 88,
+              "Mode": "Metro",
+              "Heading": [
+                -0.4788821053619147,
+                0.8778792224242126
+              ]
+            }
+          ]
+        },
+        {
+          "Label": "C",
+          "SourceNode": 2727,
+          "X": -2140.969482421875,
+          "South": 355.92449951171875,
+          "Modes": [
+            "Train"
+          ],
+          "Members": [
+            {
+              "Node": 2727,
+              "Route": 29,
+              "Mode": "Train",
+              "Heading": [
+                0.5180124373702268,
+                0.8553730851095075
+              ]
+            },
+            {
+              "Node": 32766,
+              "Route": 119,
+              "Mode": "Train",
+              "Heading": [
+                0.5180124373702268,
+                0.8553730851095075
+              ]
+            }
+          ]
+        },
+        {
+          "Label": "D",
+          "SourceNode": 4383,
+          "X": -2131.743408203125,
+          "South": 350.3369140625,
+          "Modes": [
+            "Train"
+          ],
+          "Members": [
+            {
+              "Node": 4383,
+              "Route": 119,
+              "Mode": "Train",
+              "Heading": [
+                -0.5178597384205,
+                -0.8554655406987772
+              ]
+            },
+            {
+              "Node": 32758,
+              "Route": 29,
+              "Mode": "Train",
+              "Heading": [
+                -0.5178597384205,
+                -0.8554655406987772
+              ]
+            }
+          ]
+        }
+      ],
+      "SelectedClusters": [
+        {
+          "Points": [
+            {
+              "Id": 2,
+              "X": -2140.969482421875,
+              "South": 355.92449951171875,
+              "Nodes": [
+                2727,
+                32766
+              ],
+              "Modes": [
+                "Train"
+              ]
+            },
+            {
+              "Id": 6,
+              "X": -2131.743408203125,
+              "South": 350.3369140625,
+              "Nodes": [
+                4383,
+                32758
+              ],
+              "Modes": [
+                "Train"
+              ]
+            }
+          ],
+          "A": [
+            -2140.969482421875,
+            355.92449951171875
+          ],
+          "B": [
+            -2131.743408203125,
+            350.3369140625
+          ],
+          "Error": 4.440892098500626E-16,
+          "Tolerance": 7.0,
+          "Span": 10.786174328380037,
+          "OppositePairs": 1,
+          "SameModePairs": 1
+        },
+        {
+          "Points": [
+            {
+              "Id": 15,
+              "X": -2132.69384765625,
+              "South": 316.49249267578125,
+              "Nodes": [
+                7010,
+                32692
+              ],
+              "Modes": [
+                "Metro"
+              ]
+            },
+            {
+              "Id": 47,
+              "X": -2186.456298828125,
+              "South": 351.885498046875,
+              "Nodes": [
+                14282,
+                14285
+              ],
+              "Modes": [
+                "Metro"
+              ]
+            }
+          ],
+          "A": [
+            -2186.456298828125,
+            351.885498046875
+          ],
+          "B": [
+            -2132.69384765625,
+            316.49249267578125
+          ],
+          "Error": 0.0,
+          "Tolerance": 6.0,
+          "Span": 64.36665274197901,
+          "OppositePairs": 0,
+          "SameModePairs": 1
+        }
+      ],
+      "Candidate": {
+        "Labels": [
+          "A",
+          "C",
+          "D"
+        ],
+        "A": [
+          -2137.1795762243037,
+          356.42408034362666
+        ],
+        "B": [
+          -2131.929130705812,
+          316.5932967353959
+        ],
+        "Error": 4.594023730713312,
+        "Tolerance": 5.0,
+        "Span": 40.17534693052886,
+        "OppositePairs": 1,
+        "SameModePairs": 1,
+        "PassesAlignment": true
+      },
+      "AlternativeSingletons": [
+        "B"
+      ],
+      "AlternativeAxisGap": 49.4852919546641,
+      "ClusterRadiusMetres": 90,
+      "LinkDistanceMetres": 0
+    },
+    {
+      "Slug": "opposite-direction-priority",
+      "Crop": "-4120,-3740,240,240",
+      "VisibleRouteIds": [
+        76,
+        234
+      ],
+      "Labels": [
+        {
+          "Label": "A",
+          "SourceNode": 9582,
+          "X": -3991.2568359375,
+          "South": -3666.387451171875,
+          "Modes": [
+            "Train"
+          ],
+          "Members": [
+            {
+              "Node": 9582,
+              "Route": 76,
+              "Mode": "Train",
+              "Heading": [
+                0.025158626685629466,
+                -0.9996834716565506
+              ]
+            }
+          ]
+        },
+        {
+          "Label": "B",
+          "SourceNode": 9733,
+          "X": -3985.49365234375,
+          "South": -3581.94677734375,
+          "Modes": [
+            "Train"
+          ],
+          "Members": [
+            {
+              "Node": 9733,
+              "Route": 76,
+              "Mode": "Train",
+              "Heading": [
+                0.252226141058235,
+                0.9676683180547306
+              ]
+            }
+          ]
+        },
+        {
+          "Label": "C",
+          "SourceNode": 26436,
+          "X": -4012.923828125,
+          "South": -3665.702880859375,
+          "Modes": [
+            "Train"
+          ],
+          "Members": [
+            {
+              "Node": 26436,
+              "Route": 234,
+              "Mode": "Train",
+              "Heading": [
+                0.09048550027568406,
+                -0.9958977729866954
+              ]
+            }
+          ]
+        }
+      ],
+      "SelectedClusters": [
+        {
+          "Points": [
+            {
+              "Id": 3,
+              "X": -3991.2568359375,
+              "South": -3666.387451171875,
+              "Nodes": [
+                9582
+              ],
+              "Modes": [
+                "Train"
+              ]
+            },
+            {
+              "Id": 6,
+              "X": -3985.49365234375,
+              "South": -3581.94677734375,
+              "Nodes": [
+                9733
+              ],
+              "Modes": [
+                "Train"
+              ]
+            }
+          ],
+          "A": [
+            -3991.2568359375,
+            -3666.387451171875
+          ],
+          "B": [
+            -3985.49365234375,
+            -3581.94677734375
+          ],
+          "Error": 2.220446049250313E-15,
+          "Tolerance": 7.0,
+          "Span": 84.63711763572212,
+          "OppositePairs": 1,
+          "SameModePairs": 1
+        },
+        {
+          "Points": [
+            {
+              "Id": 13,
+              "X": -4012.923828125,
+              "South": -3665.702880859375,
+              "Nodes": [
+                26436
+              ],
+              "Modes": [
+                "Train"
+              ]
+            }
+          ],
+          "A": [
+            -4012.923828125,
+            -3665.702880859375
+          ],
+          "B": [
+            -4012.923828125,
+            -3665.702880859375
+          ],
+          "Error": 0.0,
+          "Tolerance": 6.0,
+          "Span": 0.0,
+          "OppositePairs": 0,
+          "SameModePairs": 0
+        }
+      ],
+      "Candidate": {
+        "Labels": [
+          "A",
+          "C"
+        ],
+        "A": [
+          -4012.923828125,
+          -3665.702880859375
+        ],
+        "B": [
+          -3991.2568359375,
+          -3666.387451171875
+        ],
+        "Error": 0.0,
+        "Tolerance": 6.0,
+        "Span": 21.677804016226883,
+        "OppositePairs": 0,
+        "SameModePairs": 1,
+        "PassesAlignment": true
+      },
+      "AlternativeSingletons": [
+        "B"
+      ],
+      "AlternativeAxisGap": 84.63711763572212,
+      "ClusterRadiusMetres": 90,
+      "LinkDistanceMetres": 0
+    }
+  ]
+}

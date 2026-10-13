@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <OutputType>Exe</OutputType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>CS1MapView.Checks</AssemblyName>
+    <NoWarn>CS8600;CS8601;CS8602;CS8603;CS8604;CS8625;CS8618</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="2.88.7" />
+    <ProjectReference Include="../../src/CS2MapView.Core/CS2MapView.Core.csproj" />
+    <ProjectReference Include="../../src/CS2MapView.Form/CS2MapView.Form.csproj" />
+    <Reference Include="CSLMapViewXML"><HintPath>../../src/CS2MapView.Core/lib/CSLMapViewXML.dll</HintPath></Reference>
+    <None Include="../../Styles/*.cmvstyle" Link="Styles/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfBetaRouteOverride>
+  <BetaRouteOverride City="Springdale" Id="8" Name="River Line" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="27" Name="Peninsula Line [Lcl Propect]" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="29" Name="Train Line 12" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="32" Name="Metro Line 0" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="44" Name="Train Line 23" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="49" Name="Evergreen Link [Exp River/Cntrl]" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="65" Name="Train Line 17" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="77" Name="Ferry Line 1" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="88" Name="Peninsula Line [Rpd Evergreen]" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="103" Name="Silver Line" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="107" Name="Outer Loop Line" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="119" Name="Train Line 10" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="123" Name="Train Line 24" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="133" Name="Ferry Line 2" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="139" Name="College Line" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="151" Name="Blue Line" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="160" Name="Train Line 4" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="162" Name="North Harbor Monorail" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="167" Name="Port Liner" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="171" Name="Evergreen Link [LCL Union/Cntrl]" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="183" Name="Orange Line" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="189" Name="Red Line" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="221" Name="Green Line" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="229" Name="Inner Loop Line" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="232" Name="Peninsula Line [Exp DT]" Visible="false" />
+  <BetaRouteOverride City="Springdale" Id="234" Name="Train Line 19" Visible="false" />
+</ArrayOfBetaRouteOverride>

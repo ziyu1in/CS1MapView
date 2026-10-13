@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="4.31">
+  <SelectedStyle>apple-light</SelectedStyle>
+  <CanvasSize>16384</CanvasSize>
+  <RenderAreaSize>9</RenderAreaSize>
+  <Angle>0</Angle>
+  <RenderTerrain>true</RenderTerrain>
+  <RenderForest>true</RenderForest>
+  <RenderBuilding>true</RenderBuilding>
+  <RenderRoad>true</RenderRoad>
+  <RenderGrid>false</RenderGrid>
+  <RenderRail>true</RenderRail>
+  <RenderRailTrain>true</RenderRailTrain>
+  <RenderRailTram>true</RenderRailTram>
+  <RenderRailMetro>true</RenderRailMetro>
+  <RenderRailCableCar>false</RenderRailCableCar>
+  <RenderRailMonorail>true</RenderRailMonorail>
+  <RenderDistrictName>false</RenderDistrictName>
+  <RenderBuildingName>false</RenderBuildingName>
+  <RenderParkName>false</RenderParkName>
+  <RenderMapSymbol>false</RenderMapSymbol>
+  <RenderRoadName>false</RenderRoadName>
+  <RenderTransport>true</RenderTransport>
+  <RenderTransportRoute>false</RenderTransportRoute>
+  <RenderStationPremises>true</RenderStationPremises>
+  <FrameStopTracks>true</FrameStopTracks>
+  <StationPremisesColor>Red</StationPremisesColor>
+  <Railway>
+    <InfrastructureOnly>false</InfrastructureOnly>
+    <Appearance>Apple</Appearance>
+    <SeparateTracks>true</SeparateTracks>
+    <ReconnectTracks>true</ReconnectTracks>
+    <ShowTunnels>true</ShowTunnels>
+    <ColorByType>true</ColorByType>
+  </Railway>
+  <RouteMapConfig>
+    <StopsMergingRange>150</StopsMergingRange>
+    <RenderBusLine>false</RenderBusLine>
+    <RenderTramLine>true</RenderTramLine>
+    <RenderMetroLine>true</RenderMetroLine>
+    <RenderTrainLine>true</RenderTrainLine>
+    <RenderMonorailLine>true</RenderMonorailLine>
+    <RenderAirplaneLine>false</RenderAirplaneLine>
+    <RenderShipLine>false</RenderShipLine>
+    <RenderFerryLine>false</RenderFerryLine>
+    <RenderBusStop>false</RenderBusStop>
+    <RenderTramStop>false</RenderTramStop>
+    <RenderMetroStop>true</RenderMetroStop>
+    <RenderTrainStop>true</RenderTrainStop>
+    <RenderMonorailStop>true</RenderMonorailStop>
+    <RenderAirplaneStop>false</RenderAirplaneStop>
+    <RenderShipStop>false</RenderShipStop>
+    <RenderFerryStop>false</RenderFerryStop>
+    <HideCargoLines>true</HideCargoLines>
+    <StationClusterRadius>90</StationClusterRadius>
+    <StationLinkDistance>0</StationLinkDistance>
+    <ShowStationModeBadges>true</ShowStationModeBadges>
+    <SplitStationBadgesByCluster>true</SplitStationBadgesByCluster>
+    <RenderMetroStation>true</RenderMetroStation>
+    <RenderTrainStation>true</RenderTrainStation>
+    <RenderMonorailStation>true</RenderMonorailStation>
+    <RenderBlimpLine>false</RenderBlimpLine>
+    <RenderBlimpStop>false</RenderBlimpStop>
+    <RenderFerryHarbor>false</RenderFerryHarbor>
+    <MergeBusTramStop>true</MergeBusTramStop>
+    <MergeTrainMetroStaion>true</MergeTrainMetroStaion>
+    <UseCustomTransferModes>true</UseCustomTransferModes>
+    <TransferBus>false</TransferBus>
+    <TransferTrolleybus>false</TransferTrolleybus>
+    <TransferTram>false</TransferTram>
+    <TransferMetro>true</TransferMetro>
+    <TransferTrain>true</TransferTrain>
+    <TransferMonorail>true</TransferMonorail>
+    <TransferBlimp>false</TransferBlimp>
+    <TransferFerry>false</TransferFerry>
+    <AutoColoring>false</AutoColoring>
+    <WidenOnSharedLines>true</WidenOnSharedLines>
+    <DetectEndLoop>true</DetectEndLoop>
+    <MarkOneWayRoutes>true</MarkOneWayRoutes>
+    <UseMergedRouteNumberings>true</UseMergedRouteNumberings>
+  </RouteMapConfig>
+  <DisableBitmapCache>false</DisableBitmapCache>
+  <ReduceContrast>false</ReduceContrast>
+  <DisableBuildingBorder>false</DisableBuildingBorder>
+  <HideRICO>false</HideRICO>
+  <BuildingFont>Segoe UI</BuildingFont>
+  <DistrictFont>Segoe UI</DistrictFont>
+  <DistrictParkFont>Segoe UI</DistrictParkFont>
+  <RoadNameFont>Segoe UI</RoadNameFont>
+  <TransportFont>Segoe UI</TransportFont>
+  <MapSymbolStyle>ja+</MapSymbolStyle>
+  <UseVectorTerrain>true</UseVectorTerrain>
+  <DisplayContourLines>false</DisplayContourLines>
+  <ContourIntervals>Default</ContourIntervals>
+  <SVGImageLength>1024</SVGImageLength>
+  <SVGTerrainDivisions>5</SVGTerrainDivisions>
+  <SVGTextAsGeometry>false</SVGTextAsGeometry>
+  <MaxParallelism>0</MaxParallelism>
+  <IgnoreBuildingShape>
+    <ByItemClass>
+      <ItemClassRegex>^Electricity Wind Turbine$</ItemClassRegex>
+      <ItemClassRegex>^Tsunami Buoy$</ItemClassRegex>
+      <ItemClassRegex>^Radio$</ItemClassRegex>
+      <ItemClassRegex>^Firewatch$</ItemClassRegex>
+      <ItemClassRegex>^Earthquake Sensor$</ItemClassRegex>
+    </ByItemClass>
+    <ByName>
+      <NameRegex>^(Road|Train|Metro|Ship|Airplane) Connection$</NameRegex>
+      <NameRegex>^Boulder \d+$</NameRegex>
+      <NameRegex>^Rock (Area|Formation) \d+( [A-Z])?$</NameRegex>
+      <NameRegex>^Wildlife Spawn Point$</NameRegex>
+      <NameRegex>^Ship Wreck \d+$</NameRegex>
+      <NameRegex>^Dam Power House$</NameRegex>
+      <NameRegex>^Dam Node Building$</NameRegex>
+      <NameRegex>^.* Ruins \d+$</NameRegex>
+      <NameRegex>^Abandoned .*\d+$</NameRegex>
+      <NameRegex>^Water (Intake|Outlet|Treatment Plant)$</NameRegex>
+      <NameRegex>^Ancient Cemetery \d+$</NameRegex>
+      <NameRegex>^Power Relay$</NameRegex>
+      <NameRegex>^Tetrapod 01 - 1x1$</NameRegex>
+      <NameRegex>^R69 Tetrapods (Pile|Pattern)$</NameRegex>
+      <NameRegex>^Cave \d+$</NameRegex>
+      <NameRegex>^Cliff \d+$</NameRegex>
+    </ByName>
+  </IgnoreBuildingShape>
+  <IgnoreMapSymbols>
+    <ByItemClass />
+    <ByName>
+      <NameRegex>^Power Relay$</NameRegex>
+      <NameRegex>^Tetrapod 01 - 1x1$</NameRegex>
+      <NameRegex>^R69 Tetrapods (Pile|Pattern)$</NameRegex>
+      <NameRegex>^Radio Mast Tall - Wire Anchor$</NameRegex>
+    </ByName>
+  </IgnoreMapSymbols>
+  <IgnoreSegments>
+    <ByItemClass>
+      <ItemClassRegex>^Landscaping Canal$</ItemClassRegex>
+      <ItemClassRegex>^Landscaping Flood Wall$</ItemClassRegex>
+    </ByItemClass>
+    <ByName>
+      <NameRegex>^Castle Wall.*$</NameRegex>
+      <NameRegex>^Quay$</NameRegex>
+      <NameRegex>^Trench Ruins \d+$</NameRegex>
+      <NameRegex>^Airplane Stop$</NameRegex>
+    </ByName>
+  </IgnoreSegments>
+  <SampleRouteNumbering>
+    <Regex>^\[([^\]]+)\].*$</Regex>
+    <Regex>^([^ ]*\d+[^ ]*).*$</Regex>
+    <Regex>^\[([^\]]+)\].*$</Regex>
+    <Regex>^([^ ]*\d+[^ ]*).*$</Regex>
+    <Regex>^\[([^\]]+)\].*$</Regex>
+    <Regex>^([^ ]*\d+[^ ]*).*$</Regex>
+  </SampleRouteNumbering>
+  <BuildingPreferences />
+</ApplicationConfig>

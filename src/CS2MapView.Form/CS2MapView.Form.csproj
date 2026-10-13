@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>AnyCPU;x64</Platforms>
+    <AssemblyName>CS1MapView</AssemblyName>
+    <Product>CS1MapView</Product>
+    <Title>CS1MapView</Title>
+    <ApplicationIcon>CS1MapView.ico</ApplicationIcon>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <Version>0.2.0-beta</Version>
+    <Copyright>copyright(c) 2024 gansaku</Copyright>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;NU1701</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <NoWarn>1701;1702;NU1701</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;NU1701</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <NoWarn>1701;1702;NU1701</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="CS1MapView.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="3.3.1" />
+    <PackageReference Include="SkiaSharp" Version="2.88.7" />
+    <PackageReference Include="SkiaSharp.Views" Version="2.88.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CS2MapView.Core\CS2MapView.Core.csproj" />
+    <InternalsVisibleTo Include="CS1MapView.Checks" />
+    <None Include="..\..\Styles\**\*" Link="Styles\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\CSLMapViewConfig.xml" Link="Migration\CSLMapViewConfig.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\LICENSE.upstream" Link="LICENSE.upstream" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\DEVELOPMENT.md" Link="DEVELOPMENT.md" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\SOURCE-PROVENANCE.md" Link="SOURCE-PROVENANCE.md" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\UPSTREAM-BASELINE-SHA256.csv" Link="UPSTREAM-BASELINE-SHA256.csv" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\RECOVERY-INPUT-SHA256.csv" Link="RECOVERY-INPUT-SHA256.csv" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\NOTICES\**\*" Link="NOTICES\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CSLMapViewXML">
+      <HintPath>..\CS2MapView.Core\lib\CSLMapViewXML.dll</HintPath>
+    </Reference>
+    <Reference Include="Gfw.Common">
+      <HintPath>lib\Gfw.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Gfw.Ui.WindowsForms">
+      <HintPath>lib\Gfw.Ui.WindowsForms.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="LICENSE">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="log4net.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
