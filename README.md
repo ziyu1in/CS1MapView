@@ -16,7 +16,7 @@ The upstream copyright notice and MIT license are included.
 
 See the [development declaration](DEVELOPMENT.md).
 
-[![Routes, station markers, transit modal tags, tracks, and station areas](assets/images/routes-split-badges-rail-station-area.svg)](assets/images/routes-split-badges-rail-station-area.svg)
+[![Routes, station markers, transit modal tags, tracks, and station areas](assets/images/routes-split-badges-rail-station-area-v2.svg)](assets/images/routes-split-badges-rail-station-area-v2.svg)
 
 ## Glossary
 
@@ -53,7 +53,7 @@ Station areas are approximate 2D shapes.
 
 | Station areas | Station areas and tracks |
 | --- | --- |
-| ![Station areas](assets/images/station-area.svg) | ![Station areas and tracks](assets/images/rail-station-area.svg) |
+| ![Station areas](assets/images/station-area-v2.svg) | ![Station areas and tracks](assets/images/rail-station-area-v2.svg) |
 
 Limits:
 
