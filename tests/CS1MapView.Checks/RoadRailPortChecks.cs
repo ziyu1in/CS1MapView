@@ -116,6 +116,7 @@ internal static class RoadRailPortChecks
         Check(rails.All(s => s.Name == original[s.Id].Name && s.Points.First().Equals(original[s.Id].First)
             && s.Points.Last().Equals(original[s.Id].Last)), "Railway checks changed source assets");
         using var areas = CS1StationPremisesCollection.Collect(raw);
+        BmStationPlatformChecks.RunSpringdale(raw);
         Check(areas.BuildingIds.Count == 162 && areas.StopTrackIds.Count == 92 && areas.PlatformIds.Count == 314 && areas.PassageIds.Count == 309,
             "Native station-area asset coverage changed");
         Check(raw.SegmentList.Where(s => areas.StationTrackIds.Contains(s.Id)).All(s =>

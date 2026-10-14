@@ -109,6 +109,7 @@ internal static class StationPremisesPortChecks
         Console.WriteLine("PASS station areas: cargo/lot inclusion, depot families, exact full stop segment, empty paths, connected/lane-less passages, depth checks, decorative widths and overlap union");
 
         CheckUndergroundMetroStationGeometry();
+        BmStationPlatformChecks.RunPolicies();
 
         var config = new ApplicationConfig { RenderStationPremises = false, RenderTransportRoute = true, RenderRail = false,
             FrameStopTracks = false, StationPremisesColor = StationAreaColor.Blue };

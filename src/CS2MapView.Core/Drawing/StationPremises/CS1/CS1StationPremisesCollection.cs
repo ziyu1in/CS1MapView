@@ -39,7 +39,6 @@ public static class CS1StationPremisesBuilder
             "PublicTransportMonorail", "PublicTransportCableCar", "PublicTransportBus",
             "PublicTransportShip"
         };
-        private static readonly string[] BmStationTracks = { "2469645459.", "2463160214.", "2621140416.", "2908783312." };
         private static readonly string[] BmPassages = { "2372093501.", "2372093901.", "2372094372.", "2372094811.", "2372095863.", "2870803975." };
 
         private static bool Contains(string text, string value) => (text ?? "").IndexOf(value, StringComparison.OrdinalIgnoreCase) >= 0;
@@ -121,21 +120,23 @@ public static class CS1StationPremisesBuilder
                 XMLSegmentType type;
                 types.TryGetValue(s.Name, out type);
                 if (IsDecorativePlatform(s, type)) result.PlatformIds.Add(s.Id);
-                if (railIds.Contains(s.Id) && (HasPrefix(s.Name, BmStationTracks) || Contains(s.Name, "Station Track")
+                if (railIds.Contains(s.Id) && (BmStationPlatformGeometry.IsStationTrack(s.Name) || Contains(s.Name, "Station Track")
                     || Contains(s.Name, "Station Tracks") || Contains(s.Name, "Cargo Track"))) result.StationTrackIds.Add(s.Id);
             }
             result.StationTrackIds.UnionWith(result.StopTrackIds);
-            // Only recognised physical station/stop networks receive the deeper
-            // platform tint. Ordinary metro tunnels retain their light rail style.
+            // Only recognised physical station/stop networks receive the deeper tint.
+            // BM assets project their pedestrian platforms; ordinary tunnels retain their rail style.
             foreach (int id in result.StationTrackIds.OrderBy(id => id))
                 if (manager.GetWayType(segments[id]).HasFlag(WayType.Metro | WayType.Tunnel))
                     result.UndergroundMetroStationIds.Add(id);
             result.UndergroundMetroStationsWithoutStopTracks.Dispose();
             result.UndergroundMetroStationsWithoutStopTracks = NativeGeometry.Union(result.UndergroundMetroStationIds
-                .Except(result.StopTrackIds).OrderBy(id => id).Select(id => NativeGeometry.Network(segments[id], manager.GetWidth(segments[id]))));
+                .Except(result.StopTrackIds).OrderBy(id => id).Select(id => BmStationPlatformGeometry.Build(segments[id],
+                    types.GetValueOrDefault(segments[id].Name), manager.GetWidth(segments[id]))));
             result.UndergroundMetroStations.Dispose();
             result.UndergroundMetroStations = NativeGeometry.Union(result.UndergroundMetroStationIds
-                .OrderBy(id => id).Select(id => NativeGeometry.Network(segments[id], manager.GetWidth(segments[id]))));
+                .OrderBy(id => id).Select(id => BmStationPlatformGeometry.Build(segments[id],
+                    types.GetValueOrDefault(segments[id].Name), manager.GetWidth(segments[id]))));
             var stationTracks = result.StationTrackIds.Select(id => segments[id]).ToList();
             // Stop tracks remain separate even when their prefab is also a station track.
             // Turning their fill off must not undo their use as passage-association anchors.
