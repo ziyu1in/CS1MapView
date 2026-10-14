@@ -2,6 +2,10 @@
 
 **Final scope document — 2026-10-10**
 
+Terminology follows the [README glossary](../README.md#glossary), including
+network nodes and segments, mode-specific tracks and lanes, route paths, and
+transit modal tags.
+
 Status: implemented for private beta development, with native replacements on `codex/cs1-native-skia`; see [native beta acceptance](cs1-native-beta-acceptance.md). The first beta is preserved on `codex/cs1-skia-beta`. This document supersedes the earlier source-comparison migration analysis wherever the requirements differ.
 
 ## 1. Product and source foundation
@@ -19,7 +23,7 @@ The current CS1 application supplies the feature and visual reference. It remain
 | Decision | Final requirement |
 | --- | --- |
 | Game compatibility | Support CS1 only. Remove CS2 game import/export and its game-specific drawing code. |
-| Map appearance | Preserve our palette, network geometry, line/border widths, station symbols, badges, leaders, infrastructure colours and station-area treatment. |
+| Map appearance | Preserve our palette, network geometry, line/border widths, station symbols, transit modal tags, leaders, infrastructure colours and station-area treatment. |
 | UI and navigation | Keep upstream Forms layout and mouse controls where they do not cause incorrect rendering, export or selection. Matching the old zoom steps and wheel gestures is unnecessary. |
 | Street labels | Keep upstream path-following street-name rendering. Straight labels identical to the current WPF viewer are not required. |
 | Transport-building names | Keep upstream name cleanup and grouping of same-named transport-building labels. This is an approved exception to the current viewer's omitted station-name labels. |
@@ -43,7 +47,7 @@ The preserved raw CS1 recovery has transport-building name cleanup and grouping 
 | Roads | Correct exported-width precedence and validated usable-lane fallback | Apply those rules to the upstream CS1 segment manager and road builder | Reverting to rounded widths inferred from every lane |
 | Routes | Colours, visibility, overrides, shared-service widths, arrows, route integrity | Adapt the active upstream transport renderer and reconstruct CS1 paths | Opposite-direction route merging |
 | Stations | Current cluster selection, transfer forest and selectable local groups | Translate their drawing/hit geometry into the upstream renderer | Using display clusters as logical route stops |
-| Badges | Mode-letter slices, explicit shorthands, split/combined badges and leaders | Match drawing, placement and hit ownership in Skia | Name-based changes to badge or route membership |
+| Transit modal tags | Mode-letter slices, explicit shorthands, split/combined transit modal tags and leaders | Match drawing, placement and hit ownership in Skia | Name-based changes to transit modal tag or route membership |
 | Rail infrastructure | Separate tracks, reconnect behaviour, colours, tunnels and both appearances | Implement these inside upstream's CS1 railway layer | CS2 rail-data dependency |
 | Station areas | Selection rules, platform tint, passage/entrance treatment and red/blue controls | Port geometry operations and layer composition | Changed asset-selection rules without a separate request |
 | General labels | Upstream curved street labels, transport-building label grouping and SVG symbols | Match colours/fonts/halos; add missing CS1 park labels | Mandatory emulation of the old straight-text layout |
@@ -86,7 +90,7 @@ Keep its layer lifecycle, asynchronous build/resize/rotate integration, view tra
 
 This adaptation still needs CS1 route reconstruction. A working drawing loop cannot infer those paths from stop coordinates alone.
 
-Extend the inherited drawing behaviour to match our route colours, opacity, joins, caps and shared-service widths. Replace the stock stop-circle drawing with the required station display. Keep custom station symbols and their hit targets anchored; the general label arranger must not independently move or suppress them. The station badge layout owns badge/leader placement.
+Extend the inherited drawing behaviour to match our route colours, opacity, joins, caps and shared-service widths. Replace the stock stop-circle drawing with the required station display. Keep custom station symbols and their hit targets anchored; the general label arranger must not independently move or suppress them. The transit modal tag layout owns modal tag/leader placement.
 
 Keep the full-path and terminal-loop safeguards, especially for monorail. Preserve logical stops independently of all visual grouping. Ship/air paths and missing-data fallback must follow the current supported behaviour rather than being guessed from another mode.
 
@@ -105,9 +109,9 @@ Retain the current [station rules](/C:/Users/Admin/Documents/ChatGPT/CSLM/docs/c
 
 Dropping route-direction merging does not remove these station rules: headings can be read from the original outgoing route paths.
 
-### Badges and selection
+### Transit modal tags and selection
 
-Retain optional mode letters with vertical serving-line-colour slices, explicit shorthands, split-by-cluster default, combined-badge option and thin black leaders. Leaders attach radially to dots and to rounded bar tips, stopping at both outlines. Badge, leader, cluster and connector hits keep their current local transfer-group ownership.
+Retain optional mode letters with vertical serving-line-colour slices, explicit shorthands, split-by-cluster default, combined modal tag option and thin black leaders. Leaders attach radially to dots and to rounded bar tips, stopping at both outlines. Transit modal tag, leader, cluster and connector hits keep their current local transfer-group ownership.
 
 Retain highlight mode, Clear/Escape, click-again/empty-space clearing, nearest-group selection for overlapping shapes and preservation of manually hidden routes. Name labels introduced by the approved upstream policy must not change these memberships.
 
@@ -121,11 +125,11 @@ Retain [station-area selection and presentation](/C:/Users/Admin/Documents/ChatG
 
 ## 7. Rendering compatibility
 
-Create a current-appearance profile using the Apple-light colours, fonts, halos, building/road borders, rail styles, station widths, badge clipping, leader widths and layer order. Translate our fixed-plus-scaled style measurements into upstream's world/view/export coordinates explicitly. Export size must not silently change stored metre distances or logical groups.
+Create a current-appearance profile using the Apple-light colours, fonts, halos, building/road borders, rail styles, station widths, transit modal tag clipping, leader widths and layer order. Translate our fixed-plus-scaled style measurements into upstream's world/view/export coordinates explicitly. Export size must not silently change stored metre distances or logical groups.
 
 Carry forward corrected road-width precedence, fractional widths and usable-lane fallback. Preserve rail asset identities across simplification. Add the current forest-density overlay and independent visibility; the inspected upstream parses the forest data without drawing it. Add CS1 park labels, which its inspected label builder omits.
 
-Keep upstream path-following street labels and transport-building label grouping as approved. Match their typography, colours and halos to the current style; exact current label positions are not required where upstream placement differs. Keep these name labels independent from the custom transit badge system.
+Keep upstream path-following street labels and transport-building label grouping as approved. Match their typography, colours and halos to the current style; exact current label positions are not required where upstream placement differs. Keep these name labels independent from the custom transit modal tag system.
 
 Differences in antialiasing and font metrics must be evaluated in actual renders. Visual acceptance is not a byte-identical PNG promise. The permitted label and original-direction-path differences are intentional; changes elsewhere must be checked against the current viewer.
 
@@ -133,7 +137,7 @@ Differences in antialiasing and font metrics must be evaluated in actual renders
 
 Keep the inherited Forms mouse controls, wheel scaling and rotation gestures. Change navigation only where it creates incorrect coordinates, clipping, selection or render state. Remove CS2-specific map-expansion assumptions as part of making the application CS1-only.
 
-Add our feature controls to upstream's UI: infrastructure appearance/tracks/reconnection, station highlighting, transfer modes, separate cluster distances, badges, station areas, route visibility/colour/shorthand editing and building preferences. Preserve live apply, correct busy-state handling and cancellation or versioning of obsolete asynchronous rebuilds. Menu and dialog layout may adapt.
+Add our feature controls to upstream's UI: infrastructure appearance/tracks/reconnection, station highlighting, transfer modes, separate cluster distances, transit modal tags, station areas, route visibility/colour/shorthand editing and building preferences. Preserve live apply, correct busy-state handling and cancellation or versioning of obsolete asynchronous rebuilds. Menu and dialog layout may adapt.
 
 Hit testing must use the inverse of the actual view, crop, rotation and DPI transformation and the same geometry as the displayed shapes. Ordinary dragging still pans; an intended station click selects the correct local group.
 
@@ -149,7 +153,7 @@ Support the required PNG/JPEG/BMP/SVG/SVGZ output, crop/drawing-area selection, 
 | Route integrity | All Springdale services and complete paths survive; stop order/membership and monorail safeguards pass |
 | Deferred merger | Original service paths are drawn; no direction-merging controls or algorithm run |
 | Stations | Cluster/link rules, independent distances, stable results and logical/display separation pass |
-| Badges | Both split states, letters on/off, explicit shorthands, colour slices, leader attachment and click ownership pass |
+| Transit modal tags | Both split states, letters on/off, explicit shorthands, colour slices, leader attachment and click ownership pass |
 | Rail and premises | Track counts/spacing, reconnection fallback, both appearances, tunnels, colours and station-area selection pass |
 | Navigation and highlighting | Upstream controls work; transformed hits, dragging, clearing and visibility restoration pass |
 | Labels | Curved street names and grouped transport-building labels work; grouping never changes route or transfer membership |
@@ -159,16 +163,16 @@ Support the required PNG/JPEG/BMP/SVG/SVGZ output, crop/drawing-area selection, 
 
 Use the unchanged Springdale save at [Springdale-20260927-124147.cslmap.gz](/C:/Users/Admin/Documents/ChatGPT/CSLM/samples/Springdale-20260927-124147.cslmap.gz), SHA-256 `C9EBCB5BA1371BAE962FB536649AFD482F91BCC523B4B7471B91E01F3921F718`.
 
-Adapt the relevant existing [behaviour checks](/C:/Users/Admin/Documents/ChatGPT/CSLM/tests/CSLMapView.SmokeCheck). Compare the current viewer with direction merging disabled, so its merged-path view is not the wrong reference for the deferred feature. Test full-map output and Pennsylvania, Primrose and Prospect details, badge/letter variants, highlighted routes, infrastructure modes, crops and rotation/zoom/DPI hit transforms. Treat the approved label changes as explicit exceptions when comparing images; retain geometry and membership checks alongside image review.
+Adapt the relevant existing [behaviour checks](/C:/Users/Admin/Documents/ChatGPT/CSLM/tests/CSLMapView.SmokeCheck). Compare the current viewer with direction merging disabled, so its merged-path view is not the wrong reference for the deferred feature. Test full-map output and Pennsylvania, Primrose and Prospect details, modal tag/letter variants, highlighted routes, infrastructure modes, crops and rotation/zoom/DPI hit transforms. Treat the approved label changes as explicit exceptions when comparing images; retain geometry and membership checks alongside image review.
 
-Future delivered code changes still require a fresh actual Springdale render, including affected layers and relevant details. Planning/document-only work does not require a new render. Deliver future core runnable/code packages to the existing private Drive delivery folder; keep renders and supporting reports local unless requested.
+Future delivered code changes still require a fresh actual Springdale render, including affected layers and relevant details. Planning/document-only work does not require a new render. Deliver source through the project's GitHub repository and attach runnable packages to GitHub Releases when a release is requested. Keep renders and supporting reports local unless requested.
 
 ## 10. Implementation sequence
 
 1. Establish a reproducible upstream build and preserve its source baseline/notices. Separate the CS1 raw-data stage from base-map simplification.
 2. Adapt the active transport renderer to a CS1 internal model, then remove the remaining CS2 game projects and import branches.
 3. Match the base-map profile: styles, widths, terrain/forest, footprints, icons and approved upstream labels.
-4. Complete route reconstruction and rendering, station clusters/transfers, badges/leaders and highlighting. Keep direction merging out of this version.
+4. Complete route reconstruction and rendering, station clusters/transfers, transit modal tags/leaders and highlighting. Keep direction merging out of this version.
 5. Add physical-track infrastructure, reconnection, station premises and the required controls/state restoration.
 6. Complete settings migration, editors, exports/automation and packaging; pass the compatibility checks and actual render comparisons.
 

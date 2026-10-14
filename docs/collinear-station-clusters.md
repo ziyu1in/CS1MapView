@@ -1,15 +1,19 @@
 # Collinear station clusters
 
-Implemented 2026-10-09; badge leaders added 2026-10-10. The station-name proposals and manually named design previews are superseded by this implementation.
+Implemented 2026-10-09; transit modal tag leaders added 2026-10-10. The station-name proposals and manually named design previews are superseded by this implementation.
+
+Use the [README glossary](../README.md#glossary) for network and transit terms.
+Existing identifiers such as `StationBadgeLayout`, `ShowStationModeBadges`, and
+`SplitStationBadgesByCluster` retain their spelling for compatibility.
 
 ## Controls
 
-Open **Settings > Station clusters**.
+Open **View > CS1 features** and expand **RouteMapConfig**.
 
 - **Cluster search radius (m)**: default 90, range 0–512. A circle is searched around every visible physical stop. All members of a candidate must fit in at least one of these circles. Several clusters may occupy a circle. Zero keeps distinct positions as separate dots.
-- **Maximum transfer-link distance (m)**: default 100, range 0–512. Measured between the original stop positions, independently of the cluster radius. Zero disables links between distinct positions.
-- **Show mode letters when a line has no shorthand**: enabled by default. Turn it off to hide the fallback mode letters. Explicit line shorthands remain visible.
-- **Split badges by cluster**: enabled by default. Each displayed cluster gets its own badge and a thin black leader. Modes sharing that cluster remain together. Turn it off for one combined badge per local transfer group, connected to the nearest member that offers suitable placement. This also applies to explicit line shorthands.
+- **Transfer link distance (m)**: default 100, range 0–512. Measured between the original stop positions, independently of the cluster radius. Zero disables links between distinct positions.
+- **Show mode letters**: enabled by default. Turn it off to hide the fallback mode letters. Explicit line shorthands remain visible.
+- **One transit modal tag per cluster**: enabled by default. Each displayed cluster gets its own transit modal tag and a thin black leader. Modes sharing that cluster remain together. Turn it off for one combined transit modal tag per local transfer group, connected to the nearest member that offers suitable placement. This also applies to explicit line shorthands.
 
 The two distances and both toggles persist in the viewer configuration. **Transfers** chooses eligible mode combinations. **Highlight station** selects the routes serving the local station group. Escape or Clear restores the prior visibility settings.
 
@@ -26,23 +30,23 @@ Station names are omitted, including the previous transport-building name cleanu
 
 The constant symbol thickness is independent of either distance. At a 16384 canvas, cluster outer/inner widths are 14.4/11.8 pixels; link widths are 5.2/3.0 pixels. All dark outlines are painted before white interiors, removing black seams at joins.
 
-Badges group serving lines by mode. The letters use one vertical color slice per distinct line, not per platform or direction. Modes are T (train), M (metro), MR (monorail), Tr (tram), B (bus), Tb (trolleybus), F (ferry), A (air). Badges use solid clipped glyph geometry, so PNG and SVG exports retain the same colors.
+Transit modal tags group serving lines by mode. The letters use one vertical color slice per distinct line, not per platform or direction. Modes are T (train), M (metro), MR (monorail), Tr (tram), B (bus), Tb (trolleybus), F (ferry), A (air). Transit modal tags use solid clipped glyph geometry, so PNG and SVG exports retain the same colors.
 
-## Badge leaders
+## Transit modal tag leaders
 
-`StationBadgeLayout` measures the text and chooses short leader lines that avoid station symbols, transfer links, earlier badges and earlier leaders. It tests both ends of a bar and several outward placements; dots use radial placements. This is a local placement heuristic, not a guarantee of an overlap-free layout in every possible city. All Springdale badges pass the station-symbol and badge-overlap checks.
+`StationBadgeLayout` measures the text and chooses short leader lines that avoid station symbols, transfer links, earlier transit modal tags and earlier leaders. It tests both ends of a bar and several outward placements; dots use radial placements. This is a local placement heuristic, not a guarantee of an overlap-free layout in every possible city. All Springdale transit modal tags pass the station-symbol and modal tag overlap checks.
 
-Leaders are solid black, 0.3 render-scale units thick (1.2 pixels on a 16384 canvas), compared with 5.2 pixels for transfer-link outlines. Dot attachment is radial, perpendicular to the tangent of the circle. Bar attachment is at the closest rounded tip, using the actual cubic cap extent. The other endpoint meets the rounded badge border. Leaders are painted behind station symbols and badges; they never run through a symbol's white interior.
+Leaders are solid black, 0.3 render-scale units thick (1.2 pixels on a 16384 canvas), compared with 5.2 pixels for transfer-link outlines. Dot attachment is radial, perpendicular to the tangent of the circle. Bar attachment is at the closest rounded tip, using the actual cubic cap extent. The other endpoint meets the rounded transit modal tag border. Leaders are painted behind station symbols and transit modal tags; they never run through a symbol's white interior.
 
-With splitting on, badge membership comes only from the visible routes stopping at that cluster. For example, Pennsylvania has separate teal M, train T and purple/gold M badges, plus a combined M/MR badge for the shared metro/monorail bar. Turning splitting off restores one badge for the local selection group with one leader to a nearby member. Both modes keep the existing multimodal highlight group. Clicking a badge or its leader selects that same group. Hiding fallback mode letters removes their leaders too; explicit line shorthands retain their badges and leaders.
+With splitting on, transit modal tag membership comes only from the visible routes stopping at that cluster. For example, Pennsylvania has separate teal M, train T and purple/gold M transit modal tags, plus a combined M/MR transit modal tag for the shared metro/monorail bar. Turning splitting off restores one transit modal tag for the local selection group with one leader to a nearby member. Both modes keep the existing multimodal highlight group. Clicking a transit modal tag or its leader selects that same group. Hiding fallback mode letters removes their leaders too; explicit line shorthands retain their transit modal tags and leaders.
 
-The split toggle redraws labels without rebuilding routes or clusters. Older configuration files default to splitting on. CLI render helper: add `-CombinedStationBadges` to demonstrate the off state.
+The split toggle redraws labels without rebuilding routes or clusters. Older configuration files default to splitting on. To render the off state, set `RouteMapConfig.SplitStationBadgesByCluster` to false in a render configuration and pass it to `scripts/render-map.ps1 -Config <configuration-file>`.
 
 ## Route integrity and selection
 
-`StationDisplayLayout` runs after route construction. It does not modify logical `MergedStations`, any route stop, physical track path or combined-direction geometry. The existing one-stop-per-line safeguard remains in the logical route builder. Nearby opposite-direction platforms can therefore share a display symbol without deleting a journey.
+`StationDisplayLayout` runs after route construction. It does not modify logical `MergedStations`, any route stop, physical track or combined-direction geometry. The existing one-stop-per-line safeguard remains in the logical route builder. Nearby opposite-direction platforms can therefore share a display symbol without deleting a journey.
 
-Linked symbols share a highlight target when all their modes are mutually eligible and every pair of points is within twice the larger distance setting. They also share a badge when splitting is off. This bounds selection ownership on a long city-wide chain; links across the bound remain visible. Clicking either half of such a connecting link selects the corresponding local group. This selection bound never removes a transfer edge.
+Linked symbols share a highlight target when all their modes are mutually eligible and every pair of points is within twice the larger distance setting. They also share a transit modal tag when splitting is off. This bounds selection ownership on a long city-wide chain; links across the bound remain visible. Clicking either half of such a connecting link selects the corresponding local group. This selection bound never removes a transfer edge.
 
 ## Validation and renders
 
@@ -52,6 +56,6 @@ Checks cover subset enumeration, the three tolerances, same-line/direction and s
 
 With all Springdale transit modes enabled: 114 physical positions, 188 candidate groups, 79 displayed symbols, 57 eligible physical stop-pair candidates, 6 displayed connectors and 73 selectable groups. Internal candidates are represented by bars. Pennsylvania has same-mode train and metro pairs; Primrose prioritizes the opposite-direction teal-line pair.
 
-Badge checks also verify serving-route ownership, radial dot attachment, nearest bar tips, badge/leader hit targets, persistence, legacy defaults, mode letters off and the split-only live redraw. Springdale produces 79 badges with splitting on and 73 with it off.
+Transit modal tag checks also verify serving-route ownership, radial dot attachment, nearest bar tips, modal tag/leader hit targets, persistence, legacy defaults, mode letters off and the split-only live redraw. Springdale produces 79 transit modal tags with splitting on and 73 with it off.
 
 Fresh Apple-light exports are under `renders/Springdale/badge-leaders-20261010/`: full-map PNG/SVG, Pennsylvania, Primrose and Prospect details, and a Pennsylvania comparison with splitting off. Close-ups preserve the actual viewer SVG drawing and change only its root viewport/output size. Station-area tint is enabled. Earlier renders remain in their previous directory.

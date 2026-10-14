@@ -49,4 +49,8 @@ CSLMapView.Beta.routes.xml
 
 # Required DLLs in src/*/lib/, source resources, styles and symbols are tracked.
 # CSLMapViewConfig.xml is the versioned default, not a generated settings file.
+# Provenance documents and checksum manifests are kept locally, outside source control.
+/SOURCE-PROVENANCE.md
+/UPSTREAM-BASELINE-SHA256.csv
+/RECOVERY-INPUT-SHA256.csv
 AGENTS.md

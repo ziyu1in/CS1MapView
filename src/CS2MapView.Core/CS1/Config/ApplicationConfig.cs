@@ -84,7 +84,7 @@ public sealed class TransportRouteMapConfig : CS2MapView.Config.TransportRouteMa
     [DisplayName("Transfer link distance (m)"), Description("Maximum distance between actual stops when linking separate symbols. Default 100 m. Shortest legal connectors preserve connectivity without loops.")]
     public double StationLinkDistance { get; set; } = 100;
     [DisplayName("Show mode letters")] public bool ShowStationModeBadges { get; set; } = true;
-    [DisplayName("One badge per cluster")] public bool SplitStationBadgesByCluster { get; set; } = true;
+    [DisplayName("One transit modal tag per cluster")] public bool SplitStationBadgesByCluster { get; set; } = true;
     public bool RenderMetroStation { get => RenderMetroStop; set => RenderMetroStop = value; }
     public bool RenderTrainStation { get => RenderTrainStop; set => RenderTrainStop = value; }
     public bool RenderMonorailStation { get => RenderMonorailStop; set => RenderMonorailStop = value; }

@@ -24,18 +24,20 @@ colors by type, with infrastructure-only mode off. Train, metro and monorail
 station modes participate; other station modes are off. Train, metro, tram and
 monorail service routes are available wherever the route layer is enabled.
 
-"Combined" means one badge per local transfer selection group. "Split" means
-one badge per visible cluster. Mode letters are enabled in all marker views.
+Use the [README glossary](../../README.md#glossary) for network and transit terms.
 
-| Original screenshot | SVG | Routes | Markers | Physical rail | Badges | Additional visibility choice |
+"Combined" means one transit modal tag per local transfer selection group. "Split" means
+one transit modal tag per visible cluster. Mode letters are enabled in all marker views.
+
+| Original screenshot | SVG | Routes | Markers | Physical rail | Transit modal tags | Additional visibility choice |
 | --- | --- | --- | --- | --- | --- | --- |
 | `Station area.png` | [station-area.svg](station-area.svg) | Off | Off | Off | — | All services available |
 | `Rail, Station area.png` | [rail-station-area.svg](rail-station-area.svg) | Off | Off | On | — | All services available |
-| `Uni-tag, Rail, Station area.png` | [combined-badges-rail-station-area.svg](combined-badges-rail-station-area.svg) | Off | On | On | Combined | All services available |
-| `Routes, Uni-tag, Rail, Station area.png` | [routes-combined-badges-rail-station-area.svg](routes-combined-badges-rail-station-area.svg) | On | On | On | Combined | All services available |
-| `Routes, Multi-tag, Rail, Station area.png` | [routes-split-badges-rail-station-area.svg](routes-split-badges-rail-station-area.svg) | On | On | On | Split | All services available |
-| `Complex linking, Uni-tag.png` | [complex-linking-combined-badges.svg](complex-linking-combined-badges.svg) | On | On | On | Combined | All services available |
-| `Complex linking, Multi-tag.png` | [complex-linking-split-badges.svg](complex-linking-split-badges.svg) | On | On | On | Split | All services available |
+| `Uni-tag, Rail, Station area.png` | [Combined transit modal tags, rail, and station areas](combined-badges-rail-station-area.svg) | Off | On | On | Combined | All services available |
+| `Routes, Uni-tag, Rail, Station area.png` | [Routes, combined transit modal tags, rail, and station areas](routes-combined-badges-rail-station-area.svg) | On | On | On | Combined | All services available |
+| `Routes, Multi-tag, Rail, Station area.png` | [Routes, split transit modal tags, rail, and station areas](routes-split-badges-rail-station-area.svg) | On | On | On | Split | All services available |
+| `Complex linking, Uni-tag.png` | [Complex links with combined transit modal tags](complex-linking-combined-badges.svg) | On | On | On | Combined | All services available |
+| `Complex linking, Multi-tag.png` | [Complex links with split transit modal tags](complex-linking-split-badges.svg) | On | On | On | Split | All services available |
 | `Complex linking 1-1.png` | [complex-linking-1-1.svg](complex-linking-1-1.svg) | On | On | On | Split | Both metro lines and train markers |
 | `Complex linking 1-2.png` | [complex-linking-1-2.svg](complex-linking-1-2.svg) | On | On | On | Split | Orange metro line hidden |
 | `Complex linking 1-3.png` | [complex-linking-1-3.svg](complex-linking-1-3.svg) | On | On | On | Split | Teal metro line hidden |

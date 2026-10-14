@@ -43,9 +43,6 @@
     <None Include="..\..\CSLMapViewConfig.xml" Link="Migration\CSLMapViewConfig.xml" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\..\LICENSE.upstream" Link="LICENSE.upstream" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\..\DEVELOPMENT.md" Link="DEVELOPMENT.md" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="..\..\SOURCE-PROVENANCE.md" Link="SOURCE-PROVENANCE.md" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="..\..\UPSTREAM-BASELINE-SHA256.csv" Link="UPSTREAM-BASELINE-SHA256.csv" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="..\..\RECOVERY-INPUT-SHA256.csv" Link="RECOVERY-INPUT-SHA256.csv" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\..\NOTICES\**\*" Link="NOTICES\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>

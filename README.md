@@ -8,7 +8,7 @@ It does not open `.crp` files or Cities: Skylines 2 exports.
 
 ## Development and credits
 
-The author developed CS1MapView entirely through prompts to GPT-6 Astra and GPT-6.1 Sol.
+CS1MapView is developed entirely through prompts to GPT-6 Astra and GPT-6.1 Sol.
 The design is based on gansaku's original [CSLMapView](https://steamcommunity.com/sharedfiles/filedetails/?id=845665815).
 The source code is based on gansaku's [CS2MapView](https://github.com/gansaku/CS2MapView).
 We thank gansaku for the original projects.
@@ -16,7 +16,32 @@ The upstream copyright notice and MIT license are included.
 
 See the [development declaration](DEVELOPMENT.md).
 
-[![Routes, station markers, tracks, and station areas](assets/images/routes-split-badges-rail-station-area.svg)](assets/images/routes-split-badges-rail-station-area.svg)
+[![Routes, station markers, transit modal tags, tracks, and station areas](assets/images/routes-split-badges-rail-station-area.svg)](assets/images/routes-split-badges-rail-station-area.svg)
+
+## Glossary
+
+Game networks are made of nodes and segments.
+This structure applies to railways, roads, pedestrian networks, and other network types.
+
+| Term | Meaning |
+| --- | --- |
+| Network | A game structure made of connected nodes and segments. |
+| Node | An endpoint of a segment. Connected segments meet at a shared node. |
+| Segment | A network connection with exactly two nodes: its start node and its end node. It can contain multiple tracks, lanes, or pedestrian paths. |
+| Exported lane | A game metadata entry describing a way within a segment, including its mode, position, and allowed directions. The viewer uses this data to locate physical tracks and lanes. |
+| Transit line or service | A service with an ordered sequence of stops and a route through the network. |
+| Route path | The ordered geometry followed by a transit service. It can pass through many network segments. |
+| Station marker | A circle or elongated symbol representing one physical stop position or a cluster of aligned stops. |
+| Transit modal tag | A label connected to a station marker by a leader. It shows serving modes and line colors, or explicit line shorthands. |
+
+Use the mode-specific name for the ways within a segment: **railway tracks**,
+**metro tracks**, **tram tracks**, **road lanes**, **cycle lanes**, or **pedestrian paths**.
+A segment can contain ways for more than one mode, such as road lanes and tram tracks.
+
+A **quad-track railway segment** contains four railway tracks and still has only
+two endpoint nodes. Where it joins other segments, those segments meet at the
+shared node. Track count and segment count are separate quantities.
+A railway track that carries trains in both directions remains one physical track.
 
 ## Station areas
 
@@ -40,21 +65,63 @@ Limits:
 
 ## Rail tracks
 
-Train, metro, and tram tracks use exported lane positions.
+Railway, metro, and tram tracks use exported lane positions.
+With **Separate tracks** enabled, each distinct physical track position has one map line.
+A lane that carries trains in both directions still has one line.
+Different segments along a network can contain different numbers of tracks.
+At a splitting junction, the incident segments connect at a shared node.
 The Apple style uses continuous track lines.
 The Google style adds cross-ties.
 Underground tracks use dashed lines.
 Monorail and cable car tracks use one centerline.
 
 The **Infrastructure only** option hides route lines and station markers.
-The **Reconnect tracks** option can adjust track connections.
+**Reconnect tracks does not work yet.**
+The option does not currently repair the gaps or mismatched endpoints at splitting junctions.
 
 Limits:
 
-- Each line shows one track.
+- Each line shows one physical track, not its two steel rails.
 - The viewer shows one centerline when lane data is missing.
 - Switch geometry is approximate.
-- The **Reconnect tracks** option does not repair all junctions.
+
+These exports show the current track geometry around splitting junctions.
+Separate tracks is on and Reconnect tracks is off.
+
+| Two-track and single-track railway segments at a junction node | Quad-track railway segment and two-track branches |
+| --- | --- |
+| ![Two-track railway segment meeting two single-track segments at a shared node, beside a parallel railway](assets/images/track-count-examples/two-track-split.svg) | ![Quad-track railway segment at the upper left, meeting two-track branches at a shared node](assets/images/track-count-examples/four-track-split.svg) |
+
+The first crop includes a parallel two-track network.
+The quad-track railway segment in the second crop is at the upper left.
+The gaps at some endpoints show the current junction limitation.
+See the [track-count examples](assets/images/track-count-examples/README.md) for lane positions and export settings.
+
+## Supported Workshop assets
+
+The viewer recognizes the exported geometry of the following asset groups.
+The table gives selected examples present in the reference city export.
+Workshop names and links were checked on 2026-10-13.
+
+Support refers to 2D map display.
+The viewer uses lane positions, network widths, and building lots from the export.
+It does not display vehicle models, props, or platforms that exist only in building meshes.
+Other assets can work when their exports contain the same usable metadata.
+
+| Asset group and Workshop examples | Map display |
+| --- | --- |
+| RAILWAY 2 American Wooden: [network pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2610252544), [wireless](https://steamcommunity.com/sharedfiles/filedetails/?id=2619651082), [mainline](https://steamcommunity.com/sharedfiles/filedetails/?id=2610254154), [Northeast Corridor](https://steamcommunity.com/sharedfiles/filedetails/?id=2610255329) | Separate railway tracks from exported lane positions, including railway segments containing one, two, or four tracks. |
+| RAILWAY 2 American Concrete: [network pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2610275913), [mainline](https://steamcommunity.com/sharedfiles/filedetails/?id=2610277041), [Northeast Corridor](https://steamcommunity.com/sharedfiles/filedetails/?id=2610277961), [Dynamic procedural pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2812203991) | Separate railway tracks, including asymmetric and wider lane arrangements. |
+| RAILWAY 2 station tracks: Wooden [ground](https://steamcommunity.com/sharedfiles/filedetails/?id=2610256766), [low](https://steamcommunity.com/sharedfiles/filedetails/?id=2610257966), and [standard](https://steamcommunity.com/sharedfiles/filedetails/?id=2610265253) entry; Concrete [standard](https://steamcommunity.com/sharedfiles/filedetails/?id=2610283286), [high](https://steamcommunity.com/sharedfiles/filedetails/?id=2721998933), [high island](https://steamcommunity.com/sharedfiles/filedetails/?id=2722005927), and [Dynamic dual islands](https://steamcommunity.com/sharedfiles/filedetails/?id=2815362291) | Railway tracks at their exported spacing. Tracks carrying stops can also have station areas. |
+| Railway and RAILWAY 2 bridges: [Piacenza wireless](https://steamcommunity.com/sharedfiles/filedetails/?id=1574935847), [Stone Arch Overpasses](https://steamcommunity.com/sharedfiles/filedetails/?id=2112363592), [Urban Overpasses](https://steamcommunity.com/sharedfiles/filedetails/?id=2786565452), [NEC Portal North](https://steamcommunity.com/sharedfiles/filedetails/?id=2819280719), [Raritan River](https://steamcommunity.com/sharedfiles/filedetails/?id=2625686836), [Through Girder Pack 1](https://steamcommunity.com/sharedfiles/filedetails/?id=2926036331), [Railroad Crossing Variants](https://steamcommunity.com/sharedfiles/filedetails/?id=2786915325) | Physical railway tracks through bridge, overpass, and crossing networks. Bridge meshes and exact switch layouts are not shown. |
+| RAILWAY 2 [Rail/Industrial Yard Networks](https://steamcommunity.com/sharedfiles/filedetails/?id=2918422869) and [24 cm variant](https://steamcommunity.com/sharedfiles/filedetails/?id=2919967634) | Physical tracks. Yard and depot building lots are excluded from station areas. |
+| BVU Gravel Wooden Metro Tracks: [wired](https://steamcommunity.com/sharedfiles/filedetails/?id=2071010264), [third rail](https://steamcommunity.com/sharedfiles/filedetails/?id=2071006080); Station Tracks: [wired](https://steamcommunity.com/sharedfiles/filedetails/?id=2071009159), [third rail](https://steamcommunity.com/sharedfiles/filedetails/?id=2071005091) | Separate metro tracks. Tracks carrying stops can also have station areas. |
+| BM underground station tracks: [Double #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2463160214), [Center Platform #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2469645459), [Bypass #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2621140416), [4 L #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2908783312) | Metro tracks and station areas, including unused recognized station-track segments. |
+| BM Station Pathways [#01](https://steamcommunity.com/sharedfiles/filedetails/?id=2372093501), [#02](https://steamcommunity.com/sharedfiles/filedetails/?id=2372093901), [#03](https://steamcommunity.com/sharedfiles/filedetails/?id=2372094372), [#04](https://steamcommunity.com/sharedfiles/filedetails/?id=2372094811), [#05](https://steamcommunity.com/sharedfiles/filedetails/?id=2372095863), and [Station Pathways #06 / #07](https://steamcommunity.com/sharedfiles/filedetails/?id=2870803975) | Passage areas associated with nearby stations or entrances. Pathway #05 is recognized even without exported lanes. |
+| [North American Platforms (network pack)](https://steamcommunity.com/sharedfiles/filedetails/?id=2740493387) | Decorative platform areas using exported network widths. The reference export contains 19 platform variants from this pack. |
+| BM [Entrance Buildings #01 (Right)](https://steamcommunity.com/sharedfiles/filedetails/?id=2463321976) and [Entrance Buildings #02](https://steamcommunity.com/sharedfiles/filedetails/?id=2870843227); FTP station anchors: [Double #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2463308917), [Center #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2469724915), [Bypass #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2621162431), [4 Tracks #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2908904669) | Surface entrance lots and nearby passage associations. Small invisible FTP anchors do not add station-lot rectangles. |
+| LRT tram tracks: [standard](https://steamcommunity.com/sharedfiles/filedetails/?id=1554363713), [single tracks](https://steamcommunity.com/sharedfiles/filedetails/?id=1559078925), [without fences](https://steamcommunity.com/sharedfiles/filedetails/?id=1707061991); station tracks: [#01](https://steamcommunity.com/sharedfiles/filedetails/?id=1564758436), [Elevated #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2809013500) | Separate physical tram tracks. Tram station-track areas are excluded from the station area layer. |
+
 
 ## Station clusters and transfer links
 
@@ -125,25 +192,25 @@ The white station markers show the viewer results.
 
 See the [station rule examples](assets/images/station-rule-examples/README.md) for individual images and measurements.
 
-## Station badges
+## Transit modal tags
 
-Badges show line colors and short line names.
+Transit modal tags show serving modes, line colors, and short line names.
 Mode letters are optional: `T` for train, `M` for metro, and `MR` for monorail.
-Leaders connect badges to station markers.
-Leaders stop at the edges of the badges and markers.
+Leaders connect transit modal tags to station markers.
+Leaders stop at the edges of the modal tags and markers.
 
-| "One badge per cluster" | Result |
+| "One transit modal tag per cluster" | Result |
 | --- | --- |
-| On | Each station cluster has one badge. |
-| Off | Each transfer group has one badge. |
+| On | Each station cluster has one transit modal tag, containing only its serving lines. |
+| Off | Each local transfer group has one combined transit modal tag. |
 
-| One badge for each transfer group | One badge for each station cluster |
+| One transit modal tag for each transfer group | One transit modal tag for each station cluster |
 | --- | --- |
-| ![One badge for each transfer group](assets/images/complex-linking-combined-badges.svg) | ![One badge for each station cluster](assets/images/complex-linking-split-badges.svg) |
+| ![One transit modal tag for each transfer group](assets/images/complex-linking-combined-badges.svg) | ![One transit modal tag for each station cluster](assets/images/complex-linking-split-badges.svg) |
 
 ## Layer and line controls
 
-Route lines, station markers, tracks, and station areas have different layer switches.
+Route lines, station markers with transit modal tags, tracks, and station areas have different layer switches.
 Station clusters and transfer links do not include hidden lines.
 The route layer switch does not remove station markers.
 Train route lines can stay visible without train markers.
@@ -205,7 +272,7 @@ Keep the dependency DLLs in `src/*/lib/`.
 | Pan | Drag the map. |
 | Zoom | Turn the mouse wheel. |
 | Turn the map | Hold Ctrl while you turn the mouse wheel. |
-| Highlight transfers | Click a station marker, badge, or leader. |
+| Highlight transfers | Click a station marker, transit modal tag, or leader. |
 | Clear the highlight | Press Escape. |
 
 The **View** menu has the layer and style controls.
@@ -227,8 +294,7 @@ Private city exports and generated builds stay outside source control.
 ## Source and licenses
 
 The repository includes the upstream MIT license and its original copyright notice.
-See the [source provenance](SOURCE-PROVENANCE.md).
-Keep the licenses, notices, and SHA-256 manifests with the source.
+Keep the licenses and notices with the source.
 
 Internal `CS2MapView` names come from the upstream source.
 Legacy `CSLMapView` names identify the export format and migration files.
@@ -236,5 +302,3 @@ Legacy `CSLMapView` names identify the export format and migration files.
 - [Upstream MIT license](LICENSE.upstream).
 - [Forms MIT license](src/CS2MapView.Form/LICENSE).
 - [Dependency notices](NOTICES/).
-- [Source manifest](UPSTREAM-BASELINE-SHA256.csv).
-- [Recovery input manifest](RECOVERY-INPUT-SHA256.csv).

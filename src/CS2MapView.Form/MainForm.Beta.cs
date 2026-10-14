@@ -98,9 +98,9 @@ public partial class MainForm
 
         var transit = new ToolStripMenuItem("Transit routes and stations") { Name = "CS1TransitMenu" };
         Check(transit, "TransportRoutesMenu", "Routes", () => FeatureConfig.ShowTransitRoutes, v => FeatureConfig.RenderTransportRoute = v);
-        Check(transit, "TransportStationsMenu", "Station symbols and badges", () => FeatureConfig.ShowTransitLabels, v => FeatureConfig.RenderTransport = v);
+        Check(transit, "TransportStationsMenu", "Station symbols and transit modal tags", () => FeatureConfig.ShowTransitLabels, v => FeatureConfig.RenderTransport = v);
         Check(transit, "StationModeLettersMenu", "Mode letters", () => FeatureConfig.RouteMapConfig.ShowStationModeBadges, v => FeatureConfig.RouteMapConfig.ShowStationModeBadges = v);
-        Check(transit, "SplitStationBadgesMenu", "One badge per cluster", () => FeatureConfig.RouteMapConfig.SplitStationBadgesByCluster, v => FeatureConfig.RouteMapConfig.SplitStationBadgesByCluster = v);
+        Check(transit, "SplitStationBadgesMenu", "One transit modal tag per cluster", () => FeatureConfig.RouteMapConfig.SplitStationBadgesByCluster, v => FeatureConfig.RouteMapConfig.SplitStationBadgesByCluster = v);
         Check(transit, "AutomaticRouteColoursMenu", "Automatic route colours", () => FeatureConfig.RouteMapConfig.AutoColoring, v => FeatureConfig.RouteMapConfig.AutoColoring = v);
         Check(transit, "WidenSharedRoutesMenu", "Widen shared routes", () => FeatureConfig.RouteMapConfig.WidenOnSharedLines, v => FeatureConfig.RouteMapConfig.WidenOnSharedLines = v);
         Check(transit, "RouteDirectionArrowsMenu", "Direction arrows", () => FeatureConfig.RouteMapConfig.MarkOneWayRoutes, v => FeatureConfig.RouteMapConfig.MarkOneWayRoutes = v);

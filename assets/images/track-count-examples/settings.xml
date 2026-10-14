@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationConfig version="5.0">
+  <SelectedStyle>apple-light</SelectedStyle>
+  <RenderTerrain>true</RenderTerrain>
+  <RenderForest>true</RenderForest>
+  <RenderBuilding>true</RenderBuilding>
+  <RenderRoad>true</RenderRoad>
+  <RenderRail>true</RenderRail>
+  <RenderRailTrain>true</RenderRailTrain>
+  <RenderRailMetro>false</RenderRailMetro>
+  <RenderRailTram>false</RenderRailTram>
+  <RenderRailMonorail>false</RenderRailMonorail>
+  <RenderRailCableCar>false</RenderRailCableCar>
+  <RenderGrid>false</RenderGrid>
+  <RenderDistrictName>false</RenderDistrictName>
+  <RenderBuildingName>false</RenderBuildingName>
+  <RenderParkName>false</RenderParkName>
+  <RenderMapSymbol>false</RenderMapSymbol>
+  <RenderRoadName>false</RenderRoadName>
+  <RenderTransport>false</RenderTransport>
+  <RenderTransportRoute>false</RenderTransportRoute>
+  <RenderStationPremises>false</RenderStationPremises>
+  <Railway>
+    <InfrastructureOnly>true</InfrastructureOnly>
+    <Appearance>Apple</Appearance>
+    <SeparateTracks>true</SeparateTracks>
+    <ReconnectTracks>false</ReconnectTracks>
+    <ShowTunnels>true</ShowTunnels>
+    <ColorByType>true</ColorByType>
+  </Railway>
+</ApplicationConfig>
