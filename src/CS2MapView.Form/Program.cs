@@ -1,6 +1,5 @@
 using CS2MapView.Beta;
 using log4net;
-using System.Globalization;
 namespace CS2MapView.Form;
 internal static class Program
 {
@@ -11,15 +10,7 @@ internal static class Program
         try
         {
             ApplicationConfiguration.Initialize();
-            var locale = args.FirstOrDefault(a => a.StartsWith("-locale="));
-            if (locale != null)
-            {
-                var culture = CultureInfo.GetCultureInfo(locale[(locale.IndexOf('=') + 1)..]);
-                CultureInfo.CurrentCulture = culture;
-                CultureInfo.CurrentUICulture = culture;
-                CultureInfo.DefaultThreadCurrentCulture = culture;
-                CultureInfo.DefaultThreadCurrentUICulture = culture;
-            }
+            UiLocalization.Initialize(Config.UserSettings.LoadOrDefault(false), args);
             if (args.Contains("--help")) { Console.WriteLine(BetaRenderCommand.Usage); return 0; }
             if (args.Contains("--render") || args.Contains("--heightmap"))
                 return BetaRenderCommand.RunAsync(args).GetAwaiter().GetResult();

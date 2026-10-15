@@ -44,51 +44,71 @@ namespace CS2MapView.Form
         public ConfigForm()
         {
             InitializeComponent();
-            RenderAirplaneLinesCheckbox.Text = "Blimp routes";
-            RenderAirplaneStopsCheckbox.Text = "Blimp stops";
-            RenderShipLinesCheckbox.Text = "Ferry routes";
-            RenderShipStopsCheckbox.Text = "Ferry harbours";
+            InitializeLanguageTab();
+            RenderAirplaneLinesCheckbox.Text = UiText.Get("Options_BlimpRoutes");
+            RenderAirplaneStopsCheckbox.Text = UiText.Get("Options_BlimpStops");
+            RenderShipLinesCheckbox.Text = UiText.Get("Options_FerryRoutes");
+            RenderShipStopsCheckbox.Text = UiText.Get("Options_FerryHarbours");
+            ArrangeAdaptedTransportCaptions();
             RenderFerryLinesCheckbox.Visible = RenderFerryStopsCheckbox.Visible = false;
             HideCargoLinesCheckbox.Visible = false;
             UserPrefabNameCheckbox.Visible = false;
         }
 #nullable restore
 
+        private void ArrangeAdaptedTransportCaptions()
+        {
+            // The original Japanese layout used shorter ship/airplane captions.
+            // Keep the English CS1 ferry/blimp overrides apart without editing it.
+            RenderAirplaneLinesCheckbox.Left = Math.Max(RenderAirplaneLinesCheckbox.Left, RenderShipLinesCheckbox.Right + 12);
+            RenderAirplaneStopsCheckbox.Left = Math.Max(RenderAirplaneStopsCheckbox.Left, RenderShipStopsCheckbox.Right + 12);
+        }
+
         private void ConfigForm_Load(object sender, EventArgs e)
         {
+            ArrangeAdaptedTransportCaptions();
             var us = Context.UserSettings;
+            LoadLanguagePreference();
             ThemeCombobox.Items.Clear();
             ThemeCombobox.Items.AddRange(Directory.EnumerateFiles(Path.Combine(AppContext.BaseDirectory, "Styles"), "*.cmvstyle").Select(Path.GetFileNameWithoutExtension).Cast<object>().ToArray());
             ThemeCombobox.Text = (AppRoot.Session?.Config ?? CS2MapView.Beta.BetaSettings.Config).SelectedStyle;
 
             StringThemeCombobox.Items.Clear();
-            StringThemeCombobox.Items.AddRange(Context.StringThemeCandidates.Select(x => x.Name!).ToArray<object>());
-            StringThemeCombobox.Text = "CS1 style typography";
+            StringThemeCombobox.Items.Add(UiText.Get("Options_StyleTypography"));
+            StringThemeCombobox.SelectedIndex = 0;
             StringThemeCombobox.Enabled = false;
 
             ContourIntervalCombobox.Items.Clear();
-            ContourIntervalCombobox.Items.AddRange(["None", "Default", "Low"]);
+            ContourIntervalCombobox.Items.AddRange([
+                new UiChoice("None", "Options_ContourNone"),
+                new UiChoice("Default", "Options_ContourDefault"),
+                new UiChoice("Low", "Options_ContourLow")]);
             var featureConfig = AppRoot.Session?.Config ?? CS2MapView.Beta.BetaSettings.Config;
-            ContourIntervalCombobox.Text = featureConfig.DisplayContourLines ? featureConfig.ContourIntervals : "None";
+            var contourValue = featureConfig.DisplayContourLines ? featureConfig.ContourIntervals : "None";
+            ContourIntervalCombobox.SelectedItem = ContourIntervalCombobox.Items.Cast<UiChoice>().FirstOrDefault(x => x.Value == contourValue)
+                ?? ContourIntervalCombobox.Items[1];
 
             // システムフォントリストを読み込む / Load system fonts
             var availableFonts = Theme.StringTheme.GetAvailableFonts();
             var fontItems = availableFonts.ToArray<object>();
 
             BuildingFontCombobox.Items.Clear();
-            BuildingFontCombobox.Items.Add("(Use Default)"); // デフォルトを使用
+            BuildingFontCombobox.Items.Add(new UiChoice("", "Options_UseDefaultFont"));
             BuildingFontCombobox.Items.AddRange(fontItems);
-            BuildingFontCombobox.Text = string.IsNullOrEmpty(us.CustomBuildingNameFont) ? "(Use Default)" : us.CustomBuildingNameFont;
+            if (string.IsNullOrEmpty(us.CustomBuildingNameFont)) BuildingFontCombobox.SelectedIndex = 0;
+            else BuildingFontCombobox.Text = us.CustomBuildingNameFont;
 
             DistrictFontCombobox.Items.Clear();
-            DistrictFontCombobox.Items.Add("(Use Default)");
+            DistrictFontCombobox.Items.Add(new UiChoice("", "Options_UseDefaultFont"));
             DistrictFontCombobox.Items.AddRange(fontItems);
-            DistrictFontCombobox.Text = string.IsNullOrEmpty(us.CustomDistrictNameFont) ? "(Use Default)" : us.CustomDistrictNameFont;
+            if (string.IsNullOrEmpty(us.CustomDistrictNameFont)) DistrictFontCombobox.SelectedIndex = 0;
+            else DistrictFontCombobox.Text = us.CustomDistrictNameFont;
 
             StreetFontCombobox.Items.Clear();
-            StreetFontCombobox.Items.Add("(Use Default)");
+            StreetFontCombobox.Items.Add(new UiChoice("", "Options_UseDefaultFont"));
             StreetFontCombobox.Items.AddRange(fontItems);
-            StreetFontCombobox.Text = string.IsNullOrEmpty(us.CustomStreetNameFont) ? "(Use Default)" : us.CustomStreetNameFont;
+            if (string.IsNullOrEmpty(us.CustomStreetNameFont)) StreetFontCombobox.SelectedIndex = 0;
+            else StreetFontCombobox.Text = us.CustomStreetNameFont;
 
             VectorizeLandCheckbox.Checked = us.VectorizeTerrainLand;
             VectorizeWaterCheckbox.Checked = us.VectorizeTerrainWater;
@@ -106,9 +126,17 @@ namespace CS2MapView.Form
 
             var colFactory = new SortableBindingGridViewPartsFactory<LayerSettings>();
 
-            LayerConfigGridView.Columns.Add(colFactory.CreateTextboxColumn(nameof(LayerSettings.Name), "Name", 100, true, align: DataGridViewContentAlignment.MiddleLeft));
-            LayerConfigGridView.Columns.Add(colFactory.CreateCheckBoxColumn(nameof(LayerSettings.Visible), "Visible", 50, false));
-            LayerConfigGridView.Columns.Add(colFactory.CreateTextboxColumn(nameof(LayerSettings.Order), "Order", 50, false, format: "0", align: DataGridViewContentAlignment.MiddleRight));
+            LayerConfigGridView.Columns.Add(colFactory.CreateTextboxColumn(nameof(LayerSettings.Name), UiText.Get("Options_LayerName"), 100, true, align: DataGridViewContentAlignment.MiddleLeft));
+            LayerConfigGridView.Columns.Add(colFactory.CreateCheckBoxColumn(nameof(LayerSettings.Visible), UiText.Get("Options_LayerVisible"), 50, false));
+            LayerConfigGridView.Columns.Add(colFactory.CreateTextboxColumn(nameof(LayerSettings.Order), UiText.Get("Options_LayerOrder"), 50, false, format: "0", align: DataGridViewContentAlignment.MiddleRight));
+            LayerConfigGridView.CellFormatting += (_, args) =>
+            {
+                if (LayerConfigGridView.Columns[args.ColumnIndex].DataPropertyName == nameof(LayerSettings.Name) && args.Value is string layer)
+                {
+                    args.Value = UiText.TryGet("Layer_" + layer) ?? layer;
+                    args.FormattingApplied = true;
+                }
+            };
 
             LayerConfigGridView.DataSource = colFactory.CreateBindingDataSource(EdittingLayerOrder);
 
@@ -157,7 +185,7 @@ namespace CS2MapView.Form
             if (EdittingLayerOrder.Select(t => t.Order).Distinct().Count() != EdittingLayerOrder.Count)
             {
                 //TODO
-                MessageBox.Show("Duplicate order value found.");
+                MessageBox.Show(UiText.Get("Options_DuplicateLayerOrder"));
                 return false;
             }
             return true;
@@ -167,7 +195,7 @@ namespace CS2MapView.Form
         private async void SubmitButton_Click(object sender, EventArgs e)
         {
             try { await ApplyConfigurationAsync(); }
-            catch (Exception ex) { MessageBox.Show(ex.Message, "Settings could not be applied", MessageBoxButtons.OK, MessageBoxIcon.Error); SubmitButton.Enabled = true; }
+            catch (Exception ex) { MessageBox.Show(ex.Message, UiText.Get("Options_ApplyFailed"), MessageBoxButtons.OK, MessageBoxIcon.Error); SubmitButton.Enabled = true; }
         }
 
         internal Task InitializeForChecks()
@@ -209,7 +237,7 @@ namespace CS2MapView.Form
                 var featureConfig = AppRoot.Session?.Config ?? CS2MapView.Beta.BetaSettings.Config;
                 if (featureConfig.SelectedStyle != ThemeCombobox.Text)
                 {
-                    if (!File.Exists(Path.Combine(AppContext.BaseDirectory, "Styles", ThemeCombobox.Text + ".cmvstyle"))) throw new InvalidOperationException("Selected CS1 style is missing.");
+                    if (!File.Exists(Path.Combine(AppContext.BaseDirectory, "Styles", ThemeCombobox.Text + ".cmvstyle"))) throw new InvalidOperationException(UiText.Get("Options_StyleMissing"));
                     featureConfig.SelectedStyle = ThemeCombobox.Text;
                     themeChanged = true;
                 }
@@ -217,11 +245,11 @@ namespace CS2MapView.Form
 
             // カスタムフォント設定を処理 / Handle custom font settings
             {
-                string GetFontValue(string comboValue) => comboValue == "(Use Default)" ? null! : comboValue;
+                string? GetFontValue(ComboBox combo) => combo.SelectedItem is UiChoice ? null : combo.Text;
 
-                string? newBuildingFont = GetFontValue(BuildingFontCombobox.Text);
-                string? newDistrictFont = GetFontValue(DistrictFontCombobox.Text);
-                string? newStreetFont = GetFontValue(StreetFontCombobox.Text);
+                string? newBuildingFont = GetFontValue(BuildingFontCombobox);
+                string? newDistrictFont = GetFontValue(DistrictFontCombobox);
+                string? newStreetFont = GetFontValue(StreetFontCombobox);
 
                 if (us.CustomBuildingNameFont != newBuildingFont ||
                     us.CustomDistrictNameFont != newDistrictFont ||
@@ -368,7 +396,9 @@ namespace CS2MapView.Form
                 (themeChanged || fontChanged || layerOrderRequiresRedraw || layerChangedFlags.ContainsValue(true)))
                 await AppRoot.ApplyFeaturesAsync(false);
 
-            if (themeChanged | fontChanged | layerOrderRequiresRedraw | layerChangedFlags.ContainsValue(true))
+            var languageChanged = (us.UILanguage ?? "") != SelectedLanguage;
+            if (languageChanged) us.UILanguage = SelectedLanguage;
+            if (languageChanged | themeChanged | fontChanged | layerOrderRequiresRedraw | layerChangedFlags.ContainsValue(true))
             {
                 await AppRoot.Context.UserSettings.SaveAsync();
             }
@@ -406,8 +436,9 @@ namespace CS2MapView.Form
         {
             bool terrainChanged = false;
             var features = AppRoot.Session?.Config ?? CS2MapView.Beta.BetaSettings.Config;
-            bool contoursVisible = ContourIntervalCombobox.Text != "None";
-            string contourIntervals = ContourIntervalCombobox.Text == "Low" ? "Low" : "Default";
+            var contourValue = (ContourIntervalCombobox.SelectedItem as UiChoice)?.Value ?? "Default";
+            bool contoursVisible = contourValue != "None";
+            string contourIntervals = contourValue == "Low" ? "Low" : "Default";
             if (features.DisplayContourLines != contoursVisible || features.ContourIntervals != contourIntervals)
             {
                 features.DisplayContourLines = contoursVisible;

@@ -36,7 +36,7 @@ public partial class MainForm
             if (value == null) { _outputAreaWorld = null; return; }
             var area = value.Value;
             if (!float.IsFinite(area.Left) || !float.IsFinite(area.Top) || !float.IsFinite(area.Right) || !float.IsFinite(area.Bottom) || area.Width <= 0 || area.Height <= 0)
-                throw new ArgumentOutOfRangeException(nameof(value), "Print/export area must have finite positive dimensions.");
+                throw new ArgumentOutOfRangeException(nameof(value), UiText.Get("Error_InvalidOutputArea"));
             var inverse = SKMatrix.CreateRotation(-Context.ViewContext.Angle);
             _outputAreaWorld = new[] { new SKPoint(area.Left, area.Top), new SKPoint(area.Right, area.Top), new SKPoint(area.Right, area.Bottom), new SKPoint(area.Left, area.Bottom) }
                 .Select(inverse.MapPoint).ToArray();
@@ -47,16 +47,16 @@ public partial class MainForm
 
     private void InitializeBetaFeatures(string? startupMap)
     {
-        Text = ProjectInfo.Name + " — Cities: Skylines 1";
+        Text = UiText.Format("Window_MainTitle", ProjectInfo.Name);
         KeyPreview = true;
         _startupMap = startupMap;
-        var features = new ToolStripMenuItem("CS1 features…", null, (_, _) => new BetaFeatureForm(this).ShowDialog(this));
-        _highlightMenu = new ToolStripMenuItem("Select station to highlight routes") { Checked = true, CheckOnClick = true };
+        var features = new ToolStripMenuItem(UiText.Get("Menu_CS1Features"), null, (_, _) => new BetaFeatureForm(this).ShowDialog(this));
+        _highlightMenu = new ToolStripMenuItem(UiText.Get("Menu_HighlightStationRoutes")) { Checked = true, CheckOnClick = true };
         _highlightMenu.CheckedChanged += (_, _) => { _highlightEnabled = _highlightMenu.Checked; if (!_highlightEnabled) ClearStationHighlight(); };
-        _clearHighlightMenu = new ToolStripMenuItem("Clear route highlight", null, (_, _) => ClearStationHighlight()) { ShortcutKeyDisplayString = "Esc" };
+        _clearHighlightMenu = new ToolStripMenuItem(UiText.Get("Menu_ClearRouteHighlight"), null, (_, _) => ClearStationHighlight()) { ShortcutKeyDisplayString = UiText.Get("Key_Escape") };
         ViewMenuItem.DropDownItems.AddRange([new ToolStripSeparator(), features, _highlightMenu, _clearHighlightMenu]);
-        var heightmap = new ToolStripMenuItem("Save heightmap…", null, SaveHeightmap_Click) { Name = "SaveHeightmapMenu" };
-        var print = new ToolStripMenuItem("Print current view/selected area…", null, PrintMap_Click) { Name = "PrintMapMenu" };
+        var heightmap = new ToolStripMenuItem(UiText.Get("Menu_SaveHeightmap"), null, SaveHeightmap_Click) { Name = "SaveHeightmapMenu" };
+        var print = new ToolStripMenuItem(UiText.Get("Menu_PrintMap"), null, PrintMap_Click) { Name = "PrintMapMenu" };
         FileMenuItem.DropDownItems.Insert(2, heightmap); FileMenuItem.DropDownItems.Insert(3, print);
         _mapOnlyMenus.Add(heightmap); _mapOnlyMenus.Add(print); _mapOnlyMenus.Add(SaveImageToolStripMenuItem);
         InitializeFeatureMenus();
@@ -80,70 +80,70 @@ public partial class MainForm
             parent.DropDownItems.Add(item);
             return item;
         }
-        var layers = new ToolStripMenuItem("Layers and labels") { Name = "CS1LayerMenu" };
+        var layers = new ToolStripMenuItem(UiText.Get("Menu_LayersAndLabels")) { Name = "CS1LayerMenu" };
         void Layer(string name, string caption, Func<bool> read, Action<bool> write) => Check(layers, name, caption, read, write);
-        Layer("TerrainLayerMenu", "Terrain", () => FeatureConfig.RenderTerrain, v => FeatureConfig.RenderTerrain = v);
-        Layer("ForestLayerMenu", "Forest", () => FeatureConfig.RenderForest, v => FeatureConfig.RenderForest = v);
-        Layer("BuildingsLayerMenu", "Buildings", () => FeatureConfig.RenderBuilding, v => FeatureConfig.RenderBuilding = v);
-        Layer("RoadsLayerMenu", "Roads and paths", () => FeatureConfig.RenderRoad, v => FeatureConfig.RenderRoad = v);
-        Layer("RailwaysLayerMenu", "Rail infrastructure", () => FeatureConfig.ShowRailInfrastructure, v => FeatureConfig.RenderRail = v);
-        Layer("StationPremisesLayerMenu", "Station areas", () => FeatureConfig.RenderStationPremises, v => FeatureConfig.RenderStationPremises = v);
-        Layer("GridLayerMenu", "Tile grid", () => FeatureConfig.RenderGrid, v => FeatureConfig.RenderGrid = v);
+        Layer("TerrainLayerMenu", UiText.Get("Menu_Terrain"), () => FeatureConfig.RenderTerrain, v => FeatureConfig.RenderTerrain = v);
+        Layer("ForestLayerMenu", UiText.Get("Menu_Forest"), () => FeatureConfig.RenderForest, v => FeatureConfig.RenderForest = v);
+        Layer("BuildingsLayerMenu", UiText.Get("Menu_Buildings"), () => FeatureConfig.RenderBuilding, v => FeatureConfig.RenderBuilding = v);
+        Layer("RoadsLayerMenu", UiText.Get("Menu_RoadsAndPaths"), () => FeatureConfig.RenderRoad, v => FeatureConfig.RenderRoad = v);
+        Layer("RailwaysLayerMenu", UiText.Get("Menu_RailInfrastructure"), () => FeatureConfig.ShowRailInfrastructure, v => FeatureConfig.RenderRail = v);
+        Layer("StationPremisesLayerMenu", UiText.Get("Menu_StationAreas"), () => FeatureConfig.RenderStationPremises, v => FeatureConfig.RenderStationPremises = v);
+        Layer("GridLayerMenu", UiText.Get("Menu_TileGrid"), () => FeatureConfig.RenderGrid, v => FeatureConfig.RenderGrid = v);
         layers.DropDownItems.Add(new ToolStripSeparator());
-        Layer("DistrictNameMenu", "District names", () => FeatureConfig.RenderDistrictName, v => FeatureConfig.RenderDistrictName = v);
-        Layer("BuildingNameMenu", "Building names", () => FeatureConfig.RenderBuildingName, v => FeatureConfig.RenderBuildingName = v);
-        Layer("ParkNameMenu", "Park names", () => FeatureConfig.RenderParkName, v => FeatureConfig.RenderParkName = v);
-        Layer("StreetNameMenu", "Street names", () => FeatureConfig.RenderRoadName, v => FeatureConfig.RenderRoadName = v);
-        Layer("MapSymbolMenu", "Map symbols", () => FeatureConfig.RenderMapSymbol, v => FeatureConfig.RenderMapSymbol = v);
+        Layer("DistrictNameMenu", UiText.Get("Menu_DistrictNames"), () => FeatureConfig.RenderDistrictName, v => FeatureConfig.RenderDistrictName = v);
+        Layer("BuildingNameMenu", UiText.Get("Menu_BuildingNames"), () => FeatureConfig.RenderBuildingName, v => FeatureConfig.RenderBuildingName = v);
+        Layer("ParkNameMenu", UiText.Get("Menu_ParkNames"), () => FeatureConfig.RenderParkName, v => FeatureConfig.RenderParkName = v);
+        Layer("StreetNameMenu", UiText.Get("Menu_StreetNames"), () => FeatureConfig.RenderRoadName, v => FeatureConfig.RenderRoadName = v);
+        Layer("MapSymbolMenu", UiText.Get("Menu_MapSymbols"), () => FeatureConfig.RenderMapSymbol, v => FeatureConfig.RenderMapSymbol = v);
 
-        var transit = new ToolStripMenuItem("Transit routes and stations") { Name = "CS1TransitMenu" };
-        Check(transit, "TransportRoutesMenu", "Routes", () => FeatureConfig.ShowTransitRoutes, v => FeatureConfig.RenderTransportRoute = v);
-        Check(transit, "TransportStationsMenu", "Station symbols and transit modal tags", () => FeatureConfig.ShowTransitLabels, v => FeatureConfig.RenderTransport = v);
-        Check(transit, "StationModeLettersMenu", "Mode letters", () => FeatureConfig.RouteMapConfig.ShowStationModeBadges, v => FeatureConfig.RouteMapConfig.ShowStationModeBadges = v);
-        Check(transit, "SplitStationBadgesMenu", "One transit modal tag per cluster", () => FeatureConfig.RouteMapConfig.SplitStationBadgesByCluster, v => FeatureConfig.RouteMapConfig.SplitStationBadgesByCluster = v);
-        Check(transit, "AutomaticRouteColoursMenu", "Automatic route colours", () => FeatureConfig.RouteMapConfig.AutoColoring, v => FeatureConfig.RouteMapConfig.AutoColoring = v);
-        Check(transit, "WidenSharedRoutesMenu", "Widen shared routes", () => FeatureConfig.RouteMapConfig.WidenOnSharedLines, v => FeatureConfig.RouteMapConfig.WidenOnSharedLines = v);
-        Check(transit, "RouteDirectionArrowsMenu", "Direction arrows", () => FeatureConfig.RouteMapConfig.MarkOneWayRoutes, v => FeatureConfig.RouteMapConfig.MarkOneWayRoutes = v);
-        var modes = new ToolStripMenuItem("Modes");
+        var transit = new ToolStripMenuItem(UiText.Get("Menu_TransitRoutesAndStations")) { Name = "CS1TransitMenu" };
+        Check(transit, "TransportRoutesMenu", UiText.Get("Menu_Routes"), () => FeatureConfig.ShowTransitRoutes, v => FeatureConfig.RenderTransportRoute = v);
+        Check(transit, "TransportStationsMenu", UiText.Get("Menu_StationSymbolsAndModalTags"), () => FeatureConfig.ShowTransitLabels, v => FeatureConfig.RenderTransport = v);
+        Check(transit, "StationModeLettersMenu", UiText.Get("Menu_ModeLetters"), () => FeatureConfig.RouteMapConfig.ShowStationModeBadges, v => FeatureConfig.RouteMapConfig.ShowStationModeBadges = v);
+        Check(transit, "SplitStationBadgesMenu", UiText.Get("Menu_OneModalTagPerCluster"), () => FeatureConfig.RouteMapConfig.SplitStationBadgesByCluster, v => FeatureConfig.RouteMapConfig.SplitStationBadgesByCluster = v);
+        Check(transit, "AutomaticRouteColoursMenu", UiText.Get("Menu_AutomaticRouteColors"), () => FeatureConfig.RouteMapConfig.AutoColoring, v => FeatureConfig.RouteMapConfig.AutoColoring = v);
+        Check(transit, "WidenSharedRoutesMenu", UiText.Get("Menu_WidenSharedRoutes"), () => FeatureConfig.RouteMapConfig.WidenOnSharedLines, v => FeatureConfig.RouteMapConfig.WidenOnSharedLines = v);
+        Check(transit, "RouteDirectionArrowsMenu", UiText.Get("Menu_RouteDirectionArrows"), () => FeatureConfig.RouteMapConfig.MarkOneWayRoutes, v => FeatureConfig.RouteMapConfig.MarkOneWayRoutes = v);
+        var modes = new ToolStripMenuItem(UiText.Get("Menu_Modes"));
         transit.DropDownItems.Add(modes);
         var routeFields = new[] { ("Bus", "RenderBusLine", "RenderBusStop"), ("Tram", "RenderTramLine", "RenderTramStop"), ("Metro", "RenderMetroLine", "RenderMetroStation"), ("Train", "RenderTrainLine", "RenderTrainStation"), ("Monorail", "RenderMonorailLine", "RenderMonorailStation"), ("Blimp", "RenderBlimpLine", "RenderBlimpStop"), ("Ferry", "RenderFerryLine", "RenderFerryHarbor") };
         foreach (var (mode, routes, stops) in routeFields)
         {
-            var menu = new ToolStripMenuItem(mode == "Bus" ? "Bus / trolleybus" : mode); modes.DropDownItems.Add(menu);
-            foreach (var (property, caption) in new[] { (routes, "Routes"), (stops, "Stops and stations") })
+            var menu = new ToolStripMenuItem(UiText.Get("TransitMode_" + (mode == "Bus" ? "BusTrolleybus" : mode))); modes.DropDownItems.Add(menu);
+            foreach (var (property, caption) in new[] { (routes, UiText.Get("Menu_Routes")), (stops, UiText.Get("Menu_StopsAndStations")) })
                 Check(menu, mode + property + "Menu", caption,
                     () => (bool)typeof(CS2MapView.CS1.Config.TransportRouteMapConfig).GetProperty(property)!.GetValue(FeatureConfig.RouteMapConfig)!,
                     v => typeof(CS2MapView.CS1.Config.TransportRouteMapConfig).GetProperty(property)!.SetValue(FeatureConfig.RouteMapConfig, v));
         }
-        transit.DropDownItems.Add(new ToolStripMenuItem("Service visibility, colours and shorthands…", null, (_, _) => new BetaFeatureForm(this, 1).ShowDialog(this)) { Name = "RoutesEditorMenu" });
+        transit.DropDownItems.Add(new ToolStripMenuItem(UiText.Get("Menu_ServiceVisibilityColorsShorthands"), null, (_, _) => new BetaFeatureForm(this, 1).ShowDialog(this)) { Name = "RoutesEditorMenu" });
 
-        var rail = new ToolStripMenuItem("Rail infrastructure options") { Name = "CS1RailMenu" };
-        Check(rail, "InfrastructureOnlyMenu", "Infrastructure only", () => FeatureConfig.Railway.InfrastructureOnly, v => FeatureConfig.Railway.InfrastructureOnly = v);
-        Check(rail, "SeparateTracksMenu", "Separate tracks", () => FeatureConfig.Railway.SeparateTracks, v => FeatureConfig.Railway.SeparateTracks = v);
-        Check(rail, "ReconnectTracksMenu", "Reconnect tracks", () => FeatureConfig.Railway.ReconnectTracks, v => FeatureConfig.Railway.ReconnectTracks = v);
-        Check(rail, "RailTunnelsMenu", "Show tunnels", () => FeatureConfig.Railway.ShowTunnels, v => FeatureConfig.Railway.ShowTunnels = v);
-        Check(rail, "RailTypeColoursMenu", "Colour by type", () => FeatureConfig.Railway.ColorByType, v => FeatureConfig.Railway.ColorByType = v);
-        Check(rail, "FrameStopTracksMenu", "Frame station tracks", () => FeatureConfig.FrameStopTracks, v => FeatureConfig.FrameStopTracks = v);
+        var rail = new ToolStripMenuItem(UiText.Get("Menu_RailInfrastructureOptions")) { Name = "CS1RailMenu" };
+        Check(rail, "InfrastructureOnlyMenu", UiText.Get("Menu_InfrastructureOnly"), () => FeatureConfig.Railway.InfrastructureOnly, v => FeatureConfig.Railway.InfrastructureOnly = v);
+        Check(rail, "SeparateTracksMenu", UiText.Get("Menu_SeparateTracks"), () => FeatureConfig.Railway.SeparateTracks, v => FeatureConfig.Railway.SeparateTracks = v);
+        Check(rail, "ReconnectTracksMenu", UiText.Get("Menu_ReconnectTracks"), () => FeatureConfig.Railway.ReconnectTracks, v => FeatureConfig.Railway.ReconnectTracks = v);
+        Check(rail, "RailTunnelsMenu", UiText.Get("Menu_ShowTunnels"), () => FeatureConfig.Railway.ShowTunnels, v => FeatureConfig.Railway.ShowTunnels = v);
+        Check(rail, "RailTypeColoursMenu", UiText.Get("Menu_ColorByType"), () => FeatureConfig.Railway.ColorByType, v => FeatureConfig.Railway.ColorByType = v);
+        Check(rail, "FrameStopTracksMenu", UiText.Get("Menu_FrameStationTracks"), () => FeatureConfig.FrameStopTracks, v => FeatureConfig.FrameStopTracks = v);
         foreach (var appearance in Enum.GetValues<RailwayAppearance>())
         {
             var selected = appearance;
-            var item = new ToolStripMenuItem(appearance + " appearance") { Name = appearance + "RailAppearanceMenu" };
+            var item = new ToolStripMenuItem(UiText.Get("Menu_RailwayAppearance_" + appearance)) { Name = appearance + "RailAppearanceMenu" };
             item.Click += async (_, _) => await TrackMenuFeatureAsync(() => FeatureConfig.Railway.Appearance = selected);
             _featureMenuChecks.Add((item, () => FeatureConfig.Railway.Appearance == selected)); rail.DropDownItems.Add(item);
         }
-        var area = new ToolStripMenuItem("Map area") { Name = "RenderAreaMenu" };
+        var area = new ToolStripMenuItem(UiText.Get("Menu_MapArea")) { Name = "RenderAreaMenu" };
         foreach (var size in new[] { 9d, 5.1d, 5d, 3d })
         {
             var selected = size;
-            var item = new ToolStripMenuItem(size + " × " + size) { Name = "RenderArea" + size.ToString(System.Globalization.CultureInfo.InvariantCulture) + "Menu" };
+            var item = new ToolStripMenuItem(UiText.Format("Format_MapArea", size)) { Name = "RenderArea" + size.ToString(System.Globalization.CultureInfo.InvariantCulture) + "Menu" };
             item.Click += async (_, _) => await TrackMenuFeatureAsync(() => FeatureConfig.RenderAreaSize = selected);
             _featureMenuChecks.Add((item, () => Math.Abs(FeatureConfig.RenderAreaSize - selected) < .001)); area.DropDownItems.Add(item);
         }
-        var rotate = new ToolStripMenuItem("Rotate") { Name = "RotationMenu" };
+        var rotate = new ToolStripMenuItem(UiText.Get("Menu_Rotate")) { Name = "RotationMenu" };
         foreach (var degrees in new[] { 0, 90, 180, 270 })
         {
             var selected = degrees;
-            var item = new ToolStripMenuItem(degrees + "°") { Name = "Rotate" + degrees + "Menu" };
+            var item = new ToolStripMenuItem(UiText.Format("Format_Degrees", degrees)) { Name = "Rotate" + degrees + "Menu" };
             item.Click += async (_, _) =>
             {
                 Context.ViewContext.Angle = (float)(selected * Math.PI / 180);
@@ -155,15 +155,15 @@ public partial class MainForm
             };
             _featureMenuChecks.Add((item, () => Math.Abs(Context.ViewContext.Angle * 180 / Math.PI - selected) < .01)); rotate.DropDownItems.Add(item); _mapOnlyMenus.Add(item);
         }
-        var zoom = new ToolStripMenuItem("Zoom") { Name = "ZoomMenu" };
+        var zoom = new ToolStripMenuItem(UiText.Get("Menu_Zoom")) { Name = "ZoomMenu" };
         foreach (var scale in new[] { .25f, .5f, 1f, 1.5f, 2f, 3f, 4f })
         {
             var selected = scale;
-            var item = new ToolStripMenuItem((scale * 100) + "%") { Name = "Zoom" + (scale * 100) + "Menu" };
+            var item = new ToolStripMenuItem(UiText.Format("Format_Percent", scale * 100)) { Name = "Zoom" + (scale * 100) + "Menu" };
             item.Click += async (_, _) => await SetNavigationScaleAsync(selected);
             zoom.DropDownItems.Add(item); _mapOnlyMenus.Add(item);
         }
-        var fit = new ToolStripMenuItem("Fit whole map", null, async (_, _) => await FitMapAsync()) { Name = "FitMapMenu" };
+        var fit = new ToolStripMenuItem(UiText.Get("Menu_FitMap"), null, async (_, _) => await FitMapAsync()) { Name = "FitMapMenu" };
         _mapOnlyMenus.Add(fit);
         ViewMenuItem.DropDownItems.Insert(1, layers);
         ViewMenuItem.DropDownItems.Insert(2, transit);
@@ -173,12 +173,12 @@ public partial class MainForm
         ViewMenuItem.DropDownItems.Insert(6, zoom);
         ViewMenuItem.DropDownItems.Insert(7, fit);
         ViewMenuItem.DropDownOpening += (_, _) => SynchronizeFeatureMenus();
-        var lists = new ToolStripMenuItem("Lists") { Name = "CS1ListsMenu" };
-        lists.DropDownItems.Add(new ToolStripMenuItem("Transit services…", null, (_, _) => new BetaFeatureForm(this, 1).ShowDialog(this)) { Name = "ServiceListMenu" });
-        lists.DropDownItems.Add(new ToolStripMenuItem("Buildings…", null, (_, _) => new BetaFeatureForm(this, 2).ShowDialog(this)) { Name = "BuildingListMenu" });
+        var lists = new ToolStripMenuItem(UiText.Get("Menu_Lists")) { Name = "CS1ListsMenu" };
+        lists.DropDownItems.Add(new ToolStripMenuItem(UiText.Get("Menu_TransitServices"), null, (_, _) => new BetaFeatureForm(this, 1).ShowDialog(this)) { Name = "ServiceListMenu" });
+        lists.DropDownItems.Add(new ToolStripMenuItem(UiText.Get("Menu_BuildingList"), null, (_, _) => new BetaFeatureForm(this, 2).ShowDialog(this)) { Name = "BuildingListMenu" });
         menuStrip1.Items.Insert(2, lists);
-        var setArea = new ToolStripMenuItem("Use current view as print/export area", null, (_, _) => SetOutputAreaFromView()) { Name = "SetOutputAreaMenu" };
-        var clearArea = new ToolStripMenuItem("Clear print/export area", null, (_, _) => { OutputArea = null; SynchronizeFeatureMenus(); }) { Name = "ClearOutputAreaMenu" };
+        var setArea = new ToolStripMenuItem(UiText.Get("Menu_SetOutputArea"), null, (_, _) => SetOutputAreaFromView()) { Name = "SetOutputAreaMenu" };
+        var clearArea = new ToolStripMenuItem(UiText.Get("Menu_ClearOutputArea"), null, (_, _) => { OutputArea = null; SynchronizeFeatureMenus(); }) { Name = "ClearOutputAreaMenu" };
         _featureMenuChecks.Add((setArea, () => OutputArea.HasValue));
         FileMenuItem.DropDownItems.Insert(2, setArea); FileMenuItem.DropDownItems.Insert(3, clearArea);
         _mapOnlyMenus.Add(setArea); _mapOnlyMenus.Add(clearArea);
@@ -237,7 +237,7 @@ public partial class MainForm
     {
         if (!file.EndsWith(".cslmap", StringComparison.OrdinalIgnoreCase) && !file.EndsWith(".cslmap.gz", StringComparison.OrdinalIgnoreCase))
         {
-            MessageBox.Show("Open a Cities: Skylines 1 .cslmap or .cslmap.gz export.", Text);
+            MessageBox.Show(UiText.Get("Message_OpenCS1Map"), Text);
             return;
         }
         Enabled = false;
@@ -342,7 +342,7 @@ public partial class MainForm
     private void SaveHeightmap_Click(object? sender, EventArgs e)
     {
         if (Session == null) return;
-        using var dialog = new SaveFileDialog { Filter = "PNG heightmap|*.png", FileName = "heightmap.png" };
+        using var dialog = new SaveFileDialog { Filter = UiText.Get("FileFilter_Heightmap"), FileName = "heightmap.png" };
         if (dialog.ShowDialog(this) != DialogResult.OK) return;
         try { BetaOutput.SaveHeightmap(Session.Raw, dialog.FileName); }
         catch (Exception ex) { MessageBox.Show(ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error); }
@@ -351,7 +351,7 @@ public partial class MainForm
     private async void PrintMap_Click(object? sender, EventArgs e)
     {
         if (MapData == null) return;
-        using var document = new PrintDocument { DocumentName = MapData.MapName ?? "CSLMapView map" };
+        using var document = new PrintDocument { DocumentName = MapData.MapName ?? UiText.Format("Print_DefaultDocumentName", ProjectInfo.Name) };
         using var dialog = new PrintDialog { Document = document, UseEXDialog = true };
         if (dialog.ShowDialog(this) != DialogResult.OK) return;
         var rect = new SKRect(0, 0, Math.Max(1, _surfaceSize.Width), Math.Max(1, _surfaceSize.Height));

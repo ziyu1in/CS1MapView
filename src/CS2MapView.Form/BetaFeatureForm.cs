@@ -13,7 +13,7 @@ namespace CS2MapView.Form;
 internal sealed class BetaFeatureForm : System.Windows.Forms.Form
 {
     private readonly MainForm _main;
-    private readonly Label _status = new() { Dock = DockStyle.Bottom, Height = 28, Text = "Press Enter or Apply to commit numeric edits. Changes save only in the beta settings." };
+    private readonly Label _status = new() { Dock = DockStyle.Bottom, Height = 28, Text = UiText.Get("Feature_EditHint") };
     private readonly SemaphoreSlim _applyGate = new(1);
     private PropertyGrid _featureGrid = null!;
     private Task _pendingApply = Task.CompletedTask;
@@ -28,10 +28,10 @@ internal sealed class BetaFeatureForm : System.Windows.Forms.Form
     public BetaFeatureForm(MainForm main, int selectedTab = 0)
     {
         _main = main;
-        Text = "CS1 features, routes and buildings";
+        Text = UiText.Get("Feature_Title");
         Width = 940; Height = 760; StartPosition = FormStartPosition.CenterParent;
         var tabs = new TabControl { Dock = DockStyle.Fill };
-        var features = new TabPage("Map and station features");
+        var features = new TabPage(UiText.Get("Feature_MapTab"));
         var propertyGrid = new PropertyGrid { Dock = DockStyle.Fill, SelectedObject = new FeatureObject(main.Session?.Config ?? BetaSettings.Config), HelpVisible = true, ToolbarVisible = true };
         _featureGrid = propertyGrid;
         propertyGrid.PropertyValueChanged += (_, _) => QueueApply();
@@ -39,8 +39,8 @@ internal sealed class BetaFeatureForm : System.Windows.Forms.Form
         var distances = new TableLayoutPanel { Dock = DockStyle.Top, Height = 114, ColumnCount = 2, RowCount = 4, Padding = new Padding(8) };
         distances.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
         distances.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
-        distances.Controls.Add(new Label { Text = "Cluster search radius (m)", AutoSize = true }, 0, 0);
-        distances.Controls.Add(new Label { Text = "Transfer link distance (m)", AutoSize = true }, 1, 0);
+        distances.Controls.Add(new Label { Text = UiText.Get("Feature_Property_StationClusterRadius"), AutoSize = true }, 0, 0);
+        distances.Controls.Add(new Label { Text = UiText.Get("Feature_Property_StationLinkDistance"), AutoSize = true }, 1, 0);
         StationDistanceInput Distance(string name, double value, Action<double> write)
         {
             var input = new StationDistanceInput { Name = name, Minimum = 0, Maximum = 512, DecimalPlaces = 1, Increment = 1, Width = 160,
@@ -53,13 +53,13 @@ internal sealed class BetaFeatureForm : System.Windows.Forms.Form
             value => configForDistances.RouteMapConfig.StationClusterRadius = value), 0, 1);
         distances.Controls.Add(Distance("StationLinkDistanceInput", configForDistances.RouteMapConfig.StationLinkDistance,
             value => configForDistances.RouteMapConfig.StationLinkDistance = value), 1, 1);
-        distances.Controls.Add(new Label { Text = "Search for aligned stops. Default: 90 m.", AutoSize = true }, 0, 2);
-        distances.Controls.Add(new Label { Text = "Limit links between symbols. Default: 100 m.", AutoSize = true }, 1, 2);
-        var policyHint = new Label { Text = "Both distances follow the selected or legacy transfer rules below.", AutoSize = true };
+        distances.Controls.Add(new Label { Text = UiText.Get("Feature_ClusterDistanceHint"), AutoSize = true }, 0, 2);
+        distances.Controls.Add(new Label { Text = UiText.Get("Feature_LinkDistanceHint"), AutoSize = true }, 1, 2);
+        var policyHint = new Label { Text = UiText.Get("Feature_TransferPolicyHint"), AutoSize = true };
         distances.Controls.Add(policyHint, 0, 3); distances.SetColumnSpan(policyHint, 2);
         features.Controls.Add(propertyGrid); features.Controls.Add(distances); tabs.TabPages.Add(features);
 
-        var routes = new TabPage("Service visibility, colours and shorthands");
+        var routes = new TabPage(UiText.Get("Feature_ServicesTab"));
         if (main.Session != null)
         {
             var rows = new SortableBindingList<RouteRow>(main.Session.TransportManager.TransportList.Select(t => new RouteRow(main.Session, t.Id)).ToList());
@@ -79,11 +79,11 @@ internal sealed class BetaFeatureForm : System.Windows.Forms.Form
                 button.Click += (_, _) => { grid.EndEdit(); action(); grid.Refresh(); QueueApply(); };
                 serviceActions.Controls.Add(button);
             }
-            ServiceButton("ShowAllServicesButton", "Show all", () => { foreach (var route in main.Session!.TransportManager.TransportList) route.ViewerVisible = true; });
-            ServiceButton("HideAllServicesButton", "Hide all", () => { foreach (var route in main.Session!.TransportManager.TransportList) route.ViewerVisible = false; });
-            ServiceButton("RedrawServicesButton", "Redraw map", () => { });
+            ServiceButton("ShowAllServicesButton", UiText.Get("Feature_ShowAll"), () => { foreach (var route in main.Session!.TransportManager.TransportList) route.ViewerVisible = true; });
+            ServiceButton("HideAllServicesButton", UiText.Get("Feature_HideAll"), () => { foreach (var route in main.Session!.TransportManager.TransportList) route.ViewerVisible = false; });
+            ServiceButton("RedrawServicesButton", UiText.Get("Feature_RedrawMap"), () => { });
             var serviceContext = new ContextMenuStrip();
-            serviceContext.Items.Add("Choose colour…", null, (_, _) =>
+            serviceContext.Items.Add(UiText.Get("Feature_ChooseColour"), null, (_, _) =>
             {
                 if (grid.CurrentRow?.DataBoundItem is not RouteRow row) return;
                 using var dialog = new ColorDialog { FullOpen = true };
@@ -91,16 +91,16 @@ internal sealed class BetaFeatureForm : System.Windows.Forms.Form
                 if (dialog.ShowDialog(this) != DialogResult.OK) return;
                 row.Colour = $"#{dialog.Color.R:X2}{dialog.Color.G:X2}{dialog.Color.B:X2}"; grid.Refresh(); QueueApply();
             });
-            serviceContext.Items.Add("Clear colour override", null, (_, _) => { if (grid.CurrentRow?.DataBoundItem is RouteRow row) { row.Colour = ""; grid.Refresh(); QueueApply(); } });
+            serviceContext.Items.Add(UiText.Get("Feature_ClearColourOverride"), null, (_, _) => { if (grid.CurrentRow?.DataBoundItem is RouteRow row) { row.Colour = ""; grid.Refresh(); QueueApply(); } });
             Disposed += (_, _) => serviceContext.Dispose();
             grid.ContextMenuStrip = serviceContext;
             grid.CellMouseDown += (_, e) => { if (e.Button == MouseButtons.Right && e.RowIndex >= 0) grid.CurrentCell = grid.Rows[e.RowIndex].Cells[Math.Max(0, e.ColumnIndex)]; };
             routes.Controls.Add(grid); routes.Controls.Add(serviceActions);
         }
-        else routes.Controls.Add(new Label { Text = "Load a CS1 map to edit its services.", Dock = DockStyle.Top });
+        else routes.Controls.Add(new Label { Text = UiText.Get("Feature_LoadMapHint"), Dock = DockStyle.Top });
         tabs.TabPages.Add(routes);
 
-        var buildings = new TabPage("Building preferences");
+        var buildings = new TabPage(UiText.Get("Feature_BuildingsTab"));
         var config = main.Session?.Config ?? BetaSettings.Config;
         var assets = main.Session?.Raw.BuildingList.GroupBy(b => (b.SteamId, b.ShortName)).Select(g => new BuildingRow(config.BuildingPreferences, g.First(), g.Count())).OrderBy(b => b.Asset).ToList();
         var buildingGrid = assets != null ? MakeGrid(new SortableBindingList<BuildingRow>(assets)) : MakeGrid(new BindingList<NativeBuildingPreference>(config.BuildingPreferences));
@@ -116,7 +116,7 @@ internal sealed class BetaFeatureForm : System.Windows.Forms.Form
         }
         buildingGrid.CellValueChanged += (_, e) => { if (e.RowIndex >= 0) QueueApply(); };
         buildingGrid.UserDeletedRow += (_, _) => QueueApply();
-        var hint = new Label { Dock = DockStyle.Bottom, Height = 58, Text = "Preferences apply to this asset. HideShape: true/false/blank. NameVisibility: Visible, FullVisible, Invisible or blank. MapSymbol accepts an installed SVG symbol name. Blank values restore defaults." };
+        var hint = new Label { Dock = DockStyle.Bottom, Height = 58, Text = UiText.Get("Feature_BuildingPreferencesHint") };
         buildingGrid.Name = "BuildingListGrid";
         if (assets != null)
             foreach (var property in new[] { nameof(BuildingRow.Service), nameof(BuildingRow.SubService), nameof(BuildingRow.ItemClass), nameof(BuildingRow.Count) })
@@ -125,18 +125,18 @@ internal sealed class BetaFeatureForm : System.Windows.Forms.Form
         var symbolSet = new ComboBox { Name = "BuildingSymbolSetCombobox", DropDownStyle = ComboBoxStyle.DropDownList, Width = 90 };
         symbolSet.Items.AddRange(["ja+", "ja", "maki"]); symbolSet.SelectedItem = config.MapSymbolStyle;
         symbolSet.SelectedIndexChanged += (_, _) => { config.MapSymbolStyle = symbolSet.Text; QueueApply(); };
-        buildingActions.Controls.Add(new Label { Text = "Default symbols", AutoSize = true, Padding = new Padding(0, 7, 0, 0) });
+        buildingActions.Controls.Add(new Label { Text = UiText.Get("Feature_DefaultSymbols"), AutoSize = true, Padding = new Padding(0, 7, 0, 0) });
         buildingActions.Controls.Add(symbolSet);
-        var reset = new Button { Name = "ResetBuildingOverridesButton", Text = "Reset building overrides", AutoSize = true };
+        var reset = new Button { Name = "ResetBuildingOverridesButton", Text = UiText.Get("Feature_ResetBuildingOverrides"), AutoSize = true };
         reset.Click += (_, _) => { config.BuildingPreferences.Clear(); buildingGrid.Refresh(); QueueApply(); };
         buildingActions.Controls.Add(reset);
         if (assets != null) InstallBuildingContext(buildingGrid);
         buildings.Controls.Add(buildingGrid); buildings.Controls.Add(hint); buildings.Controls.Add(buildingActions); tabs.TabPages.Add(buildings);
         tabs.SelectedIndex = Math.Clamp(selectedTab, 0, tabs.TabPages.Count - 1);
         var buttons = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 38, FlowDirection = FlowDirection.RightToLeft };
-        var close = new Button { Text = "Close", Name = "FeatureCloseButton", AutoSize = true };
+        var close = new Button { Text = UiText.Get("Feature_Close"), Name = "FeatureCloseButton", AutoSize = true };
         close.Click += (_, _) => Close();
-        var apply = new Button { Text = "Apply", Name = "FeatureApplyButton", AutoSize = true };
+        var apply = new Button { Text = UiText.Get("Feature_Apply"), Name = "FeatureApplyButton", AutoSize = true };
         apply.Click += (_, _) => { if (CommitPendingEditors()) QueueApply(); };
         buttons.Controls.Add(close); buttons.Controls.Add(apply);
         Controls.Add(tabs); Controls.Add(buttons); Controls.Add(_status);
@@ -156,19 +156,19 @@ internal sealed class BetaFeatureForm : System.Windows.Forms.Form
         var context = new ContextMenuStrip();
         var symbolImages = new List<System.Drawing.Image>();
         ToolStripMenuItem Group(string title) { var item = new ToolStripMenuItem(title); context.Items.Add(item); return item; }
-        var shape = Group("Building shape");
-        shape.DropDownItems.Add(new ToolStripMenuItem("Use default", null, (_, _) => Change(r => r.HideShape = "")) { Name = "BuildingShapeDefaultMenu" });
-        shape.DropDownItems.Add(new ToolStripMenuItem("Show", null, (_, _) => Change(r => r.HideShape = "false")) { Name = "BuildingShapeShowMenu" });
-        shape.DropDownItems.Add(new ToolStripMenuItem("Hide", null, (_, _) => Change(r => r.HideShape = "true")) { Name = "BuildingShapeHideMenu" });
-        var names = Group("Building name");
-        foreach (var (caption, value) in new[] { ("Use default", ""), ("Show custom name", "Visible"), ("Show name or asset name", "FullVisible"), ("Hide", "Invisible") })
+        var shape = Group(UiText.Get("Feature_BuildingShape"));
+        shape.DropDownItems.Add(new ToolStripMenuItem(UiText.Get("Feature_UseDefault"), null, (_, _) => Change(r => r.HideShape = "")) { Name = "BuildingShapeDefaultMenu" });
+        shape.DropDownItems.Add(new ToolStripMenuItem(UiText.Get("Feature_Show"), null, (_, _) => Change(r => r.HideShape = "false")) { Name = "BuildingShapeShowMenu" });
+        shape.DropDownItems.Add(new ToolStripMenuItem(UiText.Get("Feature_Hide"), null, (_, _) => Change(r => r.HideShape = "true")) { Name = "BuildingShapeHideMenu" });
+        var names = Group(UiText.Get("Feature_BuildingName"));
+        foreach (var (caption, value) in new[] { (UiText.Get("Feature_UseDefault"), ""), (UiText.Get("Feature_ShowCustomName"), "Visible"), (UiText.Get("Feature_ShowNameOrAsset"), "FullVisible"), (UiText.Get("Feature_Hide"), "Invisible") })
         {
             var selected = value;
             names.DropDownItems.Add(new ToolStripMenuItem(caption, null, (_, _) => Change(r => r.NameVisibility = selected)) { Name = "BuildingName_" + (value == "" ? "Default" : value) });
         }
-        var symbols = Group("Map symbol");
-        symbols.DropDownItems.Add(new ToolStripMenuItem("Use default", null, (_, _) => Change(r => r.MapSymbol = "")) { Name = "BuildingSymbolDefaultMenu" });
-        symbols.DropDownItems.Add(new ToolStripMenuItem("Hide", null, (_, _) => Change(r => r.MapSymbol = "system.none")) { Name = "BuildingSymbolHideMenu" });
+        var symbols = Group(UiText.Get("Feature_MapSymbol"));
+        symbols.DropDownItems.Add(new ToolStripMenuItem(UiText.Get("Feature_UseDefault"), null, (_, _) => Change(r => r.MapSymbol = "")) { Name = "BuildingSymbolDefaultMenu" });
+        symbols.DropDownItems.Add(new ToolStripMenuItem(UiText.Get("Feature_Hide"), null, (_, _) => Change(r => r.MapSymbol = "system.none")) { Name = "BuildingSymbolHideMenu" });
         foreach (var family in new[] { "ja", "maki" })
         {
             var menu = new ToolStripMenuItem(family); symbols.DropDownItems.Add(menu);
@@ -207,7 +207,14 @@ internal sealed class BetaFeatureForm : System.Windows.Forms.Form
     private static DataGridView MakeGrid(object rows)
     {
         var grid = new DataGridView { Dock = DockStyle.Fill, AutoGenerateColumns = true, BindingContext = new BindingContext(), DataSource = rows, AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill, AllowUserToAddRows = false, AllowUserToDeleteRows = false };
-        grid.DataError += (_, e) => { e.ThrowException = false; MessageBox.Show("Enter a valid value; colours use #RRGGBB or #AARRGGBB."); };
+        void LocalizeHeaders()
+        {
+            foreach (DataGridViewColumn column in grid.Columns)
+                column.HeaderText = UiText.TryGet("Feature_Column_" + column.DataPropertyName) ?? column.HeaderText;
+        }
+        grid.DataBindingComplete += (_, _) => LocalizeHeaders();
+        LocalizeHeaders();
+        grid.DataError += (_, e) => { e.ThrowException = false; MessageBox.Show(UiText.Get("Feature_InvalidGridValue")); };
         return grid;
     }
 
@@ -293,9 +300,9 @@ internal sealed class BetaFeatureForm : System.Windows.Forms.Form
     {
         await _applyGate.WaitAsync();
         _lastApplySucceeded = false;
-        try { _status.Text = "Applying changes…"; await _main.ApplyFeaturesAsync(); _status.Text = (_main.Session?.Config ?? BetaSettings.Config).RouteMapConfig.UseCustomTransferModes
-            ? "Applied. Selected transfer modes are active."
-            : "Applied. Legacy transfer rules are active."; _featureGrid.Refresh(); _lastApplySucceeded = true; }
+        try { _status.Text = UiText.Get("Feature_Applying"); await _main.ApplyFeaturesAsync(); _status.Text = (_main.Session?.Config ?? BetaSettings.Config).RouteMapConfig.UseCustomTransferModes
+            ? UiText.Get("Feature_AppliedSelectedModes")
+            : UiText.Get("Feature_AppliedLegacyRules"); _featureGrid.Refresh(); _lastApplySucceeded = true; }
         catch (Exception ex) { _status.Text = ex.Message; MessageBox.Show(ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error); }
         finally { _applyGate.Release(); }
     }
@@ -312,9 +319,9 @@ internal sealed class BetaFeatureForm : System.Windows.Forms.Form
         public RouteRow(BetaMapSession session, int id) { _session = session; _id = id; }
         public int Id => _route.Id;
         public string Name => _route.Name;
-        public string Mode => _route.TransportType;
+        public string Mode => UiText.TryGet("TransitMode_" + _route.TransportType) ?? _route.TransportType;
         public int Stops => _route.Stops.Count;
-        [DisplayName("Length (m)")] public double LengthMetres => _route.Stops.SelectMany(s => s.PointsToNextStop).Sum(part => part.Points.Zip(part.Points.Skip(1), (a, b) => Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Z - b.Z, 2))).Sum());
+        public double LengthMetres => _route.Stops.SelectMany(s => s.PointsToNextStop).Sum(part => part.Points.Zip(part.Points.Skip(1), (a, b) => Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Z - b.Z, 2))).Sum());
         public bool Visible { get => _route.ViewerVisible; set => _route.ViewerVisible = value; }
         public string Shorthand { get => _route.ViewerDefinedLineNo ?? ""; set => _route.ViewerDefinedLineNo = string.IsNullOrWhiteSpace(value) ? null! : value; }
         public string Colour
@@ -323,7 +330,7 @@ internal sealed class BetaFeatureForm : System.Windows.Forms.Form
             set
             {
                 if (string.IsNullOrWhiteSpace(value)) { _route.UserDefinedColor = null; return; }
-                if (!SKColor.TryParse(value, out var color)) throw new ArgumentException("Colour must be #RRGGBB or #AARRGGBB.");
+                if (!SKColor.TryParse(value, out var color)) throw new ArgumentException(UiText.Get("Feature_InvalidColour"));
                 _route.UserDefinedColor = color;
             }
         }
@@ -357,12 +364,12 @@ internal sealed class BetaFeatureForm : System.Windows.Forms.Form
         public string HideShape
         {
             get => Preference?.HideShape?.ToString().ToLowerInvariant() ?? "";
-            set { if (!string.IsNullOrWhiteSpace(value) && !bool.TryParse(value, out _)) throw new ArgumentException("HideShape accepts true, false, or blank."); Editable.HideShape = string.IsNullOrWhiteSpace(value) ? null : bool.Parse(value); }
+            set { if (!string.IsNullOrWhiteSpace(value) && !bool.TryParse(value, out _)) throw new ArgumentException(UiText.Get("Feature_InvalidHideShape")); Editable.HideShape = string.IsNullOrWhiteSpace(value) ? null : bool.Parse(value); }
         }
         public string NameVisibility
         {
             get => Preference == null || Preference.NameVisibility == CS2MapView.Config.NameVisibility.Undefined ? "" : Preference.NameVisibility.ToString();
-            set { if (!string.IsNullOrWhiteSpace(value) && !Enum.TryParse<CS2MapView.Config.NameVisibility>(value, true, out _)) throw new ArgumentException("NameVisibility accepts Visible, FullVisible, Invisible, or blank."); Editable.NameVisibility = string.IsNullOrWhiteSpace(value) ? CS2MapView.Config.NameVisibility.Undefined : Enum.Parse<CS2MapView.Config.NameVisibility>(value, true); }
+            set { if (!string.IsNullOrWhiteSpace(value) && !Enum.TryParse<CS2MapView.Config.NameVisibility>(value, true, out _)) throw new ArgumentException(UiText.Get("Feature_InvalidNameVisibility")); Editable.NameVisibility = string.IsNullOrWhiteSpace(value) ? CS2MapView.Config.NameVisibility.Undefined : Enum.Parse<CS2MapView.Config.NameVisibility>(value, true); }
         }
         public string MapSymbol { get => Preference?.MapSymbol ?? ""; set => Editable.MapSymbol = string.IsNullOrWhiteSpace(value) ? null! : value; }
     }
@@ -388,14 +395,17 @@ internal sealed class FeatureObject : ICustomTypeDescriptor
     public EventDescriptorCollection GetEvents(Attribute[]? attributes) => EventDescriptorCollection.Empty;
     public EventDescriptorCollection GetEvents() => EventDescriptorCollection.Empty;
     public object GetPropertyOwner(PropertyDescriptor? pd) => this;
-    public override string ToString() => _value.GetType().Name.Replace("Config", " settings");
+    public override string ToString() => UiText.TryGet("Feature_Object_" + _value.GetType().Name) ?? _value.GetType().Name;
 
     private sealed class FeatureProperty : PropertyDescriptor
     {
         private readonly PropertyDescriptor _property;
         private readonly object _owner;
-        public FeatureProperty(PropertyDescriptor property, object owner) : base(property, [new CategoryAttribute(GetCategory(property.Name))]) { _property = property; _owner = owner; }
-        private static string GetCategory(string name) => name.Contains("Font") ? "Typography" : name is "Railway" || name.StartsWith("RenderRail") ? "Rail infrastructure" : name.Contains("Station") || name == "FrameStopTracks" ? "Station areas" : name == "RouteMapConfig" || name.StartsWith("RenderTransport") ? "Transit and station display" : "Map appearance and layers";
+        public FeatureProperty(PropertyDescriptor property, object owner) : base(property) { _property = property; _owner = owner; }
+        private static string GetCategory(string name) => UiText.Get(name.Contains("Font") ? "Feature_Category_Typography" : name is "Railway" || name.StartsWith("RenderRail") ? "Feature_Category_RailInfrastructure" : name.Contains("Station") || name == "FrameStopTracks" ? "Feature_Category_StationAreas" : name == "RouteMapConfig" || name.StartsWith("RenderTransport") ? "Feature_Category_Transit" : "Feature_Category_MapAppearance");
+        public override string Category => GetCategory(_property.Name);
+        public override string DisplayName => UiText.Get("Feature_Property_" + _property.Name);
+        public override string Description => UiText.TryGet("Feature_Description_" + _property.Name) ?? _property.Description;
         public override Type ComponentType => typeof(FeatureObject);
         public override bool IsReadOnly => _property.IsReadOnly || IsComplex(_property.PropertyType)
             || (_owner is CS2MapView.CS1.Config.TransportRouteMapConfig route &&
@@ -412,9 +422,9 @@ internal sealed class FeatureObject : ICustomTypeDescriptor
         public override void SetValue(object? component, object? value)
         {
             if (_property.Name is "StationClusterRadius" or "StationLinkDistance" && (value is not double distance || !double.IsFinite(distance) || distance < 0 || distance > 512))
-                throw new ArgumentOutOfRangeException(_property.Name, "Station distances must be from 0 to 512 metres.");
+                throw new ArgumentOutOfRangeException(_property.Name, UiText.Get("Feature_InvalidStationDistance"));
             if (_property.Name is "CanvasSize" or "RenderAreaSize" && (value is not double size || !double.IsFinite(size) || size <= 0))
-                throw new ArgumentOutOfRangeException(_property.Name, "Map sizes must be finite positive numbers.");
+                throw new ArgumentOutOfRangeException(_property.Name, UiText.Get("Feature_InvalidMapSize"));
             _property.SetValue(((FeatureObject)component!)._value, value);
         }
         public override bool ShouldSerializeValue(object component) => false;

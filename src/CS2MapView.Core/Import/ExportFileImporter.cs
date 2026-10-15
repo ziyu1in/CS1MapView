@@ -1,8 +1,9 @@
-﻿using CS2MapView.Data;
+using CS2MapView.Data;
 using CS2MapView.Drawing;
 using CS2MapView.Import.CS1;
 using Gfw.Common;
 using log4net;
+using System.Globalization;
 using System.IO.Compression;
 
 namespace CS2MapView.Import
@@ -48,7 +49,8 @@ namespace CS2MapView.Import
             {
 
                 var exData = CS1XMLImporter.Import(path);
-                lpi.Progress(this, LoadProgressInfo.Process.OpenFile, 1f, $"Loaded {path}.");
+                lpi.Progress(this, LoadProgressInfo.Process.OpenFile, 1f,
+                    string.Format(CultureInfo.CurrentCulture, Resources.ResourceManager.GetString("Progress_LoadedFile")!, path));
                 AppRoot.MapData?.Dispose();
 
                 sourceMapType = new CS1MapType(exData);
@@ -59,7 +61,7 @@ namespace CS2MapView.Import
             }
             else
             {
-                return string.Format(Resources.DataImport_ExtensionNotSupported, ext);
+                return string.Format(CultureInfo.CurrentCulture, Resources.DataImport_ExtensionNotSupported, ext);
             }
             //SKPaintクリア
             SKPaintCache.Instance.DisposeAll();

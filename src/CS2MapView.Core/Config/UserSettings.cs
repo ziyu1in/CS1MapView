@@ -13,6 +13,9 @@ namespace CS2MapView.Config
         private static readonly ILog Logger = LogManager.GetLogger(typeof(UserSettings));
         private const string DefaultFileName = Beta.ProjectInfo.Name + ".settings";
 
+        /// <summary>UI culture name. Absent choices follow an available Windows UI language; unavailable choices use English.</summary>
+        public string? UILanguage { get; set; }
+
         /// <summary>
         /// テーマ名
         /// </summary>

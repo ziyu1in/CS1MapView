@@ -31,10 +31,10 @@ namespace CS2MapView.Form
             Disposed += (_, _) => DisposePreview();
             if (areaSelectionOnly)
             {
-                Text = "Choose print/export area";
+                Text = UiText.Get("Export_SelectAreaTitle");
                 foreach (var control in new Control[] { label5, label6, label7, label8, OutputImageSizeTextbox, OutputImageSizeLabel,
                     OutputFileFormatCombobox, OutputPathTextbox, OutputFileNameTextbox, OpenFileDialogButton }) control.Visible = false;
-                SaveButton.Text = "Use selected area";
+                SaveButton.Text = UiText.Get("Export_UseSelectedArea");
                 SaveButton.Width = 190; SaveButton.Location = new Point(548, 82);
                 ClientSize = new Size(ClientSize.Width, 540);
             }
@@ -48,14 +48,14 @@ namespace CS2MapView.Form
         private async void SaveImageForm_Load(object sender, EventArgs e)
         {
             try { await InitializePreviewAsync(); }
-            catch (Exception ex) { if (!IsDisposed && !Disposing) MessageBox.Show(ex.Message, "Preview failed", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch (Exception ex) { if (!IsDisposed && !Disposing) MessageBox.Show(ex.Message, UiText.Get("Export_PreviewFailedTitle"), MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
         internal Task InitializeForChecks(Action<BetaOutputHost>? whenBuilt = null) => InitializePreviewAsync(whenBuilt);
         internal SKRect PreviewAreaForChecks => PrintArea;
         internal SKRect PreviewCropForChecks => GetRotatedCrop();
         private SKRect GetRotatedCrop()
         {
-            if (PreviewHost == null) throw new InvalidOperationException("Preview is not ready.");
+            if (PreviewHost == null) throw new InvalidOperationException(UiText.Get("Export_PreviewNotReady"));
             var view = PreviewHost.Context.ViewContext;
             var scale = view.ViewScaleFromWorld;
             return SKRect.Create(view.ViewLeftTop.x + PrintArea.Left / scale, view.ViewLeftTop.y + PrintArea.Top / scale, PrintArea.Width / scale, PrintArea.Height / scale);
@@ -128,11 +128,11 @@ namespace CS2MapView.Form
                 float rate = PrintArea.Height / PrintArea.Width;
                 if (rate >= 1f)
                 {
-                    OutputImageSizeLabel.Text = $"{(int)(outputSize.Value / rate)}x{outputSize.Value}";
+                    OutputImageSizeLabel.Text = UiText.Format("Export_ImageDimensions", (int)(outputSize.Value / rate), outputSize.Value);
                 }
                 else
                 {
-                    OutputImageSizeLabel.Text = $"{outputSize.Value}x{(int)(outputSize.Value * rate)}";
+                    OutputImageSizeLabel.Text = UiText.Format("Export_ImageDimensions", outputSize.Value, (int)(outputSize.Value * rate));
                 }
 
 
@@ -471,7 +471,8 @@ namespace CS2MapView.Form
             {
                 AddExtension = true,
                 AddToRecent = true,
-                Filter = $"*.{OutputFileFormatCombobox.Text}|*.{OutputFileFormatCombobox.Text}",
+                Filter = $"{UiText.Format("Export_FileTypeDescription", OutputFileFormatCombobox.Text.ToUpperInvariant())} (*.{OutputFileFormatCombobox.Text})|*.{OutputFileFormatCombobox.Text}",
+                Title = UiText.Get("Export_SaveDialogTitle"),
                 InitialDirectory = dir,
 
             };
@@ -500,7 +501,7 @@ namespace CS2MapView.Form
             if (_areaSelectionOnly)
             {
                 try { CommitSelectedArea(); DialogResult = DialogResult.OK; Close(); }
-                catch (Exception ex) { MessageBox.Show(ex.Message, "Area selection failed", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+                catch (Exception ex) { MessageBox.Show(ex.Message, UiText.Get("Export_AreaSelectionFailedTitle"), MessageBoxButtons.OK, MessageBoxIcon.Error); }
                 return;
             }
             SaveButton.Enabled = false;
@@ -509,7 +510,7 @@ namespace CS2MapView.Form
                 if (AppRoot.MapData is null)
                 {
                     //TODO
-                    MessageBox.Show($"Map was not loaded.");
+                    MessageBox.Show(UiText.Get("Export_MapNotLoaded"));
                     return;
                 }
                 var outputSize = OutputImageSizeTextbox.Text.ParseIntInvariant();
@@ -518,21 +519,21 @@ namespace CS2MapView.Form
                 if (string.IsNullOrEmpty(format))
                 {
                     //TODO
-                    MessageBox.Show($"Format was undefined.");
+                    MessageBox.Show(UiText.Get("Export_FormatUndefined"));
                     return;
                 }
                 var outDir = OutputPathTextbox.Text;
                 if (string.IsNullOrEmpty(outDir))
                 {
                     //TODO
-                    MessageBox.Show($"File path  was undefined.");
+                    MessageBox.Show(UiText.Get("Export_PathUndefined"));
                     return;
                 }
                 var outFn = OutputFileNameTextbox.Text;
                 if (string.IsNullOrEmpty(outFn))
                 {
                     //TODO
-                    MessageBox.Show($"File name was undefined.");
+                    MessageBox.Show(UiText.Get("Export_NameUndefined"));
                     return;
                 }
                 var fn = Path.Combine(outDir, outFn);
@@ -554,10 +555,10 @@ namespace CS2MapView.Form
                 else
                 {
                     //TODO
-                    MessageBox.Show($"Image size was undefined");
+                    MessageBox.Show(UiText.Get("Export_SizeUndefined"));
                     return;
                 }
-                if (PreviewHost == null) throw new InvalidOperationException("Preview is not ready.");
+                if (PreviewHost == null) throw new InvalidOperationException(UiText.Get("Export_PreviewNotReady"));
                 var rotatedCrop = GetRotatedCrop();
                 AppRoot.OutputArea = rotatedCrop;
                 using var host = await BetaOutput.FromScreenAsync(AppRoot, rotatedCrop, (int)imageSize.Width, (int)imageSize.Height);
@@ -566,10 +567,10 @@ namespace CS2MapView.Form
                 AppRoot.Context.UserSettings.OutputImageFormat = OutputFileFormatCombobox.Text;
                 AppRoot.Context.UserSettings.OutputImageSize = outputSize ?? DefaultImageWidth;
                 await AppRoot.Context.UserSettings.SaveAsync();
-                MessageBox.Show($"Image saved to\n{fn}");
+                MessageBox.Show(UiText.Format("Export_ImageSaved", fn));
 
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message, "Export failed", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch (Exception ex) { MessageBox.Show(ex.Message, UiText.Get("Export_FailedTitle"), MessageBoxButtons.OK, MessageBoxIcon.Error); }
             finally
             {
                 SaveButton.Enabled = true;

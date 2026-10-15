@@ -16,7 +16,7 @@ namespace CS2MapView.Form.Command
             var ofd = new OpenFileDialog
             {
                 CheckFileExists = true,
-                Filter = "Cities: Skylines 1 map (*.cslmap, *.cslmap.gz)|*.cslmap;*.cslmap.gz"
+                Filter = UiText.Get("FileFilter_CS1Map")
             };
             if( MainForm.Context.UserSettings.OpenFileDir is not null)
             {

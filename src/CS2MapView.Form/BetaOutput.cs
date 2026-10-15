@@ -122,7 +122,7 @@ internal static class BetaOutput
 
     public static void SetView(ViewContext vc, SKRect crop, float radians, int width, int height)
     {
-        if (crop.Width <= 0 || crop.Height <= 0) throw new ArgumentException("Crop width and height must be positive.");
+        if (crop.Width <= 0 || crop.Height <= 0) throw new ArgumentException(UiText.Get("Export_CropDimensionsPositive"));
         var rotated = SKPathEx.GetTransformedRectBound(crop, SKMatrix.CreateRotation(radians));
         vc.Angle = radians;
         vc.ScaleFactor = Math.Min(width / rotated.Width, height / rotated.Height) / vc.WorldScaleFactor;
@@ -132,7 +132,7 @@ internal static class BetaOutput
 
     public static async Task<BetaOutputHost> FromScreenAsync(MainForm source, SKRect rotatedCrop, int width, int height)
     {
-        if (source.Context.SourceMapType is not CS1MapType map) throw new InvalidOperationException("Load a CS1 map first.");
+        if (source.Context.SourceMapType is not CS1MapType map) throw new InvalidOperationException(UiText.Get("Export_LoadMapFirst"));
         var sourceSession = source.Session!;
         var features = Clone(sourceSession.Config);
         var host = new BetaOutputHost(Clone(source.Context.UserSettings), features);
@@ -205,7 +205,7 @@ internal static class BetaOutput
                 {
                     ".png" => SKEncodedImageFormat.Png,
                     ".jpg" or ".jpeg" => SKEncodedImageFormat.Jpeg,
-                    _ => throw new ArgumentException("Output must be PNG, JPEG, BMP, SVG or SVGZ.")
+                    _ => throw new ArgumentException(UiText.Get("Export_UnsupportedFormat"))
                 }, extension == ".png" ? 100 : 95);
                 encoded.SaveTo(file);
             }
@@ -229,7 +229,7 @@ internal static class BetaOutput
     public static void SaveHeightmap(CSLExportXML raw, string output)
     {
         var n = CSLExportXML.TERRAIN_RESOLUTION;
-        if (!output.EndsWith(".png", StringComparison.OrdinalIgnoreCase)) throw new ArgumentException("Heightmaps require .png output.");
+        if (!output.EndsWith(".png", StringComparison.OrdinalIgnoreCase)) throw new ArgumentException(UiText.Get("Export_HeightmapPngRequired"));
         Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(output))!);
         using var pixels = new MemoryStream();
         using (var compressed = new ZLibStream(pixels, CompressionLevel.Optimal, true))
@@ -272,26 +272,28 @@ internal static class BetaOutput
 
 internal static class BetaRenderCommand
 {
-    public const string Usage = ProjectInfo.Name + " --render map.cslmap.gz --output map.png [--size 8192] [--style apple-light] [--config config.xml] [--transit] [--crop x,y,width,height] [--rotate degrees] [--highlight stop-node-id]\n" + ProjectInfo.Name + " --heightmap map.cslmap.gz --output heights.png\nCrop coordinates are game metres: X east, Y=-Z south. Highlight accepts an original physical stop node ID.";
+    public static string Usage => UiText.Format("Render_Usage", ProjectInfo.Name);
     public static async Task<int> RunAsync(string[] args)
     {
         var options = new Dictionary<string, string>();
         for (var i = 0; i < args.Length; i++)
         {
             var name = args[i];
+            // The startup locale override is consumed before render options are parsed.
+            if (name.StartsWith("-locale=", StringComparison.Ordinal)) continue;
             if (name == "--transit") { options[name] = "true"; continue; }
             if (!new[] { "--render", "--heightmap", "--output", "--size", "--style", "--config", "--crop", "--rotate", "--highlight" }.Contains(name))
-                throw new ArgumentException($"Unknown option: {name}");
-            if (++i >= args.Length) throw new ArgumentException($"Missing value for {name}");
+                throw new ArgumentException(UiText.Format("Render_UnknownOption", name));
+            if (++i >= args.Length) throw new ArgumentException(UiText.Format("Render_MissingOptionValue", name));
             options[name] = args[i];
         }
-        if (!options.TryGetValue("--output", out var output)) throw new ArgumentException("--output is required.");
-        var input = options.GetValueOrDefault("--render") ?? options.GetValueOrDefault("--heightmap") ?? throw new ArgumentException("--render is required.");
+        if (!options.TryGetValue("--output", out var output)) throw new ArgumentException(UiText.Format("Render_RequiredOption", "--output"));
+        var input = options.GetValueOrDefault("--render") ?? options.GetValueOrDefault("--heightmap") ?? throw new ArgumentException(UiText.Format("Render_RequiredOption", "--render"));
         BetaSettings.Load(options.GetValueOrDefault("--config"));
         var features = BetaOutput.Clone(BetaSettings.Config);
         features.SelectedStyle = options.GetValueOrDefault("--style", "apple-light");
         var size = int.Parse(options.GetValueOrDefault("--size", "8192"), CultureInfo.InvariantCulture);
-        if (size < 32 || size > 32768) throw new ArgumentOutOfRangeException("--size", "Image size must be 32..32768.");
+        if (size < 32 || size > 32768) throw new ArgumentOutOfRangeException("--size", UiText.Get("Render_ImageSizeRange"));
         features.CanvasSize = size;
         if (options.ContainsKey("--transit"))
         {
@@ -307,11 +309,11 @@ internal static class BetaRenderCommand
         if (options.TryGetValue("--crop", out var cropText))
         {
             var values = cropText.Split(',').Select(v => float.Parse(v, CultureInfo.InvariantCulture)).ToArray();
-            if (values.Length != 4 || values.Any(v => !float.IsFinite(v))) throw new ArgumentException("Crop must be x,y,width,height in game metres.");
+            if (values.Length != 4 || values.Any(v => !float.IsFinite(v))) throw new ArgumentException(UiText.Get("Render_CropFormat"));
             crop = SKRect.Create(values[0], values[1], values[2], values[3]);
         }
         var angle = float.Parse(options.GetValueOrDefault("--rotate", "0"), CultureInfo.InvariantCulture) * (float)Math.PI / 180f;
-        if (!float.IsFinite(angle)) throw new ArgumentException("Rotation must be finite.");
+        if (!float.IsFinite(angle)) throw new ArgumentException(UiText.Get("Render_RotationFinite"));
         var bound = SKPathEx.GetTransformedRectBound(crop, SKMatrix.CreateRotation(angle));
         var width = Math.Max(1, (int)Math.Round(size * Math.Min(1, bound.Width / bound.Height)));
         var height = Math.Max(1, (int)Math.Round(size * Math.Min(1, bound.Height / bound.Width)));
@@ -320,16 +322,16 @@ internal static class BetaRenderCommand
         BetaMapSession.SetConfigForHost(host, features);
         var error = await new ExportFileImporter(host).ImportAsync(input);
         if (error != null) throw new InvalidOperationException(error);
-        if (host.Context.SourceMapType is not CS1MapType source) throw new InvalidOperationException("CS1 input is required.");
+        if (host.Context.SourceMapType is not CS1MapType source) throw new InvalidOperationException(UiText.Get("Render_CS1InputRequired"));
         var session = BetaMapSession.Get(host, source.GetImportData());
         if (options.TryGetValue("--highlight", out var node))
         {
-            if (!session.HighlightStopNode(int.Parse(node, CultureInfo.InvariantCulture))) throw new ArgumentException($"No selectable station contains stop node {node}.");
+            if (!session.HighlightStopNode(int.Parse(node, CultureInfo.InvariantCulture))) throw new ArgumentException(UiText.Format("Render_StopNodeNotSelectable", node));
             await host.MapData!.RebuildLayersOnResizeOrRotate(vc, null);
         }
         if (options.ContainsKey("--heightmap")) BetaOutput.SaveHeightmap(source.GetImportData(), output);
         else BetaOutput.Save(host, output, width, height);
-        Console.WriteLine($"Saved {Path.GetFullPath(output)} ({width} x {height}).");
+        Console.WriteLine(UiText.Format("Render_Saved", Path.GetFullPath(output), width, height));
         return 0;
     }
 }

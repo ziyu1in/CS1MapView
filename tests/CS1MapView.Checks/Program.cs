@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.IO.Compression;
+using System.Globalization;
 using CS2MapView.Beta;
 using CS2MapView.Config;
 using CS2MapView.Data;
@@ -17,6 +18,12 @@ internal static class Program
             var root = Path.GetFullPath(args[0]);
             var map = args.Length > 1 ? Path.GetFullPath(args[1]) : Path.Combine(root, "samples", "Springdale-20260927-124147.cslmap.gz");
             var reports = Path.Combine(root, "artifacts", "checks"); Directory.CreateDirectory(reports);
+            LocalizationChecks.Run(root, reports);
+            if (args.Contains("--localization-only")) return 0;
+            // Existing acceptance checks use English control captions. The
+            // localization checks above exercise all registered UI languages.
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("en");
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.CurrentUICulture;
             string Hash(string path) { using var file = File.OpenRead(path); return Convert.ToHexString(SHA256.HashData(file)); }
             var before = Hash(map);
             Require(before == "C9EBCB5BA1371BAE962FB536649AFD482F91BCC523B4B7471B91E01F3921F718", "Reference save changed before CS1MapView checks");

@@ -1,7 +1,8 @@
-﻿using CS2MapView.Drawing.Layer;
+using CS2MapView.Drawing.Layer;
 using CS2MapView.Util;
 using log4net;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace CS2MapView.Drawing.Terrain;
 /// <summary>
@@ -102,12 +103,15 @@ public class TerrainDrawingsBuilder
     {
         if (Progress.LayersCount == 0)
         {
-            CurrentProgressInfo?.Progress(this, LoadProgressInfo.Process.BuildTerrain, 0f, "Initializing terrain...");
+            CurrentProgressInfo?.Progress(this, LoadProgressInfo.Process.BuildTerrain, 0f,
+                Resources.ResourceManager.GetString("Progress_InitializingTerrain")!);
             return;
         }
         var pg = (float)Progress.CompletedCount / Progress.LayersCount;
 
-        CurrentProgressInfo?.Progress(this, LoadProgressInfo.Process.BuildTerrain, pg, $"Bulding contours ({Progress.CompletedCount}/{Progress.LayersCount}) {pg * 100:0.0}% done");
+        CurrentProgressInfo?.Progress(this, LoadProgressInfo.Process.BuildTerrain, pg,
+            string.Format(CultureInfo.CurrentCulture, Resources.ResourceManager.GetString("Progress_BuildingContours")!,
+                Progress.CompletedCount, Progress.LayersCount, pg * 100));
 
     }
     /// <summary>

@@ -1,0 +1,974 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="About_DevelopmentDeclaration" xml:space="preserve">
+    <value>The author developed CS1MapView entirely through prompts to GPT-6 Astra and GPT-6.1 Sol.</value>
+  </data>
+  <data name="About_UpstreamAcknowledgment" xml:space="preserve">
+    <value>With respect and thanks to gansaku: inspired by the original CSLMapView and built on the CS2MapView codebase.</value>
+  </data>
+  <data name="About_UpstreamRevision" xml:space="preserve">
+    <value>Upstream: gansaku/CS2MapView ecba18732777acb3de18a8378f06ab5047bc0e23 (MIT).</value>
+  </data>
+  <data name="About_VersionInfo" xml:space="preserve">
+    <value>{0} — Cities: Skylines 1
+{1} : {2}
+{3} : {4}
+
+{5}
+
+{6}
+
+{7}</value>
+  </data>
+  <data name="Diagnostic_Buildings" xml:space="preserve">
+    <value>building list</value>
+  </data>
+  <data name="Diagnostic_SegmentDetails" xml:space="preserve">
+    <value>segment details</value>
+  </data>
+  <data name="Diagnostic_Segments" xml:space="preserve">
+    <value>segment list</value>
+  </data>
+  <data name="Diagnostic_SimplifiedMap" xml:space="preserve">
+    <value>simplified map</value>
+  </data>
+  <data name="Diagnostic_TransportOverview" xml:space="preserve">
+    <value>transport manager</value>
+  </data>
+  <data name="Diagnostic_TransportSegments" xml:space="preserve">
+    <value>transport segments</value>
+  </data>
+  <data name="Dialog_SaveDiagnostic" xml:space="preserve">
+    <value>Save {0} diagnostic</value>
+  </data>
+  <data name="Error_InvalidOutputArea" xml:space="preserve">
+    <value>Print/export area must have finite positive dimensions.</value>
+  </data>
+  <data name="Export_AreaBottom" xml:space="preserve">
+    <value>Output area bottom</value>
+  </data>
+  <data name="Export_AreaLeft" xml:space="preserve">
+    <value>Output area left</value>
+  </data>
+  <data name="Export_AreaRight" xml:space="preserve">
+    <value>Output area right</value>
+  </data>
+  <data name="Export_AreaSelectionFailedTitle" xml:space="preserve">
+    <value>Area selection failed</value>
+  </data>
+  <data name="Export_AreaTop" xml:space="preserve">
+    <value>Output area top</value>
+  </data>
+  <data name="Export_Browse" xml:space="preserve">
+    <value>Browse for output file</value>
+  </data>
+  <data name="Export_CropDimensionsPositive" xml:space="preserve">
+    <value>Crop width and height must be positive.</value>
+  </data>
+  <data name="Export_FailedTitle" xml:space="preserve">
+    <value>Export failed</value>
+  </data>
+  <data name="Export_FileFormat" xml:space="preserve">
+    <value>File format</value>
+  </data>
+  <data name="Export_FileName" xml:space="preserve">
+    <value>File name</value>
+  </data>
+  <data name="Export_FileTypeDescription" xml:space="preserve">
+    <value>{0} files</value>
+  </data>
+  <data name="Export_FormatUndefined" xml:space="preserve">
+    <value>Format was undefined.</value>
+  </data>
+  <data name="Export_HeightmapPngRequired" xml:space="preserve">
+    <value>Heightmaps require .png output.</value>
+  </data>
+  <data name="Export_ImageDimensions" xml:space="preserve">
+    <value>{0}x{1}</value>
+  </data>
+  <data name="Export_ImageSaved" xml:space="preserve">
+    <value>Image saved to
+{0}</value>
+  </data>
+  <data name="Export_ImageSize" xml:space="preserve">
+    <value>Output image size</value>
+  </data>
+  <data name="Export_LoadMapFirst" xml:space="preserve">
+    <value>Load a CS1 map first.</value>
+  </data>
+  <data name="Export_MapNotLoaded" xml:space="preserve">
+    <value>Map was not loaded.</value>
+  </data>
+  <data name="Export_NameUndefined" xml:space="preserve">
+    <value>File name was undefined.</value>
+  </data>
+  <data name="Export_OutputArea" xml:space="preserve">
+    <value>Output area</value>
+  </data>
+  <data name="Export_OutputDirectory" xml:space="preserve">
+    <value>Output directory</value>
+  </data>
+  <data name="Export_PathUndefined" xml:space="preserve">
+    <value>File path was undefined.</value>
+  </data>
+  <data name="Export_PreviewFailedTitle" xml:space="preserve">
+    <value>Preview failed</value>
+  </data>
+  <data name="Export_PreviewNotReady" xml:space="preserve">
+    <value>Preview is not ready.</value>
+  </data>
+  <data name="Export_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Export_SaveDialogTitle" xml:space="preserve">
+    <value>Save image</value>
+  </data>
+  <data name="Export_SelectAreaTitle" xml:space="preserve">
+    <value>Choose print/export area</value>
+  </data>
+  <data name="Export_SizeUndefined" xml:space="preserve">
+    <value>Image size was undefined</value>
+  </data>
+  <data name="Export_Title" xml:space="preserve">
+    <value>{0} - Save image</value>
+  </data>
+  <data name="Export_UnsupportedFormat" xml:space="preserve">
+    <value>Output must be PNG, JPEG, BMP, SVG or SVGZ.</value>
+  </data>
+  <data name="Export_UseSelectedArea" xml:space="preserve">
+    <value>Use selected area</value>
+  </data>
+  <data name="Feature_AppliedLegacyRules" xml:space="preserve">
+    <value>Applied. Legacy transfer rules are active.</value>
+  </data>
+  <data name="Feature_AppliedSelectedModes" xml:space="preserve">
+    <value>Applied. Selected transfer modes are active.</value>
+  </data>
+  <data name="Feature_Apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="Feature_Applying" xml:space="preserve">
+    <value>Applying changes…</value>
+  </data>
+  <data name="Feature_BuildingName" xml:space="preserve">
+    <value>Building name</value>
+  </data>
+  <data name="Feature_BuildingPreferencesHint" xml:space="preserve">
+    <value>Preferences apply to this asset. HideShape: true/false/blank. NameVisibility: Visible, FullVisible, Invisible or blank. MapSymbol accepts an installed SVG symbol name. Blank values restore defaults.</value>
+  </data>
+  <data name="Feature_BuildingShape" xml:space="preserve">
+    <value>Building shape</value>
+  </data>
+  <data name="Feature_BuildingsTab" xml:space="preserve">
+    <value>Building preferences</value>
+  </data>
+  <data name="Feature_Category_MapAppearance" xml:space="preserve">
+    <value>Map appearance and layers</value>
+  </data>
+  <data name="Feature_Category_RailInfrastructure" xml:space="preserve">
+    <value>Rail infrastructure</value>
+  </data>
+  <data name="Feature_Category_StationAreas" xml:space="preserve">
+    <value>Station areas</value>
+  </data>
+  <data name="Feature_Category_Transit" xml:space="preserve">
+    <value>Transit and station display</value>
+  </data>
+  <data name="Feature_Category_Typography" xml:space="preserve">
+    <value>Typography</value>
+  </data>
+  <data name="Feature_ChooseColour" xml:space="preserve">
+    <value>Choose colour…</value>
+  </data>
+  <data name="Feature_ClearColourOverride" xml:space="preserve">
+    <value>Clear colour override</value>
+  </data>
+  <data name="Feature_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Feature_ClusterDistanceHint" xml:space="preserve">
+    <value>Search for aligned stops. Default: 90 m.</value>
+  </data>
+  <data name="Feature_Column_Asset" xml:space="preserve">
+    <value>Asset</value>
+  </data>
+  <data name="Feature_Column_Colour" xml:space="preserve">
+    <value>Colour</value>
+  </data>
+  <data name="Feature_Column_Count" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="Feature_Column_HideShape" xml:space="preserve">
+    <value>Hide shape</value>
+  </data>
+  <data name="Feature_Column_HideShapeEnum" xml:space="preserve">
+    <value>Hide shape value</value>
+  </data>
+  <data name="Feature_Column_Id" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Feature_Column_ItemClass" xml:space="preserve">
+    <value>Item class</value>
+  </data>
+  <data name="Feature_Column_LengthMetres" xml:space="preserve">
+    <value>Length (m)</value>
+  </data>
+  <data name="Feature_Column_MapSymbol" xml:space="preserve">
+    <value>Map symbol</value>
+  </data>
+  <data name="Feature_Column_Mode" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="Feature_Column_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Feature_Column_NameVisibility" xml:space="preserve">
+    <value>Name visibility</value>
+  </data>
+  <data name="Feature_Column_Service" xml:space="preserve">
+    <value>Service</value>
+  </data>
+  <data name="Feature_Column_Shorthand" xml:space="preserve">
+    <value>Shorthand</value>
+  </data>
+  <data name="Feature_Column_SteamId" xml:space="preserve">
+    <value>Workshop ID</value>
+  </data>
+  <data name="Feature_Column_Stops" xml:space="preserve">
+    <value>Stops</value>
+  </data>
+  <data name="Feature_Column_SubService" xml:space="preserve">
+    <value>Subservice</value>
+  </data>
+  <data name="Feature_Column_Visible" xml:space="preserve">
+    <value>Visible</value>
+  </data>
+  <data name="Feature_DefaultSymbols" xml:space="preserve">
+    <value>Default symbols</value>
+  </data>
+  <data name="Feature_Description_MergeBusTramStop" xml:space="preserve">
+    <value>Legacy transfer rule, used only when selected transfer modes are off.</value>
+  </data>
+  <data name="Feature_Description_MergeTrainMetroStaion" xml:space="preserve">
+    <value>Legacy transfer rule, used only when selected transfer modes are off.</value>
+  </data>
+  <data name="Feature_Description_StationClusterRadius" xml:space="preserve">
+    <value>Search distance for aligned physical stops. Default 90 m. Independent of symbol thickness and transfer-link distance.</value>
+  </data>
+  <data name="Feature_Description_StationLinkDistance" xml:space="preserve">
+    <value>Maximum distance between actual stops when linking separate symbols. Default 100 m. Shortest legal connectors preserve connectivity without loops.</value>
+  </data>
+  <data name="Feature_Description_UseCustomTransferModes" xml:space="preserve">
+    <value>On: use the individual transfer modes below. Off: use the legacy bus/tram and train/metro connection rules.</value>
+  </data>
+  <data name="Feature_EditHint" xml:space="preserve">
+    <value>Press Enter or Apply to commit numeric edits. Changes save only in the beta settings.</value>
+  </data>
+  <data name="Feature_Hide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="Feature_HideAll" xml:space="preserve">
+    <value>Hide all</value>
+  </data>
+  <data name="Feature_InvalidColour" xml:space="preserve">
+    <value>Colour must be #RRGGBB or #AARRGGBB.</value>
+  </data>
+  <data name="Feature_InvalidGridValue" xml:space="preserve">
+    <value>Enter a valid value; colours use #RRGGBB or #AARRGGBB.</value>
+  </data>
+  <data name="Feature_InvalidHideShape" xml:space="preserve">
+    <value>HideShape accepts true, false, or blank.</value>
+  </data>
+  <data name="Feature_InvalidMapSize" xml:space="preserve">
+    <value>Map sizes must be finite positive numbers.</value>
+  </data>
+  <data name="Feature_InvalidNameVisibility" xml:space="preserve">
+    <value>NameVisibility accepts Visible, FullVisible, Invisible, or blank.</value>
+  </data>
+  <data name="Feature_InvalidStationDistance" xml:space="preserve">
+    <value>Station distances must be from 0 to 512 metres.</value>
+  </data>
+  <data name="Feature_LinkDistanceHint" xml:space="preserve">
+    <value>Limit links between symbols. Default: 100 m.</value>
+  </data>
+  <data name="Feature_LoadMapHint" xml:space="preserve">
+    <value>Load a CS1 map to edit its services.</value>
+  </data>
+  <data name="Feature_MapSymbol" xml:space="preserve">
+    <value>Map symbol</value>
+  </data>
+  <data name="Feature_MapTab" xml:space="preserve">
+    <value>Map and station features</value>
+  </data>
+  <data name="Feature_Object_ApplicationConfig" xml:space="preserve">
+    <value>Map settings</value>
+  </data>
+  <data name="Feature_Object_RailwayConfig" xml:space="preserve">
+    <value>Railway settings</value>
+  </data>
+  <data name="Feature_Object_TransportRouteMapConfig" xml:space="preserve">
+    <value>Transit and station settings</value>
+  </data>
+  <data name="Feature_Property_Appearance" xml:space="preserve">
+    <value>Railway appearance</value>
+  </data>
+  <data name="Feature_Property_AutoColoring" xml:space="preserve">
+    <value>Assign route colours automatically</value>
+  </data>
+  <data name="Feature_Property_BuildingFont" xml:space="preserve">
+    <value>Building name font</value>
+  </data>
+  <data name="Feature_Property_CanvasSize" xml:space="preserve">
+    <value>Canvas size (pixels)</value>
+  </data>
+  <data name="Feature_Property_ColorByType" xml:space="preserve">
+    <value>Colour rail infrastructure by type</value>
+  </data>
+  <data name="Feature_Property_ContourIntervals" xml:space="preserve">
+    <value>Contour intervals</value>
+  </data>
+  <data name="Feature_Property_DetectEndLoop" xml:space="preserve">
+    <value>Hide tiny terminal loops</value>
+  </data>
+  <data name="Feature_Property_DisableBuildingBorder" xml:space="preserve">
+    <value>Hide building borders</value>
+  </data>
+  <data name="Feature_Property_DisplayContourLines" xml:space="preserve">
+    <value>Show contour lines</value>
+  </data>
+  <data name="Feature_Property_DistrictFont" xml:space="preserve">
+    <value>District name font</value>
+  </data>
+  <data name="Feature_Property_DistrictParkFont" xml:space="preserve">
+    <value>Park name font</value>
+  </data>
+  <data name="Feature_Property_FrameStopTracks" xml:space="preserve">
+    <value>Frame station tracks</value>
+  </data>
+  <data name="Feature_Property_HideRICO" xml:space="preserve">
+    <value>Hide RICO buildings</value>
+  </data>
+  <data name="Feature_Property_InfrastructureOnly" xml:space="preserve">
+    <value>Show rail infrastructure only</value>
+  </data>
+  <data name="Feature_Property_MapSymbolStyle" xml:space="preserve">
+    <value>Default map symbol set</value>
+  </data>
+  <data name="Feature_Property_MarkOneWayRoutes" xml:space="preserve">
+    <value>Mark one-way route paths</value>
+  </data>
+  <data name="Feature_Property_MergeBusTramStop" xml:space="preserve">
+    <value>Connect bus, trolleybus and tram</value>
+  </data>
+  <data name="Feature_Property_MergeTrainMetroStaion" xml:space="preserve">
+    <value>Connect train and metro</value>
+  </data>
+  <data name="Feature_Property_Railway" xml:space="preserve">
+    <value>Rail infrastructure settings</value>
+  </data>
+  <data name="Feature_Property_ReconnectTracks" xml:space="preserve">
+    <value>Reconnect railway tracks</value>
+  </data>
+  <data name="Feature_Property_RenderAreaSize" xml:space="preserve">
+    <value>Map area size (tiles)</value>
+  </data>
+  <data name="Feature_Property_RenderBlimpLine" xml:space="preserve">
+    <value>Show blimp route paths</value>
+  </data>
+  <data name="Feature_Property_RenderBlimpStop" xml:space="preserve">
+    <value>Show blimp stops</value>
+  </data>
+  <data name="Feature_Property_RenderBuilding" xml:space="preserve">
+    <value>Show buildings</value>
+  </data>
+  <data name="Feature_Property_RenderBuildingName" xml:space="preserve">
+    <value>Show building names</value>
+  </data>
+  <data name="Feature_Property_RenderBusLine" xml:space="preserve">
+    <value>Show bus route paths</value>
+  </data>
+  <data name="Feature_Property_RenderBusStop" xml:space="preserve">
+    <value>Show bus stops</value>
+  </data>
+  <data name="Feature_Property_RenderDistrictName" xml:space="preserve">
+    <value>Show district names</value>
+  </data>
+  <data name="Feature_Property_RenderFerryHarbor" xml:space="preserve">
+    <value>Show ferry harbours</value>
+  </data>
+  <data name="Feature_Property_RenderFerryLine" xml:space="preserve">
+    <value>Show ferry route paths</value>
+  </data>
+  <data name="Feature_Property_RenderForest" xml:space="preserve">
+    <value>Show trees</value>
+  </data>
+  <data name="Feature_Property_RenderGrid" xml:space="preserve">
+    <value>Show tile boundaries</value>
+  </data>
+  <data name="Feature_Property_RenderMapSymbol" xml:space="preserve">
+    <value>Show map symbols</value>
+  </data>
+  <data name="Feature_Property_RenderMetroLine" xml:space="preserve">
+    <value>Show metro route paths</value>
+  </data>
+  <data name="Feature_Property_RenderMetroStation" xml:space="preserve">
+    <value>Show metro stations</value>
+  </data>
+  <data name="Feature_Property_RenderMonorailLine" xml:space="preserve">
+    <value>Show monorail route paths</value>
+  </data>
+  <data name="Feature_Property_RenderMonorailStation" xml:space="preserve">
+    <value>Show monorail stations</value>
+  </data>
+  <data name="Feature_Property_RenderParkName" xml:space="preserve">
+    <value>Show park names</value>
+  </data>
+  <data name="Feature_Property_RenderRail" xml:space="preserve">
+    <value>Show rail infrastructure</value>
+  </data>
+  <data name="Feature_Property_RenderRailCableCar" xml:space="preserve">
+    <value>Show cable car infrastructure</value>
+  </data>
+  <data name="Feature_Property_RenderRailMetro" xml:space="preserve">
+    <value>Show metro tracks</value>
+  </data>
+  <data name="Feature_Property_RenderRailMonorail" xml:space="preserve">
+    <value>Show monorail tracks</value>
+  </data>
+  <data name="Feature_Property_RenderRailTrain" xml:space="preserve">
+    <value>Show railway tracks</value>
+  </data>
+  <data name="Feature_Property_RenderRailTram" xml:space="preserve">
+    <value>Show tram tracks</value>
+  </data>
+  <data name="Feature_Property_RenderRoad" xml:space="preserve">
+    <value>Show roads</value>
+  </data>
+  <data name="Feature_Property_RenderRoadName" xml:space="preserve">
+    <value>Show road names</value>
+  </data>
+  <data name="Feature_Property_RenderStationPremises" xml:space="preserve">
+    <value>Show station areas</value>
+  </data>
+  <data name="Feature_Property_RenderTerrain" xml:space="preserve">
+    <value>Show terrain</value>
+  </data>
+  <data name="Feature_Property_RenderTrainLine" xml:space="preserve">
+    <value>Show train route paths</value>
+  </data>
+  <data name="Feature_Property_RenderTrainStation" xml:space="preserve">
+    <value>Show railway stations</value>
+  </data>
+  <data name="Feature_Property_RenderTramLine" xml:space="preserve">
+    <value>Show tram route paths</value>
+  </data>
+  <data name="Feature_Property_RenderTramStop" xml:space="preserve">
+    <value>Show tram stops</value>
+  </data>
+  <data name="Feature_Property_RenderTransport" xml:space="preserve">
+    <value>Show transit labels</value>
+  </data>
+  <data name="Feature_Property_RenderTransportRoute" xml:space="preserve">
+    <value>Show transit route paths</value>
+  </data>
+  <data name="Feature_Property_RoadNameFont" xml:space="preserve">
+    <value>Road name font</value>
+  </data>
+  <data name="Feature_Property_RouteMapConfig" xml:space="preserve">
+    <value>Transit and station settings</value>
+  </data>
+  <data name="Feature_Property_SelectedStyle" xml:space="preserve">
+    <value>Map style</value>
+  </data>
+  <data name="Feature_Property_SeparateTracks" xml:space="preserve">
+    <value>Separate railway tracks</value>
+  </data>
+  <data name="Feature_Property_ShowStationModeBadges" xml:space="preserve">
+    <value>Show mode letters</value>
+  </data>
+  <data name="Feature_Property_ShowTunnels" xml:space="preserve">
+    <value>Show rail tunnels</value>
+  </data>
+  <data name="Feature_Property_SplitStationBadgesByCluster" xml:space="preserve">
+    <value>One transit modal tag per cluster</value>
+  </data>
+  <data name="Feature_Property_StationClusterRadius" xml:space="preserve">
+    <value>Cluster search radius (m)</value>
+  </data>
+  <data name="Feature_Property_StationLinkDistance" xml:space="preserve">
+    <value>Transfer link distance (m)</value>
+  </data>
+  <data name="Feature_Property_StationPremisesColor" xml:space="preserve">
+    <value>Station area colour</value>
+  </data>
+  <data name="Feature_Property_TransferBlimp" xml:space="preserve">
+    <value>Allow blimp transfers</value>
+  </data>
+  <data name="Feature_Property_TransferBus" xml:space="preserve">
+    <value>Allow bus transfers</value>
+  </data>
+  <data name="Feature_Property_TransferFerry" xml:space="preserve">
+    <value>Allow ferry transfers</value>
+  </data>
+  <data name="Feature_Property_TransferMetro" xml:space="preserve">
+    <value>Allow metro transfers</value>
+  </data>
+  <data name="Feature_Property_TransferMonorail" xml:space="preserve">
+    <value>Allow monorail transfers</value>
+  </data>
+  <data name="Feature_Property_TransferTrain" xml:space="preserve">
+    <value>Allow train transfers</value>
+  </data>
+  <data name="Feature_Property_TransferTram" xml:space="preserve">
+    <value>Allow tram transfers</value>
+  </data>
+  <data name="Feature_Property_TransferTrolleybus" xml:space="preserve">
+    <value>Allow trolleybus transfers</value>
+  </data>
+  <data name="Feature_Property_UseCustomTransferModes" xml:space="preserve">
+    <value>Use selected transfer modes</value>
+  </data>
+  <data name="Feature_Property_UseMergedRouteNumberings" xml:space="preserve">
+    <value>Combine identical route shorthands</value>
+  </data>
+  <data name="Feature_Property_UseVectorTerrain" xml:space="preserve">
+    <value>Use vector terrain</value>
+  </data>
+  <data name="Feature_Property_WidenOnSharedLines" xml:space="preserve">
+    <value>Widen shared route paths</value>
+  </data>
+  <data name="Feature_RedrawMap" xml:space="preserve">
+    <value>Redraw map</value>
+  </data>
+  <data name="Feature_ResetBuildingOverrides" xml:space="preserve">
+    <value>Reset building overrides</value>
+  </data>
+  <data name="Feature_ServicesTab" xml:space="preserve">
+    <value>Service visibility, colours and shorthands</value>
+  </data>
+  <data name="Feature_Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="Feature_ShowAll" xml:space="preserve">
+    <value>Show all</value>
+  </data>
+  <data name="Feature_ShowCustomName" xml:space="preserve">
+    <value>Show custom name</value>
+  </data>
+  <data name="Feature_ShowNameOrAsset" xml:space="preserve">
+    <value>Show name or asset name</value>
+  </data>
+  <data name="Feature_Title" xml:space="preserve">
+    <value>CS1 features, routes and buildings</value>
+  </data>
+  <data name="Feature_TransferPolicyHint" xml:space="preserve">
+    <value>Both distances follow the selected or legacy transfer rules below.</value>
+  </data>
+  <data name="Feature_UseDefault" xml:space="preserve">
+    <value>Use default</value>
+  </data>
+  <data name="FileFilter_CS1Map" xml:space="preserve">
+    <value>Cities: Skylines 1 map (*.cslmap, *.cslmap.gz)|*.cslmap;*.cslmap.gz</value>
+  </data>
+  <data name="FileFilter_Diagnostic" xml:space="preserve">
+    <value>{0} file|*.{1}</value>
+  </data>
+  <data name="FileFilter_Heightmap" xml:space="preserve">
+    <value>PNG heightmap|*.png</value>
+  </data>
+  <data name="Format_Degrees" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="Format_MapArea" xml:space="preserve">
+    <value>{0} × {0}</value>
+  </data>
+  <data name="Format_Percent" xml:space="preserve">
+    <value>{0:0}%</value>
+  </data>
+  <data name="Key_Escape" xml:space="preserve">
+    <value>Esc</value>
+  </data>
+  <data name="Language_English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Language_ChineseSimplified" xml:space="preserve">
+    <value>Chinese (Simplified)</value>
+  </data>
+  <data name="Language_ChineseTraditional" xml:space="preserve">
+    <value>Chinese (Traditional)</value>
+  </data>
+  <data name="Language_FallbackHint" xml:space="preserve">
+    <value>Japanese is partial. New or changed features use English.</value>
+  </data>
+  <data name="Language_Attribution" xml:space="preserve">
+    <value>Japanese translations by gansaku, from CS2MapView (MIT). The upstream Japanese resource files are included unchanged.</value>
+  </data>
+  <data name="Language_InterfaceLabel" xml:space="preserve">
+    <value>Interface language</value>
+  </data>
+  <data name="Language_JapanesePartial" xml:space="preserve">
+    <value>Japanese (partial)</value>
+  </data>
+  <data name="Language_RestartHint" xml:space="preserve">
+    <value>Save your choice, then restart CS1MapView to change the interface language.</value>
+  </data>
+  <data name="Language_Tab" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Layer_buildings" xml:space="preserve">
+    <value>Buildings</value>
+  </data>
+  <data name="Layer_districts" xml:space="preserve">
+    <value>Districts</value>
+  </data>
+  <data name="Layer_forest" xml:space="preserve">
+    <value>Forest</value>
+  </data>
+  <data name="Layer_grid" xml:space="preserve">
+    <value>Tile grid</value>
+  </data>
+  <data name="Layer_labels" xml:space="preserve">
+    <value>Labels</value>
+  </data>
+  <data name="Layer_railways" xml:space="preserve">
+    <value>Rail infrastructure</value>
+  </data>
+  <data name="Layer_roads" xml:space="preserve">
+    <value>Roads and paths</value>
+  </data>
+  <data name="Layer_stationPremises" xml:space="preserve">
+    <value>Station areas</value>
+  </data>
+  <data name="Layer_terrain" xml:space="preserve">
+    <value>Terrain</value>
+  </data>
+  <data name="Layer_transportLines" xml:space="preserve">
+    <value>Transit routes</value>
+  </data>
+  <data name="Menu_AutomaticRouteColors" xml:space="preserve">
+    <value>Automatic route colours</value>
+  </data>
+  <data name="Menu_BuildingList" xml:space="preserve">
+    <value>Buildings…</value>
+  </data>
+  <data name="Menu_BuildingNames" xml:space="preserve">
+    <value>Building names</value>
+  </data>
+  <data name="Menu_Buildings" xml:space="preserve">
+    <value>Buildings</value>
+  </data>
+  <data name="Menu_ChooseOutputArea" xml:space="preserve">
+    <value>Choose print/export area…</value>
+  </data>
+  <data name="Menu_ClearOutputArea" xml:space="preserve">
+    <value>Clear print/export area</value>
+  </data>
+  <data name="Menu_ClearRouteHighlight" xml:space="preserve">
+    <value>Clear route highlight</value>
+  </data>
+  <data name="Menu_ColorByType" xml:space="preserve">
+    <value>Colour by type</value>
+  </data>
+  <data name="Menu_CS1Features" xml:space="preserve">
+    <value>CS1 features…</value>
+  </data>
+  <data name="Menu_Debug" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="Menu_Diagnostic_Buildings" xml:space="preserve">
+    <value>Dump building list…</value>
+  </data>
+  <data name="Menu_Diagnostic_SegmentDetails" xml:space="preserve">
+    <value>Dump segment details…</value>
+  </data>
+  <data name="Menu_Diagnostic_Segments" xml:space="preserve">
+    <value>Dump segment list…</value>
+  </data>
+  <data name="Menu_Diagnostic_SimplifiedMap" xml:space="preserve">
+    <value>Dump simplified map…</value>
+  </data>
+  <data name="Menu_Diagnostic_TransportOverview" xml:space="preserve">
+    <value>Dump transport manager…</value>
+  </data>
+  <data name="Menu_Diagnostic_TransportSegments" xml:space="preserve">
+    <value>Dump transport segments…</value>
+  </data>
+  <data name="Menu_DistrictNames" xml:space="preserve">
+    <value>District names</value>
+  </data>
+  <data name="Menu_FitMap" xml:space="preserve">
+    <value>Fit whole map</value>
+  </data>
+  <data name="Menu_Forest" xml:space="preserve">
+    <value>Forest</value>
+  </data>
+  <data name="Menu_FrameStationTracks" xml:space="preserve">
+    <value>Frame station tracks</value>
+  </data>
+  <data name="Menu_HighlightStationRoutes" xml:space="preserve">
+    <value>Select station to highlight routes</value>
+  </data>
+  <data name="Menu_InfrastructureOnly" xml:space="preserve">
+    <value>Infrastructure only</value>
+  </data>
+  <data name="Menu_LayersAndLabels" xml:space="preserve">
+    <value>Layers and labels</value>
+  </data>
+  <data name="Menu_Lists" xml:space="preserve">
+    <value>Lists</value>
+  </data>
+  <data name="Menu_MapArea" xml:space="preserve">
+    <value>Map area</value>
+  </data>
+  <data name="Menu_MapStyle" xml:space="preserve">
+    <value>Map style</value>
+  </data>
+  <data name="Menu_MapSymbols" xml:space="preserve">
+    <value>Map symbols</value>
+  </data>
+  <data name="Menu_ModeLetters" xml:space="preserve">
+    <value>Mode letters</value>
+  </data>
+  <data name="Menu_Modes" xml:space="preserve">
+    <value>Modes</value>
+  </data>
+  <data name="Menu_OneModalTagPerCluster" xml:space="preserve">
+    <value>One transit modal tag per cluster</value>
+  </data>
+  <data name="Menu_ParkNames" xml:space="preserve">
+    <value>Park names</value>
+  </data>
+  <data name="Menu_PrintMap" xml:space="preserve">
+    <value>Print current view/selected area…</value>
+  </data>
+  <data name="Menu_RailInfrastructure" xml:space="preserve">
+    <value>Rail infrastructure</value>
+  </data>
+  <data name="Menu_RailInfrastructureOptions" xml:space="preserve">
+    <value>Rail infrastructure options</value>
+  </data>
+  <data name="Menu_RailwayAppearance_Apple" xml:space="preserve">
+    <value>Apple appearance</value>
+  </data>
+  <data name="Menu_RailwayAppearance_Google" xml:space="preserve">
+    <value>Google appearance</value>
+  </data>
+  <data name="Menu_ReconnectTracks" xml:space="preserve">
+    <value>Reconnect tracks</value>
+  </data>
+  <data name="Menu_RoadsAndPaths" xml:space="preserve">
+    <value>Roads and paths</value>
+  </data>
+  <data name="Menu_Rotate" xml:space="preserve">
+    <value>Rotate</value>
+  </data>
+  <data name="Menu_RouteDirectionArrows" xml:space="preserve">
+    <value>Direction arrows</value>
+  </data>
+  <data name="Menu_Routes" xml:space="preserve">
+    <value>Routes</value>
+  </data>
+  <data name="Menu_SaveHeightmap" xml:space="preserve">
+    <value>Save heightmap…</value>
+  </data>
+  <data name="Menu_SeparateTracks" xml:space="preserve">
+    <value>Separate tracks</value>
+  </data>
+  <data name="Menu_ServiceVisibilityColorsShorthands" xml:space="preserve">
+    <value>Service visibility, colours and shorthands…</value>
+  </data>
+  <data name="Menu_SetOutputArea" xml:space="preserve">
+    <value>Use current view as print/export area</value>
+  </data>
+  <data name="Menu_ShowStationAreas" xml:space="preserve">
+    <value>Show station areas</value>
+  </data>
+  <data name="Menu_ShowTunnels" xml:space="preserve">
+    <value>Show tunnels</value>
+  </data>
+  <data name="Menu_StationAreaColor_Blue" xml:space="preserve">
+    <value>Blue tint</value>
+  </data>
+  <data name="Menu_StationAreaColor_Red" xml:space="preserve">
+    <value>Red tint</value>
+  </data>
+  <data name="Menu_StationAreas" xml:space="preserve">
+    <value>Station areas</value>
+  </data>
+  <data name="Menu_StationSymbolsAndModalTags" xml:space="preserve">
+    <value>Station symbols and transit modal tags</value>
+  </data>
+  <data name="Menu_StopsAndStations" xml:space="preserve">
+    <value>Stops and stations</value>
+  </data>
+  <data name="Menu_StreetNames" xml:space="preserve">
+    <value>Street names</value>
+  </data>
+  <data name="Menu_Terrain" xml:space="preserve">
+    <value>Terrain</value>
+  </data>
+  <data name="Menu_TileGrid" xml:space="preserve">
+    <value>Tile grid</value>
+  </data>
+  <data name="Menu_TransitRoutesAndStations" xml:space="preserve">
+    <value>Transit routes and stations</value>
+  </data>
+  <data name="Menu_TransitServices" xml:space="preserve">
+    <value>Transit services…</value>
+  </data>
+  <data name="Menu_WidenSharedRoutes" xml:space="preserve">
+    <value>Widen shared routes</value>
+  </data>
+  <data name="Menu_Zoom" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="Message_OpenCS1Map" xml:space="preserve">
+    <value>Open a Cities: Skylines 1 .cslmap or .cslmap.gz export.</value>
+  </data>
+  <data name="Message_SavedFile" xml:space="preserve">
+    <value>Saved {0}</value>
+  </data>
+  <data name="Options_ApplyFailed" xml:space="preserve">
+    <value>Settings could not be applied</value>
+  </data>
+  <data name="Options_BlimpRoutes" xml:space="preserve">
+    <value>Blimp routes</value>
+  </data>
+  <data name="Options_BlimpStops" xml:space="preserve">
+    <value>Blimp stops</value>
+  </data>
+  <data name="Options_ContourDefault" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Options_ContourLow" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Options_ContourNone" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Options_DuplicateLayerOrder" xml:space="preserve">
+    <value>Duplicate order value found.</value>
+  </data>
+  <data name="Options_FerryHarbours" xml:space="preserve">
+    <value>Ferry harbours</value>
+  </data>
+  <data name="Options_FerryRoutes" xml:space="preserve">
+    <value>Ferry routes</value>
+  </data>
+  <data name="Options_LayerName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Options_LayerOrder" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="Options_LayerVisible" xml:space="preserve">
+    <value>Visible</value>
+  </data>
+  <data name="Options_StyleMissing" xml:space="preserve">
+    <value>Selected CS1 style is missing.</value>
+  </data>
+  <data name="Options_StyleTypography" xml:space="preserve">
+    <value>CS1 style typography</value>
+  </data>
+  <data name="Options_UseDefaultFont" xml:space="preserve">
+    <value>(Use Default)</value>
+  </data>
+  <data name="Print_DefaultDocumentName" xml:space="preserve">
+    <value>{0} map</value>
+  </data>
+  <data name="Render_CropFormat" xml:space="preserve">
+    <value>Crop must be x,y,width,height in game metres.</value>
+  </data>
+  <data name="Render_CS1InputRequired" xml:space="preserve">
+    <value>CS1 input is required.</value>
+  </data>
+  <data name="Render_ImageSizeRange" xml:space="preserve">
+    <value>Image size must be 32..32768.</value>
+  </data>
+  <data name="Render_MissingOptionValue" xml:space="preserve">
+    <value>Missing value for {0}</value>
+  </data>
+  <data name="Render_RequiredOption" xml:space="preserve">
+    <value>{0} is required.</value>
+  </data>
+  <data name="Render_RotationFinite" xml:space="preserve">
+    <value>Rotation must be finite.</value>
+  </data>
+  <data name="Render_Saved" xml:space="preserve">
+    <value>Saved {0} ({1} x {2}).</value>
+  </data>
+  <data name="Render_StopNodeNotSelectable" xml:space="preserve">
+    <value>No selectable station contains stop node {0}.</value>
+  </data>
+  <data name="Render_UnknownOption" xml:space="preserve">
+    <value>Unknown option: {0}</value>
+  </data>
+  <data name="Render_Usage" xml:space="preserve">
+    <value>{0} --render map.cslmap.gz --output map.png [--size 8192] [--style apple-light] [--config config.xml] [--transit] [--crop x,y,width,height] [--rotate degrees] [--highlight stop-node-id] [-locale=language]
+{0} --heightmap map.cslmap.gz --output heights.png [-locale=language]
+Crop coordinates are game metres: X east, Y=-Z south. Highlight accepts an original physical stop node ID. Use -locale=language to override the UI language, for example -locale=ja-JP.</value>
+  </data>
+  <data name="Status_RebuildingSuffix" xml:space="preserve">
+    <value> (Rebuilding...)</value>
+  </data>
+  <data name="Status_ViewInfo" xml:space="preserve">
+    <value>{0:0}%  {1:0.0}°{2}</value>
+  </data>
+  <data name="TransitMode_Airplane" xml:space="preserve">
+    <value>Airplane</value>
+  </data>
+  <data name="TransitMode_Blimp" xml:space="preserve">
+    <value>Blimp</value>
+  </data>
+  <data name="TransitMode_Bus" xml:space="preserve">
+    <value>Bus</value>
+  </data>
+  <data name="TransitMode_BusTrolleybus" xml:space="preserve">
+    <value>Bus / trolleybus</value>
+  </data>
+  <data name="TransitMode_CableCar" xml:space="preserve">
+    <value>Cable car</value>
+  </data>
+  <data name="TransitMode_Ferry" xml:space="preserve">
+    <value>Ferry</value>
+  </data>
+  <data name="TransitMode_Helicopter" xml:space="preserve">
+    <value>Helicopter</value>
+  </data>
+  <data name="TransitMode_Metro" xml:space="preserve">
+    <value>Metro</value>
+  </data>
+  <data name="TransitMode_Monorail" xml:space="preserve">
+    <value>Monorail</value>
+  </data>
+  <data name="TransitMode_Ship" xml:space="preserve">
+    <value>Ship</value>
+  </data>
+  <data name="TransitMode_Taxi" xml:space="preserve">
+    <value>Taxi</value>
+  </data>
+  <data name="TransitMode_Train" xml:space="preserve">
+    <value>Train</value>
+  </data>
+  <data name="TransitMode_Tram" xml:space="preserve">
+    <value>Tram</value>
+  </data>
+  <data name="TransitMode_Trolleybus" xml:space="preserve">
+    <value>Trolleybus</value>
+  </data>
+  <data name="Window_MainTitle" xml:space="preserve">
+    <value>{0} — Cities: Skylines 1</value>
+  </data>
+</root>

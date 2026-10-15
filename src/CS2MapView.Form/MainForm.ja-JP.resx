@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!--
     Microsoft ResX Schema 
@@ -161,7 +161,7 @@
     <value>202, 22</value>
   </data>
   <data name="GitHubMenuItem.Text" xml:space="preserve">
-    <value>原作のソースコード (&amp;G)</value>
+    <value>CS2MapView GitHub (&amp;G)</value>
   </data>
   <data name="VersionInfoMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>202, 22</value>

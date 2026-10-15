@@ -356,8 +356,9 @@ public partial class MainForm : System.Windows.Forms.Form, ICS2MapViewRoot
     }
     private void RefreshDisplayInfoLabel()
     {
-        var rebuildingStatus = _isRebuildingLabels ? " (Rebuilding...)" : "";
-        StatusBarDisplayInfoLabel.Text = $"{Context.ViewContext.ScaleFactor * 100:0}%  {Context.ViewContext.Angle * 180 / Math.PI:0.0}°{rebuildingStatus}";
+        var rebuildingStatus = _isRebuildingLabels ? UiText.Get("Status_RebuildingSuffix") : "";
+        StatusBarDisplayInfoLabel.Text = UiText.Format("Status_ViewInfo", Context.ViewContext.ScaleFactor * 100,
+            Context.ViewContext.Angle * 180 / Math.PI, rebuildingStatus);
 
     }
 

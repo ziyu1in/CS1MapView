@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -126,5 +126,16 @@
   <data name="DataImport_FileVersionWarning" xml:space="preserve">
     <value>The file version is not compatible with the viewer.
 There may be some features broken.</value>
+  </data>
+  <data name="Progress_LoadedFile" xml:space="preserve">
+    <value>Loaded {0}.</value>
+    <comment>{0}: source map file path.</comment>
+  </data>
+  <data name="Progress_InitializingTerrain" xml:space="preserve">
+    <value>Initializing terrain...</value>
+  </data>
+  <data name="Progress_BuildingContours" xml:space="preserve">
+    <value>Building contours ({0}/{1}) {2:0.0}% done</value>
+    <comment>{0}: completed layer count; {1}: total layer count; {2}: percentage complete.</comment>
   </data>
 </root>

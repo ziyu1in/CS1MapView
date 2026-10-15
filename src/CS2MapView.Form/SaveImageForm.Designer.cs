@@ -1,4 +1,4 @@
-﻿namespace CS2MapView.Form
+namespace CS2MapView.Form
 {
     partial class SaveImageForm
     {
@@ -71,6 +71,7 @@
             PrintAreaLeftTextbox.Location = new Point(549, 31);
             PrintAreaLeftTextbox.Margin = new Padding(3, 2, 3, 2);
             PrintAreaLeftTextbox.Name = "PrintAreaLeftTextbox";
+            PrintAreaLeftTextbox.AccessibleName = UiText.Get("Export_AreaLeft");
             PrintAreaLeftTextbox.Size = new Size(37, 23);
             PrintAreaLeftTextbox.TabIndex = 0;
             PrintAreaLeftTextbox.Leave += PrintAreaTextboxs_Leave;
@@ -80,6 +81,7 @@
             PrintAreaTopTextbox.Location = new Point(599, 31);
             PrintAreaTopTextbox.Margin = new Padding(3, 2, 3, 2);
             PrintAreaTopTextbox.Name = "PrintAreaTopTextbox";
+            PrintAreaTopTextbox.AccessibleName = UiText.Get("Export_AreaTop");
             PrintAreaTopTextbox.Size = new Size(37, 23);
             PrintAreaTopTextbox.TabIndex = 1;
             PrintAreaTopTextbox.Leave += PrintAreaTextboxs_Leave;
@@ -89,6 +91,7 @@
             PrintAreaRightTextbox.Location = new Point(663, 31);
             PrintAreaRightTextbox.Margin = new Padding(3, 2, 3, 2);
             PrintAreaRightTextbox.Name = "PrintAreaRightTextbox";
+            PrintAreaRightTextbox.AccessibleName = UiText.Get("Export_AreaRight");
             PrintAreaRightTextbox.Size = new Size(37, 23);
             PrintAreaRightTextbox.TabIndex = 2;
             PrintAreaRightTextbox.Leave += PrintAreaTextboxs_Leave;
@@ -98,6 +101,7 @@
             PrintAreaBottomTextbox.Location = new Point(714, 31);
             PrintAreaBottomTextbox.Margin = new Padding(3, 2, 3, 2);
             PrintAreaBottomTextbox.Name = "PrintAreaBottomTextbox";
+            PrintAreaBottomTextbox.AccessibleName = UiText.Get("Export_AreaBottom");
             PrintAreaBottomTextbox.Size = new Size(37, 23);
             PrintAreaBottomTextbox.TabIndex = 3;
             PrintAreaBottomTextbox.Leave += PrintAreaTextboxs_Leave;
@@ -109,7 +113,7 @@
             label1.Name = "label1";
             label1.Size = new Size(70, 15);
             label1.TabIndex = 4;
-            label1.Text = "Output area";
+            label1.Text = UiText.Get("Export_OutputArea");
             // 
             // label2
             // 
@@ -145,13 +149,14 @@
             label6.Name = "label6";
             label6.Size = new Size(102, 15);
             label6.TabIndex = 4;
-            label6.Text = "Output image size";
+            label6.Text = UiText.Get("Export_ImageSize");
             // 
             // OutputImageSizeTextbox
             // 
             OutputImageSizeTextbox.Location = new Point(548, 89);
             OutputImageSizeTextbox.Margin = new Padding(3, 2, 3, 2);
             OutputImageSizeTextbox.Name = "OutputImageSizeTextbox";
+            OutputImageSizeTextbox.AccessibleName = UiText.Get("Export_ImageSize");
             OutputImageSizeTextbox.Size = new Size(56, 23);
             OutputImageSizeTextbox.TabIndex = 4;
             OutputImageSizeTextbox.Leave += OutputImageSizeTextbox_Leave;
@@ -163,7 +168,7 @@
             OutputImageSizeLabel.Name = "OutputImageSizeLabel";
             OutputImageSizeLabel.Size = new Size(61, 15);
             OutputImageSizeLabel.TabIndex = 7;
-            OutputImageSizeLabel.Text = "1024x1024";
+            OutputImageSizeLabel.Text = UiText.Format("Export_ImageDimensions", 1024, 1024);
             // 
             // label5
             // 
@@ -172,7 +177,7 @@
             label5.Name = "label5";
             label5.Size = new Size(63, 15);
             label5.TabIndex = 8;
-            label5.Text = "File format";
+            label5.Text = UiText.Get("Export_FileFormat");
             // 
             // OutputFileFormatCombobox
             // 
@@ -181,6 +186,7 @@
             OutputFileFormatCombobox.Location = new Point(549, 142);
             OutputFileFormatCombobox.Margin = new Padding(3, 2, 3, 2);
             OutputFileFormatCombobox.Name = "OutputFileFormatCombobox";
+            OutputFileFormatCombobox.AccessibleName = UiText.Get("Export_FileFormat");
             OutputFileFormatCombobox.Size = new Size(111, 23);
             OutputFileFormatCombobox.TabIndex = 5;
             OutputFileFormatCombobox.SelectedIndexChanged += OutputFileFormatCombobox_SelectedIndexChanged;
@@ -192,13 +198,14 @@
             label7.Name = "label7";
             label7.Size = new Size(95, 15);
             label7.TabIndex = 8;
-            label7.Text = "Output directory";
+            label7.Text = UiText.Get("Export_OutputDirectory");
             // 
             // OutputPathTextbox
             // 
             OutputPathTextbox.Location = new Point(6, 565);
             OutputPathTextbox.Margin = new Padding(3, 2, 3, 2);
             OutputPathTextbox.Name = "OutputPathTextbox";
+            OutputPathTextbox.AccessibleName = UiText.Get("Export_OutputDirectory");
             OutputPathTextbox.Size = new Size(739, 23);
             OutputPathTextbox.TabIndex = 6;
             // 
@@ -209,7 +216,7 @@
             SaveButton.Name = "SaveButton";
             SaveButton.Size = new Size(82, 22);
             SaveButton.TabIndex = 9;
-            SaveButton.Text = "Save";
+            SaveButton.Text = UiText.Get("Export_Save");
             SaveButton.UseVisualStyleBackColor = true;
             SaveButton.Click += SaveButton_Click;
             // 
@@ -218,6 +225,7 @@
             OpenFileDialogButton.Location = new Point(236, 614);
             OpenFileDialogButton.Margin = new Padding(3, 2, 3, 2);
             OpenFileDialogButton.Name = "OpenFileDialogButton";
+            OpenFileDialogButton.AccessibleName = UiText.Get("Export_Browse");
             OpenFileDialogButton.Size = new Size(37, 22);
             OpenFileDialogButton.TabIndex = 8;
             OpenFileDialogButton.Text = "...";
@@ -228,6 +236,7 @@
             // 
             OutputFileNameTextbox.Location = new Point(6, 612);
             OutputFileNameTextbox.Name = "OutputFileNameTextbox";
+            OutputFileNameTextbox.AccessibleName = UiText.Get("Export_FileName");
             OutputFileNameTextbox.Size = new Size(224, 23);
             OutputFileNameTextbox.TabIndex = 7;
             // 
@@ -238,7 +247,7 @@
             label8.Name = "label8";
             label8.Size = new Size(57, 15);
             label8.TabIndex = 8;
-            label8.Text = "File name";
+            label8.Text = UiText.Get("Export_FileName");
             // 
             // SaveImageForm
             // 
@@ -272,7 +281,7 @@
             MinimizeBox = false;
             Name = "SaveImageForm";
             SizeGripStyle = SizeGripStyle.Hide;
-            Text = CS2MapView.Beta.ProjectInfo.Name + " - Save image";
+            Text = UiText.Format("Export_Title", CS2MapView.Beta.ProjectInfo.Name);
             FormClosing += SaveImageForm_FormClosing;
             FormClosed += SaveImageForm_FormClosed;
             Load += SaveImageForm_Load;

@@ -7,6 +7,8 @@
 /renders/
 /deliveries/
 /Runnable/
+/scripts/
+/samples/
 
 # Local SDKs and caches
 **/.tools/
@@ -54,3 +56,4 @@ CSLMapView.Beta.routes.xml
 /UPSTREAM-BASELINE-SHA256.csv
 /RECOVERY-INPUT-SHA256.csv
 AGENTS.md
+docs/cs1-only-port-specification.md

@@ -1,0 +1,960 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="About_DevelopmentDeclaration" xml:space="preserve">
+    <value>作者完全透過向 GPT-6 Astra 與 GPT-6.1 Sol 下提示詞來開發 CS1MapView。</value>
+  </data>
+  <data name="About_UpstreamAcknowledgment" xml:space="preserve">
+    <value>謹向 gansaku 致上敬意與感謝：本專案受原版 CSLMapView 啟發，並以 CS2MapView 的程式碼基礎建構而成。</value>
+  </data>
+  <data name="About_UpstreamRevision" xml:space="preserve">
+    <value>上游：gansaku/CS2MapView ecba18732777acb3de18a8378f06ab5047bc0e23 (MIT).</value>
+  </data>
+  <data name="About_VersionInfo" xml:space="preserve">
+    <value>{0} — Cities: Skylines 1
+{1} : {2}
+{3} : {4}
+
+{5}
+
+{6}
+
+{7}</value>
+  </data>
+  <data name="Diagnostic_Buildings" xml:space="preserve">
+    <value>建築清單</value>
+  </data>
+  <data name="Diagnostic_SegmentDetails" xml:space="preserve">
+    <value>路段詳細資料</value>
+  </data>
+  <data name="Diagnostic_Segments" xml:space="preserve">
+    <value>路段清單</value>
+  </data>
+  <data name="Diagnostic_SimplifiedMap" xml:space="preserve">
+    <value>簡化地圖</value>
+  </data>
+  <data name="Diagnostic_TransportOverview" xml:space="preserve">
+    <value>運輸管理器</value>
+  </data>
+  <data name="Diagnostic_TransportSegments" xml:space="preserve">
+    <value>運輸路段</value>
+  </data>
+  <data name="Dialog_SaveDiagnostic" xml:space="preserve">
+    <value>儲存 {0} 診斷資料</value>
+  </data>
+  <data name="Error_InvalidOutputArea" xml:space="preserve">
+    <value>列印/匯出區域的尺寸必須為有限正值。</value>
+  </data>
+  <data name="Export_AreaBottom" xml:space="preserve">
+    <value>輸出區域底部</value>
+  </data>
+  <data name="Export_AreaLeft" xml:space="preserve">
+    <value>輸出區域左側</value>
+  </data>
+  <data name="Export_AreaRight" xml:space="preserve">
+    <value>輸出區域右側</value>
+  </data>
+  <data name="Export_AreaSelectionFailedTitle" xml:space="preserve">
+    <value>區域選取失敗</value>
+  </data>
+  <data name="Export_AreaTop" xml:space="preserve">
+    <value>輸出區域頂部</value>
+  </data>
+  <data name="Export_Browse" xml:space="preserve">
+    <value>瀏覽輸出檔案</value>
+  </data>
+  <data name="Export_CropDimensionsPositive" xml:space="preserve">
+    <value>裁切的寬度與高度必須為正值。</value>
+  </data>
+  <data name="Export_FailedTitle" xml:space="preserve">
+    <value>匯出失敗</value>
+  </data>
+  <data name="Export_FileFormat" xml:space="preserve">
+    <value>檔案格式</value>
+  </data>
+  <data name="Export_FileName" xml:space="preserve">
+    <value>檔案名稱</value>
+  </data>
+  <data name="Export_FileTypeDescription" xml:space="preserve">
+    <value>{0} 檔案</value>
+  </data>
+  <data name="Export_FormatUndefined" xml:space="preserve">
+    <value>格式未定義。</value>
+  </data>
+  <data name="Export_HeightmapPngRequired" xml:space="preserve">
+    <value>高程圖必須以 .png 格式輸出。</value>
+  </data>
+  <data name="Export_ImageDimensions" xml:space="preserve">
+    <value>{0}x{1}</value>
+  </data>
+  <data name="Export_ImageSaved" xml:space="preserve">
+    <value>影像已儲存至
+{0}</value>
+  </data>
+  <data name="Export_ImageSize" xml:space="preserve">
+    <value>輸出影像尺寸</value>
+  </data>
+  <data name="Export_LoadMapFirst" xml:space="preserve">
+    <value>請先載入 CS1 地圖。</value>
+  </data>
+  <data name="Export_MapNotLoaded" xml:space="preserve">
+    <value>地圖未載入。</value>
+  </data>
+  <data name="Export_NameUndefined" xml:space="preserve">
+    <value>檔案名稱未定義。</value>
+  </data>
+  <data name="Export_OutputArea" xml:space="preserve">
+    <value>輸出區域</value>
+  </data>
+  <data name="Export_OutputDirectory" xml:space="preserve">
+    <value>輸出資料夾</value>
+  </data>
+  <data name="Export_PathUndefined" xml:space="preserve">
+    <value>檔案路徑未定義。</value>
+  </data>
+  <data name="Export_PreviewFailedTitle" xml:space="preserve">
+    <value>預覽失敗</value>
+  </data>
+  <data name="Export_PreviewNotReady" xml:space="preserve">
+    <value>預覽尚未就緒。</value>
+  </data>
+  <data name="Export_Save" xml:space="preserve">
+    <value>儲存</value>
+  </data>
+  <data name="Export_SaveDialogTitle" xml:space="preserve">
+    <value>儲存影像</value>
+  </data>
+  <data name="Export_SelectAreaTitle" xml:space="preserve">
+    <value>選擇列印/匯出區域</value>
+  </data>
+  <data name="Export_SizeUndefined" xml:space="preserve">
+    <value>影像尺寸未定義</value>
+  </data>
+  <data name="Export_Title" xml:space="preserve">
+    <value>{0} - 儲存影像</value>
+  </data>
+  <data name="Export_UnsupportedFormat" xml:space="preserve">
+    <value>輸出格式必須為 PNG、JPEG、BMP、SVG 或 SVGZ。</value>
+  </data>
+  <data name="Export_UseSelectedArea" xml:space="preserve">
+    <value>使用選取的區域</value>
+  </data>
+  <data name="Feature_AppliedLegacyRules" xml:space="preserve">
+    <value>已套用。目前使用舊版轉乘規則。</value>
+  </data>
+  <data name="Feature_AppliedSelectedModes" xml:space="preserve">
+    <value>已套用。目前使用選取的轉乘運具。</value>
+  </data>
+  <data name="Feature_Apply" xml:space="preserve">
+    <value>套用</value>
+  </data>
+  <data name="Feature_Applying" xml:space="preserve">
+    <value>正在套用變更…</value>
+  </data>
+  <data name="Feature_BuildingName" xml:space="preserve">
+    <value>建築名稱</value>
+  </data>
+  <data name="Feature_BuildingPreferencesHint" xml:space="preserve">
+    <value>偏好設定會套用至此資產。HideShape：true/false/空白。NameVisibility：Visible、FullVisible、Invisible 或空白。MapSymbol 可接受已安裝的 SVG 符號名稱。留空即還原為預設值。</value>
+  </data>
+  <data name="Feature_BuildingShape" xml:space="preserve">
+    <value>建築外形</value>
+  </data>
+  <data name="Feature_BuildingsTab" xml:space="preserve">
+    <value>建築偏好設定</value>
+  </data>
+  <data name="Feature_Category_MapAppearance" xml:space="preserve">
+    <value>地圖外觀與圖層</value>
+  </data>
+  <data name="Feature_Category_RailInfrastructure" xml:space="preserve">
+    <value>鐵路設施</value>
+  </data>
+  <data name="Feature_Category_StationAreas" xml:space="preserve">
+    <value>車站區域</value>
+  </data>
+  <data name="Feature_Category_Transit" xml:space="preserve">
+    <value>大眾運輸與車站顯示</value>
+  </data>
+  <data name="Feature_Category_Typography" xml:space="preserve">
+    <value>排版</value>
+  </data>
+  <data name="Feature_ChooseColour" xml:space="preserve">
+    <value>選擇顏色…</value>
+  </data>
+  <data name="Feature_ClearColourOverride" xml:space="preserve">
+    <value>清除顏色覆寫</value>
+  </data>
+  <data name="Feature_Close" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="Feature_ClusterDistanceHint" xml:space="preserve">
+    <value>搜尋對齊的站點。預設：90 公尺。</value>
+  </data>
+  <data name="Feature_Column_Asset" xml:space="preserve">
+    <value>資產</value>
+  </data>
+  <data name="Feature_Column_Colour" xml:space="preserve">
+    <value>顏色</value>
+  </data>
+  <data name="Feature_Column_Count" xml:space="preserve">
+    <value>數量</value>
+  </data>
+  <data name="Feature_Column_HideShape" xml:space="preserve">
+    <value>隱藏外形</value>
+  </data>
+  <data name="Feature_Column_HideShapeEnum" xml:space="preserve">
+    <value>隱藏外形值</value>
+  </data>
+  <data name="Feature_Column_Id" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Feature_Column_ItemClass" xml:space="preserve">
+    <value>項目類別</value>
+  </data>
+  <data name="Feature_Column_LengthMetres" xml:space="preserve">
+    <value>長度（公尺）</value>
+  </data>
+  <data name="Feature_Column_MapSymbol" xml:space="preserve">
+    <value>地圖符號</value>
+  </data>
+  <data name="Feature_Column_Mode" xml:space="preserve">
+    <value>運具</value>
+  </data>
+  <data name="Feature_Column_Name" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="Feature_Column_NameVisibility" xml:space="preserve">
+    <value>名稱可見性</value>
+  </data>
+  <data name="Feature_Column_Service" xml:space="preserve">
+    <value>服務</value>
+  </data>
+  <data name="Feature_Column_Shorthand" xml:space="preserve">
+    <value>簡稱</value>
+  </data>
+  <data name="Feature_Column_SteamId" xml:space="preserve">
+    <value>工作坊 ID</value>
+  </data>
+  <data name="Feature_Column_Stops" xml:space="preserve">
+    <value>站點</value>
+  </data>
+  <data name="Feature_Column_SubService" xml:space="preserve">
+    <value>子服務</value>
+  </data>
+  <data name="Feature_Column_Visible" xml:space="preserve">
+    <value>Visible</value>
+  </data>
+  <data name="Feature_DefaultSymbols" xml:space="preserve">
+    <value>預設符號</value>
+  </data>
+  <data name="Feature_Description_MergeBusTramStop" xml:space="preserve">
+    <value>舊版轉乘規則，僅在關閉所選的轉乘模式時使用。</value>
+  </data>
+  <data name="Feature_Description_MergeTrainMetroStaion" xml:space="preserve">
+    <value>舊版轉乘規則，僅在關閉所選的轉乘模式時使用。</value>
+  </data>
+  <data name="Feature_Description_StationClusterRadius" xml:space="preserve">
+    <value>對齊實體站點的搜尋距離。預設 90 公尺。與符號粗細及轉乘連結距離無關。</value>
+  </data>
+  <data name="Feature_Description_StationLinkDistance" xml:space="preserve">
+    <value>連結個別符號時，實際站點之間的最大距離。預設 100 公尺。以最短的合法連接線維持連通性且不形成迴圈。</value>
+  </data>
+  <data name="Feature_Description_UseCustomTransferModes" xml:space="preserve">
+    <value>開啟：使用下方各別的轉乘模式。關閉：使用舊版的公車/輕軌與火車/捷運連接規則。</value>
+  </data>
+  <data name="Feature_EditHint" xml:space="preserve">
+    <value>按 Enter 或「套用」確認數值編輯。變更僅儲存在 beta 設定中。</value>
+  </data>
+  <data name="Feature_Hide" xml:space="preserve">
+    <value>隱藏</value>
+  </data>
+  <data name="Feature_HideAll" xml:space="preserve">
+    <value>全部隱藏</value>
+  </data>
+  <data name="Feature_InvalidColour" xml:space="preserve">
+    <value>顏色必須是 #RRGGBB 或 #AARRGGBB。</value>
+  </data>
+  <data name="Feature_InvalidGridValue" xml:space="preserve">
+    <value>請輸入有效值；顏色使用 #RRGGBB 或 #AARRGGBB。</value>
+  </data>
+  <data name="Feature_InvalidHideShape" xml:space="preserve">
+    <value>HideShape 接受 true、false 或空白。</value>
+  </data>
+  <data name="Feature_InvalidMapSize" xml:space="preserve">
+    <value>地圖尺寸必須是有限的正數。</value>
+  </data>
+  <data name="Feature_InvalidNameVisibility" xml:space="preserve">
+    <value>NameVisibility 接受 Visible、FullVisible、Invisible 或空白。</value>
+  </data>
+  <data name="Feature_InvalidStationDistance" xml:space="preserve">
+    <value>車站距離必須介於 0 到 512 公尺之間。</value>
+  </data>
+  <data name="Feature_LinkDistanceHint" xml:space="preserve">
+    <value>限制符號之間的連結。預設：100 公尺。</value>
+  </data>
+  <data name="Feature_LoadMapHint" xml:space="preserve">
+    <value>載入 CS1 地圖以編輯其服務。</value>
+  </data>
+  <data name="Feature_MapSymbol" xml:space="preserve">
+    <value>地圖符號</value>
+  </data>
+  <data name="Feature_MapTab" xml:space="preserve">
+    <value>地圖與車站功能</value>
+  </data>
+  <data name="Feature_Object_ApplicationConfig" xml:space="preserve">
+    <value>地圖設定</value>
+  </data>
+  <data name="Feature_Object_RailwayConfig" xml:space="preserve">
+    <value>鐵路設定</value>
+  </data>
+  <data name="Feature_Object_TransportRouteMapConfig" xml:space="preserve">
+    <value>大眾運輸與車站設定</value>
+  </data>
+  <data name="Feature_Property_Appearance" xml:space="preserve">
+    <value>鐵路外觀</value>
+  </data>
+  <data name="Feature_Property_AutoColoring" xml:space="preserve">
+    <value>自動指派路線顏色</value>
+  </data>
+  <data name="Feature_Property_BuildingFont" xml:space="preserve">
+    <value>建築名稱字體</value>
+  </data>
+  <data name="Feature_Property_CanvasSize" xml:space="preserve">
+    <value>畫布尺寸（像素）</value>
+  </data>
+  <data name="Feature_Property_ColorByType" xml:space="preserve">
+    <value>依類型為鐵路設施上色</value>
+  </data>
+  <data name="Feature_Property_ContourIntervals" xml:space="preserve">
+    <value>等高線間距</value>
+  </data>
+  <data name="Feature_Property_DetectEndLoop" xml:space="preserve">
+    <value>隱藏微小的終端迴圈</value>
+  </data>
+  <data name="Feature_Property_DisableBuildingBorder" xml:space="preserve">
+    <value>隱藏建築邊框</value>
+  </data>
+  <data name="Feature_Property_DisplayContourLines" xml:space="preserve">
+    <value>顯示等高線</value>
+  </data>
+  <data name="Feature_Property_DistrictFont" xml:space="preserve">
+    <value>區域名稱字體</value>
+  </data>
+  <data name="Feature_Property_DistrictParkFont" xml:space="preserve">
+    <value>公園名稱字體</value>
+  </data>
+  <data name="Feature_Property_FrameStopTracks" xml:space="preserve">
+    <value>為車站軌道加邊框</value>
+  </data>
+  <data name="Feature_Property_HideRICO" xml:space="preserve">
+    <value>隱藏 RICO 建築</value>
+  </data>
+  <data name="Feature_Property_InfrastructureOnly" xml:space="preserve">
+    <value>僅顯示鐵路設施</value>
+  </data>
+  <data name="Feature_Property_MapSymbolStyle" xml:space="preserve">
+    <value>預設地圖符號組</value>
+  </data>
+  <data name="Feature_Property_MarkOneWayRoutes" xml:space="preserve">
+    <value>標示單向路線路徑</value>
+  </data>
+  <data name="Feature_Property_MergeBusTramStop" xml:space="preserve">
+    <value>連接公車、無軌電車與輕軌</value>
+  </data>
+  <data name="Feature_Property_MergeTrainMetroStaion" xml:space="preserve">
+    <value>連接火車與捷運</value>
+  </data>
+  <data name="Feature_Property_Railway" xml:space="preserve">
+    <value>鐵路設施設定</value>
+  </data>
+  <data name="Feature_Property_ReconnectTracks" xml:space="preserve">
+    <value>重新連接鐵路軌道</value>
+  </data>
+  <data name="Feature_Property_RenderAreaSize" xml:space="preserve">
+    <value>地圖區域大小（區塊）</value>
+  </data>
+  <data name="Feature_Property_RenderBlimpLine" xml:space="preserve">
+    <value>顯示飛船路線路徑</value>
+  </data>
+  <data name="Feature_Property_RenderBlimpStop" xml:space="preserve">
+    <value>顯示飛船站點</value>
+  </data>
+  <data name="Feature_Property_RenderBuilding" xml:space="preserve">
+    <value>顯示建築</value>
+  </data>
+  <data name="Feature_Property_RenderBuildingName" xml:space="preserve">
+    <value>顯示建築名稱</value>
+  </data>
+  <data name="Feature_Property_RenderBusLine" xml:space="preserve">
+    <value>顯示公車路線路徑</value>
+  </data>
+  <data name="Feature_Property_RenderBusStop" xml:space="preserve">
+    <value>顯示公車站點</value>
+  </data>
+  <data name="Feature_Property_RenderDistrictName" xml:space="preserve">
+    <value>顯示區域名稱</value>
+  </data>
+  <data name="Feature_Property_RenderFerryHarbor" xml:space="preserve">
+    <value>顯示渡輪碼頭</value>
+  </data>
+  <data name="Feature_Property_RenderFerryLine" xml:space="preserve">
+    <value>顯示渡輪路線路徑</value>
+  </data>
+  <data name="Feature_Property_RenderForest" xml:space="preserve">
+    <value>顯示樹木</value>
+  </data>
+  <data name="Feature_Property_RenderGrid" xml:space="preserve">
+    <value>顯示區塊邊界</value>
+  </data>
+  <data name="Feature_Property_RenderMapSymbol" xml:space="preserve">
+    <value>顯示地圖符號</value>
+  </data>
+  <data name="Feature_Property_RenderMetroLine" xml:space="preserve">
+    <value>顯示捷運路線路徑</value>
+  </data>
+  <data name="Feature_Property_RenderMetroStation" xml:space="preserve">
+    <value>顯示捷運車站</value>
+  </data>
+  <data name="Feature_Property_RenderMonorailLine" xml:space="preserve">
+    <value>顯示單軌路線路徑</value>
+  </data>
+  <data name="Feature_Property_RenderMonorailStation" xml:space="preserve">
+    <value>顯示單軌車站</value>
+  </data>
+  <data name="Feature_Property_RenderParkName" xml:space="preserve">
+    <value>顯示公園名稱</value>
+  </data>
+  <data name="Feature_Property_RenderRail" xml:space="preserve">
+    <value>顯示鐵路設施</value>
+  </data>
+  <data name="Feature_Property_RenderRailCableCar" xml:space="preserve">
+    <value>顯示纜車設施</value>
+  </data>
+  <data name="Feature_Property_RenderRailMetro" xml:space="preserve">
+    <value>顯示捷運軌道</value>
+  </data>
+  <data name="Feature_Property_RenderRailMonorail" xml:space="preserve">
+    <value>顯示單軌軌道</value>
+  </data>
+  <data name="Feature_Property_RenderRailTrain" xml:space="preserve">
+    <value>顯示鐵路軌道</value>
+  </data>
+  <data name="Feature_Property_RenderRailTram" xml:space="preserve">
+    <value>顯示輕軌軌道</value>
+  </data>
+  <data name="Feature_Property_RenderRoad" xml:space="preserve">
+    <value>顯示道路</value>
+  </data>
+  <data name="Feature_Property_RenderRoadName" xml:space="preserve">
+    <value>顯示道路名稱</value>
+  </data>
+  <data name="Feature_Property_RenderStationPremises" xml:space="preserve">
+    <value>顯示車站區域</value>
+  </data>
+  <data name="Feature_Property_RenderTerrain" xml:space="preserve">
+    <value>顯示地形</value>
+  </data>
+  <data name="Feature_Property_RenderTrainLine" xml:space="preserve">
+    <value>顯示火車路線路徑</value>
+  </data>
+  <data name="Feature_Property_RenderTrainStation" xml:space="preserve">
+    <value>顯示鐵路車站</value>
+  </data>
+  <data name="Feature_Property_RenderTramLine" xml:space="preserve">
+    <value>顯示輕軌路線路徑</value>
+  </data>
+  <data name="Feature_Property_RenderTramStop" xml:space="preserve">
+    <value>顯示輕軌站點</value>
+  </data>
+  <data name="Feature_Property_RenderTransport" xml:space="preserve">
+    <value>顯示大眾運輸標註</value>
+  </data>
+  <data name="Feature_Property_RenderTransportRoute" xml:space="preserve">
+    <value>顯示大眾運輸路線路徑</value>
+  </data>
+  <data name="Feature_Property_RoadNameFont" xml:space="preserve">
+    <value>道路名稱字體</value>
+  </data>
+  <data name="Feature_Property_RouteMapConfig" xml:space="preserve">
+    <value>大眾運輸與車站設定</value>
+  </data>
+  <data name="Feature_Property_SelectedStyle" xml:space="preserve">
+    <value>地圖樣式</value>
+  </data>
+  <data name="Feature_Property_SeparateTracks" xml:space="preserve">
+    <value>分離鐵路軌道</value>
+  </data>
+  <data name="Feature_Property_ShowStationModeBadges" xml:space="preserve">
+    <value>顯示運具字母</value>
+  </data>
+  <data name="Feature_Property_ShowTunnels" xml:space="preserve">
+    <value>顯示鐵路隧道</value>
+  </data>
+  <data name="Feature_Property_SplitStationBadgesByCluster" xml:space="preserve">
+    <value>每個叢集一個運具標籤</value>
+  </data>
+  <data name="Feature_Property_StationClusterRadius" xml:space="preserve">
+    <value>叢集搜尋半徑（公尺）</value>
+  </data>
+  <data name="Feature_Property_StationLinkDistance" xml:space="preserve">
+    <value>轉乘連結距離（公尺）</value>
+  </data>
+  <data name="Feature_Property_StationPremisesColor" xml:space="preserve">
+    <value>車站區域顏色</value>
+  </data>
+  <data name="Feature_Property_TransferBlimp" xml:space="preserve">
+    <value>允許飛船轉乘</value>
+  </data>
+  <data name="Feature_Property_TransferBus" xml:space="preserve">
+    <value>允許公車轉乘</value>
+  </data>
+  <data name="Feature_Property_TransferFerry" xml:space="preserve">
+    <value>允許渡輪轉乘</value>
+  </data>
+  <data name="Feature_Property_TransferMetro" xml:space="preserve">
+    <value>允許捷運轉乘</value>
+  </data>
+  <data name="Feature_Property_TransferMonorail" xml:space="preserve">
+    <value>允許單軌轉乘</value>
+  </data>
+  <data name="Feature_Property_TransferTrain" xml:space="preserve">
+    <value>允許火車轉乘</value>
+  </data>
+  <data name="Feature_Property_TransferTram" xml:space="preserve">
+    <value>允許輕軌轉乘</value>
+  </data>
+  <data name="Feature_Property_TransferTrolleybus" xml:space="preserve">
+    <value>允許無軌電車轉乘</value>
+  </data>
+  <data name="Feature_Property_UseCustomTransferModes" xml:space="preserve">
+    <value>使用選取的轉乘運具</value>
+  </data>
+  <data name="Feature_Property_UseMergedRouteNumberings" xml:space="preserve">
+    <value>合併相同的路線簡稱</value>
+  </data>
+  <data name="Feature_Property_UseVectorTerrain" xml:space="preserve">
+    <value>使用向量地形</value>
+  </data>
+  <data name="Feature_Property_WidenOnSharedLines" xml:space="preserve">
+    <value>加寬共用的路線路徑</value>
+  </data>
+  <data name="Feature_RedrawMap" xml:space="preserve">
+    <value>重繪地圖</value>
+  </data>
+  <data name="Feature_ResetBuildingOverrides" xml:space="preserve">
+    <value>重設建築覆寫設定</value>
+  </data>
+  <data name="Feature_ServicesTab" xml:space="preserve">
+    <value>服務可見性、顏色與簡稱</value>
+  </data>
+  <data name="Feature_Show" xml:space="preserve">
+    <value>顯示</value>
+  </data>
+  <data name="Feature_ShowAll" xml:space="preserve">
+    <value>全部顯示</value>
+  </data>
+  <data name="Feature_ShowCustomName" xml:space="preserve">
+    <value>顯示自訂名稱</value>
+  </data>
+  <data name="Feature_ShowNameOrAsset" xml:space="preserve">
+    <value>顯示名稱或資產名稱</value>
+  </data>
+  <data name="Feature_Title" xml:space="preserve">
+    <value>CS1 功能、路線與建築</value>
+  </data>
+  <data name="Feature_TransferPolicyHint" xml:space="preserve">
+    <value>這兩個距離皆依循下方所選或舊版的轉乘規則。</value>
+  </data>
+  <data name="Feature_UseDefault" xml:space="preserve">
+    <value>使用預設值</value>
+  </data>
+  <data name="FileFilter_CS1Map" xml:space="preserve">
+    <value>Cities: Skylines 1 地圖 (*.cslmap, *.cslmap.gz)|*.cslmap;*.cslmap.gz</value>
+  </data>
+  <data name="FileFilter_Diagnostic" xml:space="preserve">
+    <value>{0} 檔案|*.{1}</value>
+  </data>
+  <data name="FileFilter_Heightmap" xml:space="preserve">
+    <value>PNG 高程圖|*.png</value>
+  </data>
+  <data name="Format_Degrees" xml:space="preserve">
+    <value>{0}°</value>
+  </data>
+  <data name="Format_MapArea" xml:space="preserve">
+    <value>{0} × {0}</value>
+  </data>
+  <data name="Format_Percent" xml:space="preserve">
+    <value>{0:0}%</value>
+  </data>
+  <data name="Key_Escape" xml:space="preserve">
+    <value>Esc</value>
+  </data>
+  <data name="Language_English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  
+  <data name="Language_InterfaceLabel" xml:space="preserve">
+    <value>介面語言</value>
+  </data>
+  <data name="Language_RestartHint" xml:space="preserve">
+    <value>儲存您的選擇，然後重新啟動 CS1MapView 以變更介面語言。</value>
+  </data>
+  <data name="Language_Tab" xml:space="preserve">
+    <value>語言</value>
+  </data>
+  <data name="Layer_buildings" xml:space="preserve">
+    <value>建築</value>
+  </data>
+  <data name="Layer_districts" xml:space="preserve">
+    <value>區域</value>
+  </data>
+  <data name="Layer_forest" xml:space="preserve">
+    <value>樹木</value>
+  </data>
+  <data name="Layer_grid" xml:space="preserve">
+    <value>區塊網格</value>
+  </data>
+  <data name="Layer_labels" xml:space="preserve">
+    <value>標註</value>
+  </data>
+  <data name="Layer_railways" xml:space="preserve">
+    <value>鐵路設施</value>
+  </data>
+  <data name="Layer_roads" xml:space="preserve">
+    <value>道路與小徑</value>
+  </data>
+  <data name="Layer_stationPremises" xml:space="preserve">
+    <value>車站區域</value>
+  </data>
+  <data name="Layer_terrain" xml:space="preserve">
+    <value>地形</value>
+  </data>
+  <data name="Layer_transportLines" xml:space="preserve">
+    <value>大眾運輸路線</value>
+  </data>
+  <data name="Menu_AutomaticRouteColors" xml:space="preserve">
+    <value>自動路線顏色</value>
+  </data>
+  <data name="Menu_BuildingList" xml:space="preserve">
+    <value>建築…</value>
+  </data>
+  <data name="Menu_BuildingNames" xml:space="preserve">
+    <value>建築名稱</value>
+  </data>
+  <data name="Menu_Buildings" xml:space="preserve">
+    <value>建築</value>
+  </data>
+  <data name="Menu_ChooseOutputArea" xml:space="preserve">
+    <value>選擇列印/匯出區域…</value>
+  </data>
+  <data name="Menu_ClearOutputArea" xml:space="preserve">
+    <value>清除列印/匯出區域</value>
+  </data>
+  <data name="Menu_ClearRouteHighlight" xml:space="preserve">
+    <value>清除路線醒目提示</value>
+  </data>
+  <data name="Menu_ColorByType" xml:space="preserve">
+    <value>依類型著色</value>
+  </data>
+  <data name="Menu_CS1Features" xml:space="preserve">
+    <value>CS1 功能…</value>
+  </data>
+  <data name="Menu_Debug" xml:space="preserve">
+    <value>偵錯</value>
+  </data>
+  <data name="Menu_Diagnostic_Buildings" xml:space="preserve">
+    <value>傾印建築清單…</value>
+  </data>
+  <data name="Menu_Diagnostic_SegmentDetails" xml:space="preserve">
+    <value>傾印路段詳細資料…</value>
+  </data>
+  <data name="Menu_Diagnostic_Segments" xml:space="preserve">
+    <value>傾印路段清單…</value>
+  </data>
+  <data name="Menu_Diagnostic_SimplifiedMap" xml:space="preserve">
+    <value>傾印簡化地圖…</value>
+  </data>
+  <data name="Menu_Diagnostic_TransportOverview" xml:space="preserve">
+    <value>傾印運輸管理器…</value>
+  </data>
+  <data name="Menu_Diagnostic_TransportSegments" xml:space="preserve">
+    <value>傾印運輸路段…</value>
+  </data>
+  <data name="Menu_DistrictNames" xml:space="preserve">
+    <value>區域名稱</value>
+  </data>
+  <data name="Menu_FitMap" xml:space="preserve">
+    <value>顯示整張地圖</value>
+  </data>
+  <data name="Menu_Forest" xml:space="preserve">
+    <value>樹木</value>
+  </data>
+  <data name="Menu_FrameStationTracks" xml:space="preserve">
+    <value>為車站軌道加邊框</value>
+  </data>
+  <data name="Menu_HighlightStationRoutes" xml:space="preserve">
+    <value>選取車站以醒目顯示路線</value>
+  </data>
+  <data name="Menu_InfrastructureOnly" xml:space="preserve">
+    <value>僅顯示基礎設施</value>
+  </data>
+  <data name="Menu_LayersAndLabels" xml:space="preserve">
+    <value>圖層與標註</value>
+  </data>
+  <data name="Menu_Lists" xml:space="preserve">
+    <value>清單</value>
+  </data>
+  <data name="Menu_MapArea" xml:space="preserve">
+    <value>地圖區域</value>
+  </data>
+  <data name="Menu_MapStyle" xml:space="preserve">
+    <value>地圖樣式</value>
+  </data>
+  <data name="Menu_MapSymbols" xml:space="preserve">
+    <value>地圖符號</value>
+  </data>
+  <data name="Menu_ModeLetters" xml:space="preserve">
+    <value>運具字母</value>
+  </data>
+  <data name="Menu_Modes" xml:space="preserve">
+    <value>運具</value>
+  </data>
+  <data name="Menu_OneModalTagPerCluster" xml:space="preserve">
+    <value>每個叢集一個運具標籤</value>
+  </data>
+  <data name="Menu_ParkNames" xml:space="preserve">
+    <value>公園名稱</value>
+  </data>
+  <data name="Menu_PrintMap" xml:space="preserve">
+    <value>列印目前檢視/選取區域…</value>
+  </data>
+  <data name="Menu_RailInfrastructure" xml:space="preserve">
+    <value>鐵路設施</value>
+  </data>
+  <data name="Menu_RailInfrastructureOptions" xml:space="preserve">
+    <value>鐵路設施選項</value>
+  </data>
+  <data name="Menu_RailwayAppearance_Apple" xml:space="preserve">
+    <value>Apple 外觀</value>
+  </data>
+  <data name="Menu_RailwayAppearance_Google" xml:space="preserve">
+    <value>Google 外觀</value>
+  </data>
+  <data name="Menu_ReconnectTracks" xml:space="preserve">
+    <value>重新連接軌道</value>
+  </data>
+  <data name="Menu_RoadsAndPaths" xml:space="preserve">
+    <value>道路與小徑</value>
+  </data>
+  <data name="Menu_Rotate" xml:space="preserve">
+    <value>旋轉</value>
+  </data>
+  <data name="Menu_RouteDirectionArrows" xml:space="preserve">
+    <value>方向箭頭</value>
+  </data>
+  <data name="Menu_Routes" xml:space="preserve">
+    <value>路線</value>
+  </data>
+  <data name="Menu_SaveHeightmap" xml:space="preserve">
+    <value>儲存高程圖…</value>
+  </data>
+  <data name="Menu_SeparateTracks" xml:space="preserve">
+    <value>分離軌道</value>
+  </data>
+  <data name="Menu_ServiceVisibilityColorsShorthands" xml:space="preserve">
+    <value>服務可見性、顏色與簡稱…</value>
+  </data>
+  <data name="Menu_SetOutputArea" xml:space="preserve">
+    <value>以目前檢視作為列印/匯出區域</value>
+  </data>
+  <data name="Menu_ShowStationAreas" xml:space="preserve">
+    <value>顯示車站區域</value>
+  </data>
+  <data name="Menu_ShowTunnels" xml:space="preserve">
+    <value>顯示隧道</value>
+  </data>
+  <data name="Menu_StationAreaColor_Blue" xml:space="preserve">
+    <value>藍色色調</value>
+  </data>
+  <data name="Menu_StationAreaColor_Red" xml:space="preserve">
+    <value>紅色色調</value>
+  </data>
+  <data name="Menu_StationAreas" xml:space="preserve">
+    <value>車站區域</value>
+  </data>
+  <data name="Menu_StationSymbolsAndModalTags" xml:space="preserve">
+    <value>車站符號與運具標籤</value>
+  </data>
+  <data name="Menu_StopsAndStations" xml:space="preserve">
+    <value>站點與車站</value>
+  </data>
+  <data name="Menu_StreetNames" xml:space="preserve">
+    <value>街道名稱</value>
+  </data>
+  <data name="Menu_Terrain" xml:space="preserve">
+    <value>地形</value>
+  </data>
+  <data name="Menu_TileGrid" xml:space="preserve">
+    <value>區塊網格</value>
+  </data>
+  <data name="Menu_TransitRoutesAndStations" xml:space="preserve">
+    <value>大眾運輸路線與車站</value>
+  </data>
+  <data name="Menu_TransitServices" xml:space="preserve">
+    <value>大眾運輸服務…</value>
+  </data>
+  <data name="Menu_WidenSharedRoutes" xml:space="preserve">
+    <value>加寬共用路線</value>
+  </data>
+  <data name="Menu_Zoom" xml:space="preserve">
+    <value>縮放</value>
+  </data>
+  <data name="Message_OpenCS1Map" xml:space="preserve">
+    <value>開啟 Cities: Skylines 1 的 .cslmap 或 .cslmap.gz 匯出檔。</value>
+  </data>
+  <data name="Message_SavedFile" xml:space="preserve">
+    <value>已儲存 {0}</value>
+  </data>
+  <data name="Options_ApplyFailed" xml:space="preserve">
+    <value>無法套用設定</value>
+  </data>
+  <data name="Options_BlimpRoutes" xml:space="preserve">
+    <value>飛船路線</value>
+  </data>
+  <data name="Options_BlimpStops" xml:space="preserve">
+    <value>飛船站點</value>
+  </data>
+  <data name="Options_ContourDefault" xml:space="preserve">
+    <value>預設</value>
+  </data>
+  <data name="Options_ContourLow" xml:space="preserve">
+    <value>低</value>
+  </data>
+  <data name="Options_ContourNone" xml:space="preserve">
+    <value>無</value>
+  </data>
+  <data name="Options_DuplicateLayerOrder" xml:space="preserve">
+    <value>發現重複的順序值。</value>
+  </data>
+  <data name="Options_FerryHarbours" xml:space="preserve">
+    <value>渡輪碼頭</value>
+  </data>
+  <data name="Options_FerryRoutes" xml:space="preserve">
+    <value>渡輪路線</value>
+  </data>
+  <data name="Options_LayerName" xml:space="preserve">
+    <value>名稱</value>
+  </data>
+  <data name="Options_LayerOrder" xml:space="preserve">
+    <value>順序</value>
+  </data>
+  <data name="Options_LayerVisible" xml:space="preserve">
+    <value>可見</value>
+  </data>
+  <data name="Options_StyleMissing" xml:space="preserve">
+    <value>找不到選取的 CS1 樣式。</value>
+  </data>
+  <data name="Options_StyleTypography" xml:space="preserve">
+    <value>CS1 樣式排版</value>
+  </data>
+  <data name="Options_UseDefaultFont" xml:space="preserve">
+    <value>(Use Default)</value>
+  </data>
+  <data name="Print_DefaultDocumentName" xml:space="preserve">
+    <value>{0} 地圖</value>
+  </data>
+  <data name="Render_CropFormat" xml:space="preserve">
+    <value>裁切範圍必須是 x,y,width,height，單位為遊戲公尺。</value>
+  </data>
+  <data name="Render_CS1InputRequired" xml:space="preserve">
+    <value>必須提供 CS1 輸入。</value>
+  </data>
+  <data name="Render_ImageSizeRange" xml:space="preserve">
+    <value>影像尺寸必須介於 32..32768。</value>
+  </data>
+  <data name="Render_MissingOptionValue" xml:space="preserve">
+    <value>缺少 {0} 的值</value>
+  </data>
+  <data name="Render_RequiredOption" xml:space="preserve">
+    <value>必須指定 {0}。</value>
+  </data>
+  <data name="Render_RotationFinite" xml:space="preserve">
+    <value>旋轉角度必須是有限值。</value>
+  </data>
+  <data name="Render_Saved" xml:space="preserve">
+    <value>已儲存 {0} ({1} x {2}).</value>
+  </data>
+  <data name="Render_StopNodeNotSelectable" xml:space="preserve">
+    <value>沒有可選取的車站包含站點節點 {0}。</value>
+  </data>
+  <data name="Render_UnknownOption" xml:space="preserve">
+    <value>未知的選項：{0}</value>
+  </data>
+  <data name="Render_Usage" xml:space="preserve">
+    <value>{0} --render map.cslmap.gz --output map.png [--size 8192] [--style apple-light] [--config config.xml] [--transit] [--crop x,y,width,height] [--rotate degrees] [--highlight stop-node-id] [-locale=language]
+{0} --heightmap map.cslmap.gz --output heights.png [-locale=language]
+裁切座標的單位為遊戲公尺：X 向東、Y=-Z 向南。--highlight 接受原始實體站點節點 ID。使用 -locale=language 可覆寫介面語言，例如 -locale=ja-JP。</value>
+  </data>
+  <data name="Status_RebuildingSuffix" xml:space="preserve">
+    <value> (重建中...)</value>
+  </data>
+  <data name="Status_ViewInfo" xml:space="preserve">
+    <value>{0:0}%  {1:0.0}°{2}</value>
+  </data>
+  <data name="TransitMode_Airplane" xml:space="preserve">
+    <value>飛機</value>
+  </data>
+  <data name="TransitMode_Blimp" xml:space="preserve">
+    <value>飛船</value>
+  </data>
+  <data name="TransitMode_Bus" xml:space="preserve">
+    <value>公車</value>
+  </data>
+  <data name="TransitMode_BusTrolleybus" xml:space="preserve">
+    <value>公車 / 無軌電車</value>
+  </data>
+  <data name="TransitMode_CableCar" xml:space="preserve">
+    <value>纜車</value>
+  </data>
+  <data name="TransitMode_Ferry" xml:space="preserve">
+    <value>渡輪</value>
+  </data>
+  <data name="TransitMode_Helicopter" xml:space="preserve">
+    <value>直升機</value>
+  </data>
+  <data name="TransitMode_Metro" xml:space="preserve">
+    <value>捷運</value>
+  </data>
+  <data name="TransitMode_Monorail" xml:space="preserve">
+    <value>單軌</value>
+  </data>
+  <data name="TransitMode_Ship" xml:space="preserve">
+    <value>輪船</value>
+  </data>
+  <data name="TransitMode_Taxi" xml:space="preserve">
+    <value>計程車</value>
+  </data>
+  <data name="TransitMode_Train" xml:space="preserve">
+    <value>火車</value>
+  </data>
+  <data name="TransitMode_Tram" xml:space="preserve">
+    <value>輕軌</value>
+  </data>
+  <data name="TransitMode_Trolleybus" xml:space="preserve">
+    <value>無軌電車</value>
+  </data>
+  <data name="Window_MainTitle" xml:space="preserve">
+    <value>{0} — Cities: Skylines 1</value>
+  </data>
+</root>

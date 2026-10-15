@@ -25,7 +25,10 @@ namespace CS2MapView.Form.Command
             {
                 var coreAssembly = Assembly.GetAssembly(typeof(ICS2MapViewRoot))?.GetName();
                 var formAssembly = Assembly.GetAssembly(typeof(MainForm))?.GetName();
-                return $"{CS2MapView.Beta.ProjectInfo.Name} — Cities: Skylines 1\r\n{formAssembly?.Name} : {formAssembly?.Version}\r\n{coreAssembly?.Name} : {coreAssembly?.Version}\r\n\r\n{CS2MapView.Beta.ProjectInfo.DevelopmentDeclaration}\r\n\r\n{CS2MapView.Beta.ProjectInfo.UpstreamAcknowledgment}\r\n\r\nUpstream: gansaku/CS2MapView ecba18732777acb3de18a8378f06ab5047bc0e23 (MIT).";
+                return UiText.Format("About_VersionInfo", CS2MapView.Beta.ProjectInfo.Name,
+                    formAssembly?.Name, formAssembly?.Version, coreAssembly?.Name, coreAssembly?.Version,
+                    UiText.Get("About_DevelopmentDeclaration"), UiText.Get("About_UpstreamAcknowledgment"),
+                    UiText.Get("About_UpstreamRevision"));
             }
         }
     }
