@@ -57,3 +57,7 @@ CSLMapView.Beta.routes.xml
 /RECOVERY-INPUT-SHA256.csv
 AGENTS.md
 docs/cs1-only-port-specification.md
+scripts/render-map.ps1
+scripts/render-map.ps1
+/samples
+/scripts
