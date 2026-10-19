@@ -971,4 +971,16 @@ Crop coordinates are game metres: X east, Y=-Z south. Highlight accepts an origi
   <data name="Window_MainTitle" xml:space="preserve">
     <value>{0} — Cities: Skylines 1</value>
   </data>
+  <data name="Feature_Property_RenderHillshading" xml:space="preserve"><value>Hillshading</value></data>
+  <data name="Feature_Property_HillshadingStrength" xml:space="preserve"><value>Hillshading strength (%)</value></data>
+  <data name="Feature_Description_RenderHillshading" xml:space="preserve"><value>Soft terrain relief from the saved elevations. Independent of contour lines.</value></data>
+  <data name="Feature_Description_HillshadingStrength" xml:space="preserve"><value>Shading strength from 0 to 100 percent. The preview uses 82 percent.</value></data>
+  <data name="Options_HillshadingStrength" xml:space="preserve"><value>Strength (%)</value></data>
+  <data name="Menu_TerrainAppearance" xml:space="preserve"><value>Terrain appearance</value></data>
+  <data name="Options_ContourLines" xml:space="preserve"><value>Contour lines</value></data>
+  <data name="Options_ContourFine" xml:space="preserve"><value>A — Fine olive</value></data>
+  <data name="Options_ContourBalanced" xml:space="preserve"><value>B — Balanced warm gray</value></data>
+  <data name="Options_ContourSparse" xml:space="preserve"><value>C — Sparse neutral</value></data>
+  <data name="Feature_Property_ContourDetailLevel" xml:space="preserve"><value>Contour detail</value></data>
+  <data name="Feature_Description_ContourDetailLevel" xml:space="preserve"><value>A: fine olive lines with gentle smoothing. B: clearer warm-gray lines with rounder curves. C: 50 m spacing and stronger smoothing. Major contours every 100 m. Selection is retained when contours are hidden.</value></data>
 </root>

@@ -3,6 +3,8 @@
 internal class LandVectorContourBuilder : AbstractVectorContourBuilder
 {
     internal required float SeaLevel { get; init; }
+    internal bool FillLand { get; init; } = true;
+    internal List<IDrawCommand> ContourCommands { get; } = [];
 
     private float GetHeight(ReadOnlySpan<float> input, int x, int y)
     {
@@ -62,8 +64,14 @@ internal class LandVectorContourBuilder : AbstractVectorContourBuilder
         foreach (var path in pathes)
         {
 
-            var cmd = new PathDrawCommand { Path = path, FillColor = contourColors.FillColor, StrokePaintFunc = stroke is null ? null : stroke.ToCacheKey };
-            ResultCommands.Add(cmd);
+            if (FillLand)
+                ResultCommands.Add(new PathDrawCommand { Path = path, FillColor = contourColors.FillColor });
+            if (stroke is not null && contourColors.BorderColor.A != 0)
+                ContourCommands.Add(new PathDrawCommand {
+                    Path = FillLand ? new SkiaSharp.SKPath(path) : path, StrokePaintFunc = stroke.ToCacheKey
+                });
+            else if (!FillLand)
+                path.Dispose();
         }
     }
 }

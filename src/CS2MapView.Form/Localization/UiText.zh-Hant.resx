@@ -957,4 +957,16 @@
   <data name="Window_MainTitle" xml:space="preserve">
     <value>{0} — Cities: Skylines 1</value>
   </data>
+  <data name="Feature_Property_RenderHillshading" xml:space="preserve"><value>地形暈渲</value></data>
+  <data name="Feature_Property_HillshadingStrength" xml:space="preserve"><value>暈渲強度（%）</value></data>
+  <data name="Feature_Description_RenderHillshading" xml:space="preserve"><value>根據匯出的高程柔和顯示地形起伏，可與等高線獨立開關。</value></data>
+  <data name="Feature_Description_HillshadingStrength" xml:space="preserve"><value>暈渲強度為 0 至 100%，預覽使用 82%。</value></data>
+  <data name="Options_HillshadingStrength" xml:space="preserve"><value>強度（%）</value></data>
+  <data name="Menu_TerrainAppearance" xml:space="preserve"><value>地形顯示</value></data>
+  <data name="Options_ContourLines" xml:space="preserve"><value>等高線</value></data>
+  <data name="Options_ContourFine" xml:space="preserve"><value>A — 精細橄欖色</value></data>
+  <data name="Options_ContourBalanced" xml:space="preserve"><value>B — 均衡暖灰色</value></data>
+  <data name="Options_ContourSparse" xml:space="preserve"><value>C — 稀疏中性色</value></data>
+  <data name="Feature_Property_ContourDetailLevel" xml:space="preserve"><value>等高線細節</value></data>
+  <data name="Feature_Description_ContourDetailLevel" xml:space="preserve"><value>A：橄欖色細線，輕度平滑。B：更清晰的暖灰色線條，曲線更圓滑。C：50 公尺間距，更強的平滑。每 100 公尺加粗主等高線。關閉等高線後仍保留所選級別。</value></data>
 </root>

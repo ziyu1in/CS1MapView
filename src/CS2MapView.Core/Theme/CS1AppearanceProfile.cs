@@ -28,7 +28,8 @@ public static class CS1AppearanceProfile
         StrokeStyle? Border(BorderConfig? value) => value is null ? null : new StrokeStyle(Size(value.Size),
             value.DashStyle?.Dashes?.Select(d => (float)d).ToArray(), StrokeType.Round);
         StringStyle Text(string? family, SizeEx? size, SizeEx? halo) => new(family ?? "Meiryo", Size(size), new StrokeStyle(Size(halo)));
-        var contourColor = config?.DisplayContourLines == true ? Color(c.ContourLine) : default;
+        // Smooth preset contours are separate strokes; these paths only fill land.
+        var contourColor = default(SerializableColor);
         colors.LandContourColors = c.LandColors.Select(s => new ContourColor(s.Threshold, contourColor,
             SerializableColor.FromSKColor(s.Color))).ToList();
         colors.WaterContourColors = c.WaterColors.Select(s => new ContourColor(s.Threshold, Color(c.Coastline),
@@ -103,9 +104,8 @@ public static class CS1AppearanceProfile
             StreetName = Text(us.CustomStreetNameFont ?? config?.RoadNameFont, style.FontSize.RoadNameFontSize, style.FontSize.RoadNameFontBorderSize),
             ParkName = Text(config?.DistrictParkFont, style.FontSize.DistrictParkFontSize, style.FontSize.DistrictParkFontBorderSize)
         };
-        var selectedHeights = config?.DisplayContourLines == true
-            ? (config.ContourIntervals == "Low" ? ContourHeights.Low : ContourHeights.Default).LandHeights!
-            : c.LandColors.Where(x => x.Threshold != float.MinValue).Select(x => new ContourStrokeStyle(x.Threshold, Size(style.ContourMiddle?.Size))).ToList();
+        var selectedHeights = c.LandColors.Where(x => x.Threshold != float.MinValue)
+            .Select(x => new ContourStrokeStyle(x.Threshold, Size(style.ContourMiddle?.Size))).ToList();
         foreach (var height in selectedHeights)
         {
             var border = height.Height % 100 == 0 ? style.ContourWide : height.Height % 50 == 0 ? style.ContourMiddle : style.ContourNarrow;

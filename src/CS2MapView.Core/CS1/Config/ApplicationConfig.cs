@@ -46,8 +46,15 @@ public sealed class ApplicationConfig
     [Browsable(false)] public string TransportFont { get; set; } = "Meiryo";
     public string MapSymbolStyle { get; set; } = "ja+";
     public bool UseVectorTerrain { get; set; } = true;
+    public bool RenderHillshading { get; set; }
+    private int hillshadingStrength = 82;
+    public int HillshadingStrength { get => hillshadingStrength; set => hillshadingStrength = Math.Clamp(value, 0, 100); }
     public bool DisplayContourLines { get; set; }
-    public string ContourIntervals { get; set; } = "Default";
+    private ContourDetail contourDetailLevel = ContourDetail.Balanced;
+    /// <summary>The selected smooth contour preset, retained while contours are hidden.</summary>
+    public ContourDetail ContourDetailLevel { get => contourDetailLevel; set => contourDetailLevel = Enum.IsDefined(value) ? value : ContourDetail.Balanced; }
+    // Retain the former setting in saved files and legacy imports.
+    [Browsable(false)] public string ContourIntervals { get; set; } = "Default";
     [Browsable(false)] public int SVGImageLength { get; set; } = 1024;
     [Browsable(false)] public int SVGTerrainDivisions { get; set; } = 5;
     [Browsable(false)] public bool SVGTextAsGeometry { get; set; }
@@ -63,6 +70,8 @@ public sealed class ApplicationConfig
     [XmlIgnore] public bool ShowStationPremises => RenderStationPremises;
 }
 
+/// <summary>Contour presets matching the fine olive, balanced warm-gray and sparse neutral examples.</summary>
+public enum ContourDetail { Fine, Balanced, Sparse }
 public enum StationAreaColor { Red, Blue }
 public enum RailwayAppearance { Apple, Google }
 public sealed class RailwayConfig

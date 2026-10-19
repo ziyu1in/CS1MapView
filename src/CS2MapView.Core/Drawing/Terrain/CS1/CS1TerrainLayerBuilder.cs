@@ -2,6 +2,7 @@
 using CS2MapView.Drawing.Layer;
 using CSLMapView.XML;
 using System.Data;
+using CS2MapView.Beta;
 
 namespace CS2MapView.Drawing.Terrain.CS1;
 /// <summary>
@@ -25,9 +26,7 @@ public class CS1TerrainLayerBuilder(ICS2MapViewRoot AppRoot, CSLExportXML Xml)
         {
             bool vectorizeLand = AppRoot.Context.UserSettings.VectorizeTerrainLand;
             bool vectorizeWater = AppRoot.Context.UserSettings.VectorizeTerrainWater;
-
-            
-
+            var config = BetaMapSession.Get(AppRoot, Xml).Config;
             var procParam = new TerrainDrawingsBuilder.Parameters
             {
                 TerrainInputArrayHeight = CSLExportXML.TERRAIN_RESOLUTION,
@@ -44,6 +43,10 @@ public class CS1TerrainLayerBuilder(ICS2MapViewRoot AppRoot, CSLExportXML Xml)
                 WaterHeights = AppRoot.Context.ContourHeights.WaterHeights?.Select(wh => wh.Height),
                 VectolizeLand = vectorizeLand,
                 VectolizeWater = vectorizeWater,
+                LandContourFactory = config.DisplayContourLines
+                    ? () => CS1ContourBuilder.Create(Xml, config.ContourDetailLevel) : null,
+                LandOverlayFactory = config.RenderHillshading
+                    ? () => CS1HillshadeBuilder.Create(Xml, config.HillshadingStrength) : null,
                 MetricalRect = CS1MapType.CS1WorldRect
             };
             var terrainBuilder = new TerrainDrawingsBuilder(procParam);

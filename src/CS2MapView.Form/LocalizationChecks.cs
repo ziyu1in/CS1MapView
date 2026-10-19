@@ -488,10 +488,11 @@ internal static class LocalizationChecks
         using (var options = NewOptions(main))
         {
             var contours = Control<ComboBox>(options, "ContourIntervalCombobox");
-            Require(contours.Items.Cast<UiChoice>().Select(x => x.Value).SequenceEqual(new[] { "None", "Default", "Low" }),
+            Require(contours.Items.Cast<UiChoice>().Select(x => x.Value).SequenceEqual(new[] { "Fine", "Balanced", "Sparse" }),
                 "Localized contour choices changed their stable values");
-            SelectChoice(contours, "Low");
-            Require(contours.SelectedItem!.ToString() == UiText.Get("Options_ContourLow"), "Contour choice did not use its text ID");
+            Control<CheckBox>(options, "ContourLinesCheckbox").Checked = true;
+            SelectChoice(contours, "Sparse");
+            Require(contours.SelectedItem!.ToString() == UiText.Get("Options_ContourSparse"), "Contour choice did not use its text ID");
             foreach (var name in new[] { "BuildingFontCombobox", "DistrictFontCombobox", "StreetFontCombobox" })
             {
                 var fonts = Control<ComboBox>(options, name);
@@ -502,13 +503,13 @@ internal static class LocalizationChecks
             options.ApplyConfigurationAsync().GetAwaiter().GetResult();
         }
         var loaded = UserSettings.LoadOrDefault(false, settingsPath);
-        Require(BetaSettings.Config.DisplayContourLines && BetaSettings.Config.ContourIntervals == "Low" &&
-                XDocument.Load(BetaSettings.ConfigPath).Root!.Element("ContourIntervals")!.Value == "Low",
-            "Applying contour choices changed the stable Low value");
+        Require(BetaSettings.Config.DisplayContourLines && BetaSettings.Config.ContourDetailLevel == CS2MapView.CS1.Config.ContourDetail.Sparse &&
+                XDocument.Load(BetaSettings.ConfigPath).Root!.Element("ContourDetailLevel")!.Value == "Sparse",
+            "Applying contour choices did not preserve the stable Sparse value");
         Require(loaded.CustomBuildingNameFont == null && loaded.CustomDistrictNameFont == null && loaded.CustomStreetNameFont == null,
             "Applying default fonts persisted the UI caption as a font family");
         using var reopened = NewOptions(main);
-        Require(Control<ComboBox>(reopened, "ContourIntervalCombobox").SelectedItem is UiChoice { Value: "Low" } &&
+        Require(Control<ComboBox>(reopened, "ContourIntervalCombobox").SelectedItem is UiChoice { Value: "Sparse" } &&
                 Control<ComboBox>(reopened, "BuildingFontCombobox").SelectedItem is UiChoice { Value: "" },
             "Reopening localized options lost stable contour/default-font choices");
     }

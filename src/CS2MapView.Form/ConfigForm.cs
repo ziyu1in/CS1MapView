@@ -45,6 +45,7 @@ namespace CS2MapView.Form
         {
             InitializeComponent();
             InitializeLanguageTab();
+            InitializeTerrainControls();
             RenderAirplaneLinesCheckbox.Text = UiText.Get("Options_BlimpRoutes");
             RenderAirplaneStopsCheckbox.Text = UiText.Get("Options_BlimpStops");
             RenderShipLinesCheckbox.Text = UiText.Get("Options_FerryRoutes");
@@ -78,15 +79,9 @@ namespace CS2MapView.Form
             StringThemeCombobox.SelectedIndex = 0;
             StringThemeCombobox.Enabled = false;
 
-            ContourIntervalCombobox.Items.Clear();
-            ContourIntervalCombobox.Items.AddRange([
-                new UiChoice("None", "Options_ContourNone"),
-                new UiChoice("Default", "Options_ContourDefault"),
-                new UiChoice("Low", "Options_ContourLow")]);
             var featureConfig = AppRoot.Session?.Config ?? CS2MapView.Beta.BetaSettings.Config;
-            var contourValue = featureConfig.DisplayContourLines ? featureConfig.ContourIntervals : "None";
-            ContourIntervalCombobox.SelectedItem = ContourIntervalCombobox.Items.Cast<UiChoice>().FirstOrDefault(x => x.Value == contourValue)
-                ?? ContourIntervalCombobox.Items[1];
+            LoadHillshadingControls(featureConfig);
+            LoadContourControls(featureConfig);
 
             // システムフォントリストを読み込む / Load system fonts
             var availableFonts = Theme.StringTheme.GetAvailableFonts();
@@ -436,15 +431,8 @@ namespace CS2MapView.Form
         {
             bool terrainChanged = false;
             var features = AppRoot.Session?.Config ?? CS2MapView.Beta.BetaSettings.Config;
-            var contourValue = (ContourIntervalCombobox.SelectedItem as UiChoice)?.Value ?? "Default";
-            bool contoursVisible = contourValue != "None";
-            string contourIntervals = contourValue == "Low" ? "Low" : "Default";
-            if (features.DisplayContourLines != contoursVisible || features.ContourIntervals != contourIntervals)
-            {
-                features.DisplayContourLines = contoursVisible;
-                features.ContourIntervals = contourIntervals;
-                terrainChanged = true;
-            }
+            terrainChanged |= SetHillshadingValues(features);
+            terrainChanged |= SetContourValues(features);
 
             bool prevBoolValue = Context.UserSettings.VectorizeTerrainLand;
             bool newBoolValue = VectorizeLandCheckbox.Checked;

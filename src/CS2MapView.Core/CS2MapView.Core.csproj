@@ -11,13 +11,16 @@
     <Platforms>AnyCPU;x64</Platforms>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Version>0.1.2</Version>
+    <Version>0.1.2.1</Version>
     <Copyright>copyright(c) 2024 gansaku</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="log4net" Version="3.3.1" />
     <PackageReference Include="SkiaSharp" Version="2.88.7" />
     <PackageReference Include="Svg.Skia" Version="1.0.0.13" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="CS1MapView.Checks" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

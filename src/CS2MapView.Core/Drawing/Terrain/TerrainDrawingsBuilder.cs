@@ -78,6 +78,12 @@ public class TerrainDrawingsBuilder
         /// 水域のベクトル化
         /// </summary>
         public bool VectolizeWater { get; set; } = true;
+        /// <summary>Draw contour strokes independently of vector land fills.</summary>
+        public bool DrawLandContourLines { get; init; }
+        /// <summary>Optional relief between land fills and contour/water outlines.</summary>
+        public Func<IDrawCommand?>? LandOverlayFactory { get; init; }
+        /// <summary>Optional smooth contours drawn above relief and below water.</summary>
+        public Func<IEnumerable<IDrawCommand>>? LandContourFactory { get; init; }
         /// <summary>
         /// アプリケーション
         /// </summary>
@@ -183,7 +189,7 @@ public class TerrainDrawingsBuilder
             }
 
         }
-        if (Params.VectolizeLand && LandArray is not null && Params.LandHeights is not null)
+        if ((Params.VectolizeLand || Params.DrawLandContourLines) && LandArray is not null && Params.LandHeights is not null)
         {
             calculators.AddRange(Params.LandHeights.Select(lc => (ITerrainDrawingsBuiderProcedure)new LandVectorContourBuilder
             {
@@ -194,18 +200,21 @@ public class TerrainDrawingsBuilder
                 TargetHeight = lc,
                 MetricRect = Params.MetricalRect,
                 Progress = Progress,
-                Context = Params.AppRoot.Context
+                Context = Params.AppRoot.Context,
+                FillLand = Params.VectolizeLand
             }));
         }
 
-        if (!Params.VectolizeLand || !Params.VectolizeWater)
+        // Keep raster land and water separate so relief never shades the water.
+        foreach (bool drawLand in new[] { true, false })
         {
+            if (drawLand ? Params.VectolizeLand : Params.VectolizeWater) continue;
             calculators.Add(new RasterHeightMapBuilder
             {
                 InputLandArray = Params.InputLandArray,
                 InputWaterArray = Params.InputWaterArray,
-                DrawLand = !Params.VectolizeLand,
-                DrawWater = !Params.VectolizeWater,
+                DrawLand = drawLand,
+                DrawWater = !drawLand,
                 TerrainInputWidth = Params.TerrainInputArrayWidth,
                 TerrainInputHeight = Params.TerrainInputArrayHeight,
                 WaterInputWidth = Params.WaterInputArrayWidth,
@@ -227,38 +236,26 @@ public class TerrainDrawingsBuilder
 
         var result = new BasicLayer(Params.AppRoot, ILayer.LayerNameTerrain, Params.MetricalRect);
 
-        //並び替え
-        List<ITerrainDrawingsBuiderProcedure> ordered = [];
-        if (!Params.VectolizeLand)
-        {
-            ordered.AddRange(calculators.Where(t => t is RasterHeightMapBuilder));
-        }
-        else
-        {
-            ordered.AddRange(calculators.Where(t => t is LandVectorContourBuilder).OrderBy(t => (t as LandVectorContourBuilder)?.TargetHeight));
-        }
-        if (!Params.VectolizeWater)
-        {
-            if (Params.VectolizeLand)
-            {
-                ordered.AddRange(calculators.Where(t => t is RasterHeightMapBuilder));
-            }
-        }
-        else
-        {
-            ordered.AddRange(calculators.Where(t => t is WaterVectorContourBuilder).OrderBy(t => (t as WaterVectorContourBuilder)?.TargetHeight));
-        }
-
-
+        // Land, relief, contours, water. Every later map layer remains above these.
+        var land = calculators.OfType<LandVectorContourBuilder>().OrderBy(t => t.TargetHeight).ToList();
         if (Params.VectolizeLand)
         {
-
             result.DrawCommands.Add(new PathDrawCommand { Path = SKPathEx.RectToPath(Params.MetricalRect), FillColor = Params.AppRoot.Context.Theme.Colors?.LerpLandContourColors(-30000f).FillColor });
         }
-        foreach (var calculator in ordered)
-        {
+        foreach (var calculator in land)
             result.DrawCommands.AddRange(calculator.GetResult());
-        }
+        foreach (var calculator in calculators.OfType<RasterHeightMapBuilder>().Where(t => t.DrawLand))
+            result.DrawCommands.AddRange(calculator.GetResult());
+        var overlay = Params.LandOverlayFactory?.Invoke();
+        if (overlay is not null) result.DrawCommands.Add(overlay);
+        foreach (var calculator in land)
+            result.DrawCommands.AddRange(calculator.ContourCommands);
+        if (Params.LandContourFactory is not null)
+            result.DrawCommands.AddRange(Params.LandContourFactory());
+        foreach (var calculator in calculators.OfType<RasterHeightMapBuilder>().Where(t => t.DrawWater))
+            result.DrawCommands.AddRange(calculator.GetResult());
+        foreach (var calculator in calculators.OfType<WaterVectorContourBuilder>().OrderBy(t => t.TargetHeight))
+            result.DrawCommands.AddRange(calculator.GetResult());
 
         Logger.Debug($"Parallel.ForEach {sw.ElapsedMilliseconds}ms");
         CurrentProgressInfo = null;

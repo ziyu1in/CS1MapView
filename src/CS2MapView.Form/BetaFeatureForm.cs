@@ -412,6 +412,8 @@ internal sealed class FeatureObject : ICustomTypeDescriptor
                 (_property.Name.StartsWith("Transfer") && !route.UseCustomTransferModes
                  || _property.Name is "MergeBusTramStop" or "MergeTrainMetroStaion" && route.UseCustomTransferModes));
         public override Type PropertyType => IsComplex(_property.PropertyType) ? typeof(FeatureObject) : _property.PropertyType;
+        public override TypeConverter Converter => _property.PropertyType == typeof(CS2MapView.CS1.Config.ContourDetail)
+            ? new ContourDetailConverter() : base.Converter;
         public override bool CanResetValue(object component) => false;
         public override object? GetValue(object? component)
         {

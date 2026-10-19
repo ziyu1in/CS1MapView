@@ -45,6 +45,26 @@ two endpoint nodes. Where it joins other segments, those segments meet at the
 shared node. Track count and segment count are separate quantities.
 A railway track that carries trains in both directions remains one physical track.
 
+## Terrain appearance
+
+**Hillshading** adds soft relief from the exported terrain elevations.
+It is off by default. Turn it on under **View > Layers and labels > Terrain appearance**,
+or in the **Terrain** section of Options. The strength is adjustable from 0 to 100 percent;
+82 percent matches the initial preview. Land colours stay in the selected map style.
+Water, coastlines, roads, railways, and labels retain their existing appearance.
+
+**Show contour lines** is a separate option. Use shading, contour lines, both, or neither.
+Choose a contour detail preset in Options or **View > Layers and labels > Terrain appearance > Contour detail**:
+
+- **A — Fine olive:** 25 m detail with gentle smoothing and fine olive strokes.
+- **B — Balanced warm gray:** 25 m detail with rounder curves and stronger warm-gray strokes. Initial selection.
+- **C — Sparse neutral:** 50 m spacing, stronger smoothing and fewer small loops.
+
+Major contours are stronger every 100 m. A and B use 50 m spacing above 500 m.
+The contour checkbox switches lines off without losing the selected preset.
+Both options are saved and apply to the screen and exported maps, including raster terrain.
+The terrain grid limits the detail visible at close zoom levels.
+
 ## Station areas
 
 The station area layer shows building lots, station tracks, platform networks, and underground pedestrian networks.

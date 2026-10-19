@@ -47,6 +47,7 @@ internal static class Program
                 return 0;
             }
             TransitPortChecks.RunPolicies();
+            ContourPresetChecks.Run();
             RoadRailPortChecks.RunPolicies();
             var settings = UserSettings.Default;
             BetaOutput.ApplyFeatureSettings(settings, config);
@@ -56,6 +57,7 @@ internal static class Program
             var raw = source.GetImportData();
             var session = BetaMapSession.Get(host, raw);
             FoundationPortChecks.Run(host, raw);
+            TerrainDisplayChecks.Run(raw, reports);
             var ids = raw.SegmentList.Select(s => s.Id).ToArray();
             using (session.BuildStationCommand(host.Context.ViewContext)) { }
             TransitPortChecks.RunSpringdale(session, raw, reports);

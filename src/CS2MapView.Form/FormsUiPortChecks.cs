@@ -240,7 +240,11 @@ internal static class FormsUiPortChecks
                 Control<CheckBox>(options, "RenderBusLinesCheckbox").Checked = false;
                 Control<CheckBox>(options, "RenderStreetNameLabelCheckbox").Checked = false;
                 Control<ComboBox>(options, "BuildingFontCombobox").Text = "Arial";
-                Control<ComboBox>(options, "ContourIntervalCombobox").Text = "Low";
+                Control<CheckBox>(options, "ContourLinesCheckbox").Checked = true;
+                Control<ComboBox>(options, "ContourIntervalCombobox").SelectedItem = Control<ComboBox>(options, "ContourIntervalCombobox")
+                    .Items.Cast<UiChoice>().Single(x => x.Value == "Sparse");
+                Control<CheckBox>(options, "HillshadingCheckbox").Checked = true;
+                Control<NumericUpDown>(options, "HillshadingStrengthInput").Value = 65;
                 var layers = Control<DataGridView>(options, "LayerConfigGridView");
                 foreach (DataGridViewRow row in layers.Rows)
                     if (row.DataBoundItem is CS2MapView.Config.LayerSettings layer && layer.Name == "forest") layer.Visible = false;
@@ -250,8 +254,21 @@ internal static class FormsUiPortChecks
                 Require(!ContainsLabel(main.MapData!.LabelContentsManager!, "StreetNameLabel"), "Native label contents retained hidden street labels");
                 Require(session.Config.SelectedStyle == "lightgray" && main.Context.Theme.Colors!.WaterContourColors != null, "Inherited style choice did not rebuild the translated theme");
                 Require(session.Config.BuildingFont == "Arial" && main.Context.StringTheme.BuildingName!.FontFamily == "Arial", "Inherited font choice did not affect native label typography");
-                Require(session.Config.DisplayContourLines && session.Config.ContourIntervals == "Low", "Inherited contour controls were ignored");
+                Require(session.Config.DisplayContourLines && session.Config.ContourDetailLevel == CS2MapView.CS1.Config.ContourDetail.Sparse,
+                    "Contour checkbox/preset controls were ignored");
+                Require(session.Config.RenderHillshading && session.Config.HillshadingStrength == 65,
+                    "Hillshading controls were not saved independently of contour lines");
                 Require(!session.Config.RenderForest && !main.MapData!.Layers.Any(l => l.LayerName == "forest"), "Inherited forest layer visibility was ignored");
+                Menus(main.MainMenuStrip!.Items).Single(x => x.Name == "ContourDetailFineMenu").PerformClick();
+                main.LastMenuAction.GetAwaiter().GetResult();
+                Require(session.Config.ContourDetailLevel == CS2MapView.CS1.Config.ContourDetail.Fine && session.Config.DisplayContourLines && session.Config.RenderHillshading,
+                    "Contour preset menu did not apply the selection independently of shading");
+                Require(Menus(main.MainMenuStrip!.Items).Count(x => x.Name.StartsWith("ContourDetail") && x.Checked) == 1,
+                    "Contour preset menu did not have one checked selection");
+                Menus(main.MainMenuStrip!.Items).Single(x => x.Name == "ContourLinesMenu").PerformClick();
+                main.LastMenuAction.GetAwaiter().GetResult();
+                Require(!session.Config.DisplayContourLines && session.Config.ContourDetailLevel == CS2MapView.CS1.Config.ContourDetail.Fine && session.Config.RenderHillshading,
+                    "Hiding contours lost the selected preset or changed shading");
             }
 
             // Restore reference choices before testing selected, hidden-service exports.
@@ -261,6 +278,9 @@ internal static class FormsUiPortChecks
             session.Config.BuildingFont = config.BuildingFont;
             session.Config.DisplayContourLines = config.DisplayContourLines;
             session.Config.ContourIntervals = config.ContourIntervals;
+            session.Config.ContourDetailLevel = config.ContourDetailLevel;
+            session.Config.RenderHillshading = config.RenderHillshading;
+            session.Config.HillshadingStrength = config.HillshadingStrength;
             session.Config.RenderForest = config.RenderForest;
             main.ApplyFeaturesAsync().GetAwaiter().GetResult();
             var candidate = session.TransportManager.SelectableStations.First(s => s.Stops.Count > 0);

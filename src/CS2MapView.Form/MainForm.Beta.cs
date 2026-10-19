@@ -83,6 +83,23 @@ public partial class MainForm
         var layers = new ToolStripMenuItem(UiText.Get("Menu_LayersAndLabels")) { Name = "CS1LayerMenu" };
         void Layer(string name, string caption, Func<bool> read, Action<bool> write) => Check(layers, name, caption, read, write);
         Layer("TerrainLayerMenu", UiText.Get("Menu_Terrain"), () => FeatureConfig.RenderTerrain, v => FeatureConfig.RenderTerrain = v);
+        var terrain = new ToolStripMenuItem(UiText.Get("Menu_TerrainAppearance")) { Name = "TerrainAppearanceMenu" };
+        Check(terrain, "HillshadingMenu", UiText.Get("Feature_Property_RenderHillshading"), () => FeatureConfig.RenderHillshading, v => FeatureConfig.RenderHillshading = v);
+        Check(terrain, "ContourLinesMenu", UiText.Get("Feature_Property_DisplayContourLines"), () => FeatureConfig.DisplayContourLines, v => FeatureConfig.DisplayContourLines = v);
+        var contourDetail = new ToolStripMenuItem(UiText.Get("Feature_Property_ContourDetailLevel")) { Name = "ContourDetailMenu" };
+        foreach (var detail in Enum.GetValues<ContourDetail>())
+        {
+            var selected = detail;
+            var item = new ToolStripMenuItem(ContourDetailChoices.Caption(detail)) { Name = "ContourDetail" + detail + "Menu" };
+            item.Click += async (_, _) => await TrackMenuFeatureAsync(() => {
+                FeatureConfig.ContourDetailLevel = selected;
+                FeatureConfig.DisplayContourLines = true;
+            });
+            _featureMenuChecks.Add((item, () => FeatureConfig.ContourDetailLevel == selected));
+            contourDetail.DropDownItems.Add(item);
+        }
+        terrain.DropDownItems.Add(contourDetail);
+        layers.DropDownItems.Add(terrain);
         Layer("ForestLayerMenu", UiText.Get("Menu_Forest"), () => FeatureConfig.RenderForest, v => FeatureConfig.RenderForest = v);
         Layer("BuildingsLayerMenu", UiText.Get("Menu_Buildings"), () => FeatureConfig.RenderBuilding, v => FeatureConfig.RenderBuilding = v);
         Layer("RoadsLayerMenu", UiText.Get("Menu_RoadsAndPaths"), () => FeatureConfig.RenderRoad, v => FeatureConfig.RenderRoad = v);
