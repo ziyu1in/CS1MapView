@@ -1,5 +1,6 @@
 ﻿using CSLMapView.XML;
 using System.IO.Compression;
+using CS2MapView.Util.CS1;
 using System.Text;
 using System.Xml.Serialization;
 
@@ -201,7 +202,10 @@ namespace CS2MapView.Import.CS1
         /// segments. Source IDs, PathUnit references, lane metadata and assets
         /// remain intact in the raw model used by transit, tracks and premises.
         /// </summary>
-        public static CSLExportXML CreateLabelView(CSLExportXML raw)
+        public static CSLExportXML CreateLabelView(CSLExportXML raw, bool preserveRoadHierarchy = false)
+            => CreateLabelView(raw, preserveRoadHierarchy, null);
+
+        internal static CSLExportXML CreateLabelView(CSLExportXML raw, bool preserveRoadHierarchy, CS1RoadGeometry? roadGeometry)
         {
             var network = new CSLExportXML
             {
@@ -216,8 +220,9 @@ namespace CS2MapView.Import.CS1
             stream.Position = 0;
             var copy = (CSLExportXML)serializer.Deserialize(stream)!;
             ProcessNodeSegment(copy.NodeList, copy.SegmentList);
-            SegmentSimplicator.SimplifySegments(copy, true);
-            SegmentSimplicator.SimplifySegments(copy, true);
+            roadGeometry?.Initialize(copy);
+            SegmentSimplicator.SimplifySegments(copy, true, preserveRoadHierarchy, roadGeometry);
+            SegmentSimplicator.SimplifySegments(copy, true, preserveRoadHierarchy, roadGeometry);
             // Label builders only read these source collections.
             copy.BuildingList = raw.BuildingList;
             copy.DistrictList = raw.DistrictList;

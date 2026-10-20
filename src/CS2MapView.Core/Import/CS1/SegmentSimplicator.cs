@@ -6,7 +6,7 @@ namespace CS2MapView.Import.CS1
 {
     internal static class SegmentSimplicator
     {
-        internal static void SimplifySegments(CSLExportXML xml, bool invert)
+        internal static void SimplifySegments(CSLExportXML xml, bool invert, bool preserveRoadHierarchy = false, CS1RoadGeometry? roadGeometry = null)
         {
             CS1SegmentManager mgr = new(xml);
 
@@ -15,7 +15,7 @@ namespace CS2MapView.Import.CS1
             {
                 xml.SegmentList.Reverse();
             }
-            List<List<XMLSegment>> grouped = SimplifySegmentsImpl.GroupDirectSegment(mgr, xml.SegmentList);
+            List<List<XMLSegment>> grouped = SimplifySegmentsImpl.GroupDirectSegment(mgr, xml.SegmentList, preserveRoadHierarchy, roadGeometry);
             foreach (List<XMLSegment> group in grouped)
             {
                 XMLSegment seg0 = group.First();
@@ -30,6 +30,7 @@ namespace CS2MapView.Import.CS1
                 {
                     XMLSegment current = group[i];
 
+                    roadGeometry?.Append(seg0, current);
                     seg0.Points.AddRange(current.Points.GetRange(1, current.Points.Count - 1));
                     //     if( RoadWidthManager.GetWidthType( current ) != seg0Width ) {
                     //         Log.Warn( $"segment[{current.Id}]'s width = {rcon.GetRoadWidth( current )} but seg0's width={seg0Width}" );
@@ -121,7 +122,7 @@ namespace CS2MapView.Import.CS1
             /// <param name="segMgr"></param>
             /// <param name="roadList"></param>
             /// <returns></returns>
-            internal static List<List<XMLSegment>> GroupDirectSegment(CS1SegmentManager segMgr, List<XMLSegment> roadList)
+            internal static List<List<XMLSegment>> GroupDirectSegment(CS1SegmentManager segMgr, List<XMLSegment> roadList, bool preserveRoadHierarchy, CS1RoadGeometry? roadGeometry)
             {
                 List<XMLSegment> tempList = new(roadList);
                 List<List<XMLSegment>> result = [];
@@ -135,13 +136,13 @@ namespace CS2MapView.Import.CS1
                     }
 
                     tempList.Remove(seg);
-                    List<XMLSegment> nextList = FindNextRoads(segMgr, seg, tempList);
+                    List<XMLSegment> nextList = FindNextRoads(segMgr, seg, tempList, preserveRoadHierarchy, roadGeometry);
                     result.Add(nextList);
                 }
 
                 return result;
             }
-            private static List<XMLSegment> FindNextRoads(CS1SegmentManager segMgr, XMLSegment seg, List<XMLSegment> searchTargetList)
+            private static List<XMLSegment> FindNextRoads(CS1SegmentManager segMgr, XMLSegment seg, List<XMLSegment> searchTargetList, bool preserveRoadHierarchy, CS1RoadGeometry? roadGeometry)
             {
 
                 List<XMLSegment> result = [seg];
@@ -150,8 +151,8 @@ namespace CS2MapView.Import.CS1
                     return result;
                 }
 
-                List<XMLSegment> FilteredStartConnections = FilterSameWayVisual(segMgr, seg, seg.StartConnections);
-                List<XMLSegment> FilteredEndConnections = FilterSameWayVisual(segMgr, seg, seg.EndConnections);
+                List<XMLSegment> FilteredStartConnections = FilterSameWayVisual(segMgr, seg, seg.StartConnections, preserveRoadHierarchy);
+                List<XMLSegment> FilteredEndConnections = FilterSameWayVisual(segMgr, seg, seg.EndConnections, preserveRoadHierarchy);
 
                 //接続ノードが1つだけで、しかも連結対象であれば
                 if ((seg.StartConnections?.Count ?? 0) == 1 && FilteredStartConnections.Count == 1)
@@ -165,8 +166,9 @@ namespace CS2MapView.Import.CS1
                         if (!con.Points.Last().Equals(seg.Points[0]))
                         {
                             con.SwapStartEnd();
+                            roadGeometry?.Reverse(con);
                         }
-                        List<XMLSegment> nextList = FindNextRoads(segMgr, con, searchTargetList);
+                        List<XMLSegment> nextList = FindNextRoads(segMgr, con, searchTargetList, preserveRoadHierarchy, roadGeometry);
                         result.Clear();
                         result.AddRange(nextList);
                         result.Add(seg);
@@ -184,9 +186,10 @@ namespace CS2MapView.Import.CS1
                         if (!con.Points[0].Equals(seg.Points.Last()))
                         {
                             con.SwapStartEnd();
+                            roadGeometry?.Reverse(con);
                         }
 
-                        List<XMLSegment> nextList = FindNextRoads(segMgr, con, searchTargetList);
+                        List<XMLSegment> nextList = FindNextRoads(segMgr, con, searchTargetList, preserveRoadHierarchy, roadGeometry);
 
                         result.AddRange(nextList);
                     }
@@ -203,7 +206,7 @@ namespace CS2MapView.Import.CS1
             /// <param name="me"></param>
             /// <param name="list"></param>
             /// <returns></returns>
-            private static List<XMLSegment> FilterSameWayVisual(CS1SegmentManager segMgr, XMLSegment me, List<XMLSegment>? list)
+            private static List<XMLSegment> FilterSameWayVisual(CS1SegmentManager segMgr, XMLSegment me, List<XMLSegment>? list, bool preserveRoadHierarchy)
             {
                 WayType t = segMgr.GetWayType(me);
                 WayType service = t.ToServiceOnly();
@@ -266,7 +269,8 @@ namespace CS2MapView.Import.CS1
                                 result.Add(seg);
                             }
                         }
-                        else if (t == targetWayType && segMgr.GetWidth(me) == segMgr.GetWidth(seg))
+                        else if (t == targetWayType && segMgr.GetWidth(me) == segMgr.GetWidth(seg)
+                            && (!preserveRoadHierarchy || segMgr.GetRoadImportance(me) == segMgr.GetRoadImportance(seg)))
                         {
 
                             //道路・複合セグメント

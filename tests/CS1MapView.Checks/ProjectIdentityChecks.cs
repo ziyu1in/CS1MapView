@@ -11,6 +11,8 @@ internal static class ProjectIdentityChecks
     {
         Require(typeof(ProjectInfo).Assembly.GetName().Name == "CS1MapView.Core", "Core assembly has the old product name");
         Require(typeof(MainForm).Assembly.GetName().Name == "CS1MapView", "Application assembly has the old product name");
+        Require(typeof(MainForm).Assembly.GetName().Version == new Version(0, 1, 2, 2)
+            && typeof(ProjectInfo).Assembly.GetName().Version == new Version(0, 1, 2, 2), "Viewer and Core versions must both be 0.1.2.2");
         Require(typeof(MainForm).Assembly.GetCustomAttribute<AssemblyProductAttribute>()?.Product == ProjectInfo.Name,
             "Windows product metadata has the old name");
         Require(HelpCommands.VersionInfoText.Contains(ProjectInfo.DevelopmentDeclaration) &&

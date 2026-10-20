@@ -252,7 +252,10 @@ Train route lines can stay visible without train markers.
 
 ## Other features
 
-- The `apple-light` style sets the map colors.
+- Map styles include `apple-light`, `carto-voyager` and `carto-positron`.
+- Curved roads recover native Bézier geometry from compatible five-point exports, preserving endpoint nodes and original segment boundaries through display joining. Ground, elevated, tunnel and junction strokes follow the recovered curves in every style.
+- Parking-lot networks and their service roads are excluded from lane-based road emphasis; ordinary streets with curbside parking retain their normal importance.
+- The two CARTO-inspired styles use total motor-traffic lane counts for road color and outline contrast: fewer than four lanes stays minor, four or five is intermediate, and six or more is major. Voyager uses yellow for intermediate and major roads, with deeper yellow highways; Positron uses gray for roads up to 12 m wide and white for wider roads, independently of lane count. See [road styles](docs/road-styles.md).
 - The viewer uses exported road widths.
 - Road widths use defaults when export data is missing.
 - The editors change line colors, short line names, and building settings.

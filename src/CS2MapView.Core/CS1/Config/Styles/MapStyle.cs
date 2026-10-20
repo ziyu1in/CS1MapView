@@ -24,6 +24,7 @@ public sealed class MapStyle
     public TextColorRules TextColors { get; set; } = new();
     public WayWidth WayWidth { get; set; } = new();
     public WayBorder WayBorder { get; set; } = new();
+    public RoadHierarchyStyle RoadHierarchy { get; set; } = new();
     public FontSize FontSize { get; set; } = new();
     public static MapStyle Load(string path)
     {
@@ -48,6 +49,10 @@ public sealed class MapStyle
             var element = xml.Element(property.Name);
             if (element == null) continue;
             if (property.PropertyType == typeof(SKColor)) property.SetValue(value, ReadColor(element));
+            else if (property.PropertyType == typeof(bool) && bool.TryParse(element.Value, out var enabled)) property.SetValue(value, enabled);
+            else if (property.PropertyType == typeof(double)
+                && double.TryParse(element.Value, NumberStyles.Float, CultureInfo.InvariantCulture, out var number)
+                && double.IsFinite(number) && number >= 0) property.SetValue(value, number);
             else if (property.PropertyType == typeof(SizeEx)) property.SetValue(value, new SizeEx(Number(element.Attribute("fixed")?.Value), Number(element.Attribute("scaled")?.Value)));
             else if (property.PropertyType == typeof(BorderConfig))
             {
@@ -64,6 +69,27 @@ public sealed class MapStyle
                 ReadObject(property.GetValue(value)!, element);
         }
     }
+}
+
+/// <summary>Opt-in lane-based road colors. Legacy styles retain their original rendering.</summary>
+public sealed class RoadHierarchyStyle
+{
+    public bool Enabled { get; set; }
+    public double NarrowRoadMaxWidth { get; set; }
+    public RoadClassPalette Narrow { get; set; } = new();
+    public RoadClassPalette Intermediate { get; set; } = new();
+    public RoadClassPalette Major { get; set; } = new();
+}
+
+/// <summary>Ground, tunnel and elevated colors; widths remain independent of the road class.</summary>
+public sealed class RoadClassPalette
+{
+    public SKColor Fill { get; set; } = SKColors.White;
+    public SKColor Border { get; set; } = new(210, 210, 210);
+    public SKColor TunnelFill { get; set; } = new(250, 250, 250);
+    public SKColor TunnelBorder { get; set; } = new(220, 220, 220);
+    public SKColor ElevatedFill { get; set; } = SKColors.White;
+    public SKColor ElevatedBorder { get; set; } = new(190, 190, 190);
 }
 
 /// <summary>CS1 two-part measurements converted to upstream native Width/StrokeStyle.</summary>

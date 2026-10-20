@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MapStyle xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" contentVersion="4.1" fileVersion="4.1">
+  <BuildingBorder>
+    <Size fixed="0.15" scaled="0.04" />
+  </BuildingBorder>
+  <StationBorder>
+    <Size fixed="0.3" scaled="0.1" />
+  </StationBorder>
+  <GridLine>
+    <Size fixed="1.5" scaled="0" />
+    <DashStyle>
+      <Dashes>
+        <Dash>2</Dash>
+        <Dash>2</Dash>
+        <Dash>0</Dash>
+        <Dash>2</Dash>
+      </Dashes>
+      <Offset>0</Offset>
+    </DashStyle>
+  </GridLine>
+  <MapSymbolSize fixed="2" scaled="4" />
+  <ContourWide>
+    <Size fixed="0.5" scaled="0" />
+  </ContourWide>
+  <ContourMiddle>
+    <Size fixed="0.2" scaled="0" />
+  </ContourMiddle>
+  <ContourNarrow>
+    <Size fixed="0.1" scaled="0" />
+    <DashStyle>
+      <Dashes>
+        <Dash>30</Dash>
+        <Dash>10</Dash>
+      </Dashes>
+      <Offset>0</Offset>
+    </DashStyle>
+  </ContourNarrow>
+  <CoastLine>
+    <Size fixed="0.3" scaled="0" />
+  </CoastLine>
+  <Colors>
+    <LandColors>
+      <Color a="255" r="245" g="243" b="239" threshold="-3.40282347E+38" />
+    </LandColors>
+    <WaterColors>
+      <Color a="255" r="196" g="223" b="234" threshold="-3.40282347E+38" />
+    </WaterColors>
+    <RouteMapColors>
+      <Color a="255" r="255" g="0" b="0" />
+      <Color a="255" r="0" g="130" b="0" />
+      <Color a="255" r="0" g="0" b="255" />
+      <Color a="255" r="0" g="170" b="255" />
+      <Color a="255" r="230" g="80" b="0" />
+      <Color a="255" r="100" g="0" b="190" />
+      <Color a="255" r="160" g="0" b="100" />
+    </RouteMapColors>
+    <GridLine a="255" r="221" g="217" b="210" />
+    <BuildingBorder a="255" r="221" g="217" b="210" />
+    <ResidentialBuilding a="255" r="233" g="229" b="223" />
+    <CommercialBuilding a="255" r="232" g="227" b="219" />
+    <IndustrialBuilding a="255" r="229" g="225" b="218" />
+    <OfficeBuilding a="255" r="229" g="229" b="224" />
+    <PublicTransportBuilding a="255" r="223" g="230" b="231" />
+    <PublicBuilding a="255" r="228" g="229" b="223" />
+    <BeautificationBuilding a="255" r="217" g="231" b="204" />
+    <Railway a="255" r="178" g="184" b="183" />
+    <RailwayDash a="255" r="245" g="243" b="239" />
+    <RailwayTunnel a="255" r="201" g="205" b="202" />
+    <Metroway a="255" r="166" g="179" b="191" />
+    <MetrowayDash a="255" r="245" g="243" b="239" />
+    <Tramway a="255" r="171" g="189" b="181" />
+    <TramwayDash a="255" r="245" g="243" b="239" />
+    <Road a="255" r="255" g="255" b="255" />
+    <RoadBorder a="255" r="218" g="215" b="209" />
+    <RoadTunnel a="255" r="250" g="249" b="246" />
+    <RoadTunnelBorder a="255" r="226" g="223" b="217" />
+    <RoadEleavted a="255" r="255" g="255" b="255" />
+    <RoadElevatedBorder a="255" r="200" g="196" b="187" />
+    <Highway a="255" r="245" g="216" b="135" />
+    <HighwayBorder a="255" r="196" g="172" b="109" />
+    <HighwayTunnel a="255" r="249" g="237" b="205" />
+    <HighwayTunnelBorder a="255" r="217" g="205" b="168" />
+    <HighwayEleavted a="255" r="245" g="216" b="135" />
+    <HighwayElevatedBorder a="255" r="172" g="148" b="93" />
+    <Beautification a="255" r="252" g="252" b="248" />
+    <BeautificationBorder a="255" r="206" g="216" b="197" />
+    <BeautificationTunnel a="255" r="245" g="247" b="240" />
+    <BeautificationTunnelBorder a="255" r="214" g="221" b="205" />
+    <BeautificationElevated a="255" r="255" g="255" b="255" />
+    <BeautificationElevatedBorder a="255" r="189" g="203" b="176" />
+    <ForestBase a="255" r="214" g="228" b="203" />
+    <CableCarWay a="255" r="174" g="183" b="177" />
+    <MonorailWay a="255" r="173" g="183" b="183" />
+    <ContourLine a="255" r="210" g="212" b="202" />
+    <Coastline a="255" r="163" g="200" b="216" />
+  </Colors>
+  <TextColors>
+    <DistrictName a="255" r="117" g="129" b="136" />
+    <DistrictNameBorder a="255" r="255" g="255" b="255" />
+    <BuildingName a="255" r="116" g="125" b="130" />
+    <BuildingNameBorder a="255" r="255" g="255" b="255" />
+    <DistrictParkName a="255" r="123" g="146" b="113" />
+    <DistrictParkNameBorder a="255" r="255" g="255" b="255" />
+    <StopNameBorder a="255" r="255" g="255" b="255" />
+    <StopNameBorderBlack a="255" r="66" g="81" b="96" />
+    <BusStop a="255" r="71" g="125" b="178" />
+    <TramStop a="255" r="90" g="153" b="129" />
+    <MetroStop a="255" r="103" g="143" b="192" />
+    <TrainStop a="255" r="139" g="128" b="170" />
+    <RoadName a="255" r="115" g="123" b="128" />
+    <RoadNameBorder a="255" r="255" g="255" b="255" />
+  </TextColors>
+  <WayWidth>
+    <TrainRail fixed="1.1" scaled="0.65" />
+    <TrainRailDash fixed="0.45" scaled="0.25" />
+    <TrainRailTunnel fixed="0.65" scaled="0.4" />
+    <TramRail fixed="0.7" scaled="0.35" />
+    <TramRailDash fixed="0.3" scaled="0.15" />
+    <MetroRail fixed="0.8" scaled="0.4" />
+    <MetroRailDash fixed="0.3" scaled="0.15" />
+    <Beautification fixed="1" scaled="0.6" />
+    <CableCarRail fixed="0.6" scaled="0.3" />
+    <CableCarDecorationSpan fixed="1" scaled="15" />
+    <CableCarDecorationLength fixed="0.6" scaled="0.3" />
+    <CableCarDecorationWidth fixed="0.3" scaled="0.2" />
+    <CableCarStationWidth fixed="1.4" scaled="0.3" />
+    <MonorailRail fixed="1" scaled="1" />
+    <MonorailDecorationSpan fixed="2" scaled="25" />
+    <MonorailDecorationLength fixed="1" scaled="1" />
+    <MonorailDecorationWidth fixed="0.6" scaled="0.6" />
+    <MonorailStationWidth fixed="3" scaled="1.8" />
+    <RoadNarrow fixed="1" scaled="0.7" />
+    <Road fixed="1" scaled="1.9" />
+    <RoadWide fixed="1" scaled="4.3" />
+    <RoadVeryWide fixed="1" scaled="6" />
+    <HighwayRamp fixed="1" scaled="1.5" />
+    <Highway fixed="1" scaled="1.9" />
+    <HighwayWide fixed="1" scaled="4" />
+  </WayWidth>
+  <WayBorder>
+    <BeautificationBorder>
+      <Size fixed="0.3" scaled="0.05" />
+    </BeautificationBorder>
+    <BeautificationTunnelBorder>
+      <Size fixed="0.3" scaled="0.05" />
+      <DashStyle>
+        <Dashes>
+          <Dash>1.5</Dash>
+          <Dash>2</Dash>
+        </Dashes>
+        <Offset>0</Offset>
+      </DashStyle>
+    </BeautificationTunnelBorder>
+    <BeautificationElevatedBorder>
+      <Size fixed="0.6" scaled="0.05" />
+    </BeautificationElevatedBorder>
+    <RoadBorder>
+      <Size fixed="0.65" scaled="0.10" />
+    </RoadBorder>
+    <RoadTunnelBorder>
+      <Size fixed="0.5" scaled="0.05" />
+      <DashStyle>
+        <Dashes>
+          <Dash>1.5</Dash>
+          <Dash>2</Dash>
+        </Dashes>
+        <Offset>0</Offset>
+      </DashStyle>
+    </RoadTunnelBorder>
+    <RoadElevatedBorder>
+      <Size fixed="1.0" scaled="0.15" />
+    </RoadElevatedBorder>
+    <HighwayBorder>
+      <Size fixed="0.8" scaled="0.15" />
+    </HighwayBorder>
+    <HighwayTunnelBorder>
+      <Size fixed="0.65" scaled="0.10" />
+      <DashStyle>
+        <Dashes>
+          <Dash>1.5</Dash>
+          <Dash>2</Dash>
+        </Dashes>
+        <Offset>0</Offset>
+      </DashStyle>
+    </HighwayTunnelBorder>
+    <HighwayElevatedBorder>
+      <Size fixed="1.1" scaled="0.15" />
+    </HighwayElevatedBorder>
+  </WayBorder>
+  <FontSize>
+    <TransportStopFontSize fixed="4" scaled="4" />
+    <TransportStopFontBorderSize fixed="0.7" scaled="0.12" />
+    <DistrictFontSize fixed="6" scaled="8" />
+    <DistrictFontBorderSize fixed="0.8" scaled="0.2" />
+    <DistrictParkFontSize fixed="4" scaled="5" />
+    <DistrictParkFontBorderSize fixed="0.7" scaled="0.12" />
+    <BuildingFontSize fixed="3" scaled="3.5" />
+    <BuildingFontBorderSize fixed="0.6" scaled="0.10" />
+    <RoadNameFontSize fixed="3" scaled="3.2" />
+    <RoadNameFontBorderSize fixed="0.65" scaled="0.10" />
+  </FontSize>
+  <RoadHierarchy>
+    <Enabled>true</Enabled>
+    <Intermediate>
+      <ElevatedFill a="255" r="255" g="240" b="199" />
+      <TunnelFill a="255" r="255" g="248" b="232" />
+      <Border a="255" r="200" g="196" b="186" />
+      <TunnelBorder a="255" r="215" g="210" b="199" />
+      <Fill a="255" r="255" g="240" b="199" />
+      <ElevatedBorder a="255" r="181" g="175" b="163" />
+    </Intermediate>
+    <Major>
+      <ElevatedFill a="255" r="255" g="231" b="166" />
+      <TunnelFill a="255" r="255" g="241" b="204" />
+      <Border a="255" r="183" g="176" b="162" />
+      <TunnelBorder a="255" r="204" g="196" b="180" />
+      <Fill a="255" r="255" g="231" b="166" />
+      <ElevatedBorder a="255" r="164" g="155" b="137" />
+    </Major>
+  </RoadHierarchy>
+</MapStyle>

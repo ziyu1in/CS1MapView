@@ -236,6 +236,7 @@ internal static class FormsUiPortChecks
                 Require(!Control<ComboBox>(options, "StringThemeCombobox").Enabled, "Unused string-theme control remained active");
                 var style = Control<ComboBox>(options, "ThemeCombobox");
                 Require(style.Items.Contains("apple-light") && style.Items.Contains("lightgray"), "Migrated style choices missing from inherited settings");
+                Require(style.Items.Contains("carto-voyager") && style.Items.Contains("carto-positron"), "New CARTO-inspired styles are missing from Options");
                 style.SelectedItem = "lightgray";
                 Control<CheckBox>(options, "RenderBusLinesCheckbox").Checked = false;
                 Control<CheckBox>(options, "RenderStreetNameLabelCheckbox").Checked = false;

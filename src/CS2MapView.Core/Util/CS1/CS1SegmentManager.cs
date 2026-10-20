@@ -11,6 +11,8 @@ namespace CS2MapView.Util
         {
             internal WayType WayType { get; set; }
             internal double Width { get; set; }
+            internal RoadLaneCounts RoadLanes { get; set; }
+            internal RoadImportance RoadImportance { get; set; }
         }
 
         private readonly Dictionary<string, CalculatedSegmentType> cache = [];
@@ -123,6 +125,9 @@ namespace CS2MapView.Util
 
                 obj.Width = min <= max ? Math.Max(max - min, 3d) : 3d;
                 obj.WayType = wt;
+                obj.RoadLanes = RoadLaneMetadata.Read(t);
+                obj.RoadImportance = t.Highway ? RoadImportance.Highway
+                    : RoadLaneMetadata.IsParkingLotNetwork(t.Name) ? RoadImportance.Minor : obj.RoadLanes.Importance;
                 cache[t.Name] = obj;
             }
         }
@@ -158,6 +163,12 @@ namespace CS2MapView.Util
             }
         }
         private static bool IsPositiveFinite(float value) => value > 0 && float.IsFinite(value);
+
+        internal RoadLaneCounts GetRoadLanes(XMLSegment segment) => cache.TryGetValue(segment.Name, out var type)
+            ? type.RoadLanes : default;
+
+        internal RoadImportance GetRoadImportance(XMLSegment segment) => cache.TryGetValue(segment.Name, out var type)
+            ? type.RoadImportance : GetWayType(segment).HasBit(WayType.Highway) ? RoadImportance.Highway : RoadImportance.Minor;
 
         private static bool HasLaneFlag(string? flags, string value) => (flags ?? string.Empty)
             .Split(',').Any(flag => flag.Trim() == value);

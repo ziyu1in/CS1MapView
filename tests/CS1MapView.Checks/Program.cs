@@ -49,12 +49,16 @@ internal static class Program
             TransitPortChecks.RunPolicies();
             ContourPresetChecks.Run();
             RoadRailPortChecks.RunPolicies();
+            RoadHierarchyChecks.RunPolicies();
+            RoadCurveChecks.RunPolicies();
             var settings = UserSettings.Default;
             BetaOutput.ApplyFeatureSettings(settings, config);
             using var host = new BetaOutputHost(settings, config);
             Require(new ExportFileImporter(host).ImportAsync(map).GetAwaiter().GetResult() == null, "GZip import failed");
             var source = (CS1MapType)host.Context.SourceMapType!;
             var raw = source.GetImportData();
+            RoadHierarchyChecks.RunSpringdale(raw, reports);
+            RoadCurveChecks.RunSpringdale(raw, reports);
             var session = BetaMapSession.Get(host, raw);
             FoundationPortChecks.Run(host, raw);
             TerrainDisplayChecks.Run(raw, reports);

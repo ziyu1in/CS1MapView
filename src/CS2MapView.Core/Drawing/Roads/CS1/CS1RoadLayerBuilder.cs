@@ -9,7 +9,6 @@ using SkiaSharp;
 using CS2MapView.Beta;
 using CS2MapView.CS1.Config.Styles;
 using CS2MapView.Import.CS1;
-using static CS2MapView.Util.CS1.CSLMapViewCompatibility;
 
 namespace CS2MapView.Drawing.Roads.CS1;
 /// <summary>
@@ -23,8 +22,9 @@ public class CS1RoadLayerBuilder
     private CSLExportXML ExportXML { get; init; }
 
     private CS1SegmentManager SegmentManager { get; init; }
+    private CS1RoadGeometry RoadGeometry { get; } = new();
     private BasicLayer ResultLayer { get; init; }
-    private Dictionary<(WayType, float, bool), Func<float, float, SKPaintCache.StrokeKey?>> StrokeKeyFuncs { get; init; }
+    private Dictionary<(WayType, float, bool, RoadImportance, bool), Func<float, float, SKPaintCache.StrokeKey?>> StrokeKeyFuncs { get; init; }
     /// <summary>
     /// コンストラクタ
     /// </summary>
@@ -34,9 +34,9 @@ public class CS1RoadLayerBuilder
     {
         AppRoot = appRoot;
         RawXML = xml;
-        // Junction construction uses the same upstream joined display network
-        // as street labels; source tracks, paths and widths remain unchanged.
-        ExportXML = CS1XMLImporter.CreateLabelView(xml);
+        // Recover original curves on the copied network before its segments
+        // are reversed, joined or simplified for display.
+        ExportXML = CS1XMLImporter.CreateLabelView(xml, Session.CurrentMapStyle.RoadHierarchy.Enabled, RoadGeometry);
         SegmentManager = new CS1SegmentManager(ExportXML);
         ResultLayer = new BasicLayer(AppRoot, ILayer.LayerNameRoads, CS1MapType.CS1WorldRect);
         StrokeKeyFuncs = [];
@@ -149,9 +149,35 @@ public class CS1RoadLayerBuilder
         return wt.HasBit(WayType.Tunnel) ? b.BeautificationTunnelBorder : wt.HasBit(WayType.Elevated) ? b.BeautificationElevatedBorder : b.BeautificationBorder;
     }
 
-    private Func<float, float, SKPaintCache.StrokeKey?> CreateStrokeFunc(WayType wt, float meterWidth, bool isBorder)
+    private RoadImportance GetImportance(XMLSegment segment) => Session.CurrentMapStyle.RoadHierarchy.Enabled
+        ? SegmentManager.GetRoadImportance(segment) : RoadImportance.Minor;
+
+    private bool IsNarrow(XMLSegment segment)
     {
+        var hierarchy = Session.CurrentMapStyle.RoadHierarchy;
+        var way = SegmentManager.GetWayType(segment);
+        return hierarchy.Enabled && hierarchy.NarrowRoadMaxWidth > 0 && way.HasBit(WayType.Road)
+            && !way.HasBit(WayType.Highway) && SegmentManager.GetWidth(segment) <= hierarchy.NarrowRoadMaxWidth;
+    }
+
+    private SKColor? GetDrawingColor(WayType wt, RoadImportance importance, bool isBorder, bool narrow)
+    {
+        var hierarchy = Session.CurrentMapStyle.RoadHierarchy;
+        if (hierarchy.Enabled && wt.HasBit(WayType.Road) && !wt.HasBit(WayType.Highway)
+            && (narrow || importance is RoadImportance.Intermediate or RoadImportance.Major))
+        {
+            var palette = narrow ? hierarchy.Narrow : importance == RoadImportance.Major ? hierarchy.Major : hierarchy.Intermediate;
+            return wt.HasBit(WayType.Tunnel) ? isBorder ? palette.TunnelBorder : palette.TunnelFill
+                : wt.HasBit(WayType.Elevated) ? isBorder ? palette.ElevatedBorder : palette.ElevatedFill
+                : isBorder ? palette.Border : palette.Fill;
+        }
         var color = WayTypeToColor(wt, isBorder);
+        return color.HasValue ? (SKColor)color.Value : null;
+    }
+
+    private Func<float, float, SKPaintCache.StrokeKey?> CreateStrokeFunc(WayType wt, float meterWidth, bool isBorder, RoadImportance importance, bool narrow)
+    {
+        var color = GetDrawingColor(wt, importance, isBorder, narrow);
         if (color is null || meterWidth <= 0 || !float.IsFinite(meterWidth)) return (_, _) => null;
         var strokeWidth = meterWidth;
         float[]? dash = null;
@@ -168,16 +194,16 @@ public class CS1RoadLayerBuilder
         }
         return (_, _) => new SKPaintCache.StrokeKey(strokeWidth, (SKColor)color, StrokeType.Round, dash);
     }
-    private Func<float, float, SKPaintCache.StrokeKey?> GetStrokeFunc(WayType wt, float meterWidth, bool isBorder)
+    private Func<float, float, SKPaintCache.StrokeKey?> GetStrokeFunc(WayType wt, float meterWidth, bool isBorder, RoadImportance importance, bool narrow)
     {
-        var key = (wt, meterWidth, isBorder);
+        var key = (wt, meterWidth, isBorder, importance, narrow);
         if (StrokeKeyFuncs.TryGetValue(key, out var value))
         {
             return value;
         }
         else
         {
-            StrokeKeyFuncs.Add(key, CreateStrokeFunc(wt, meterWidth, isBorder));
+            StrokeKeyFuncs.Add(key, CreateStrokeFunc(wt, meterWidth, isBorder, importance, narrow));
             return StrokeKeyFuncs[key];
         }
     }
@@ -193,42 +219,19 @@ public class CS1RoadLayerBuilder
 
         foreach (XMLSegment seg in roadList)
         {
-            SKPoint? lastPoint = null;
             WayType wt = SegmentManager.GetWayType(seg);
-
-            //    geo.FillRule = FillRule.Nonzero;
-
             var width = GetDrawingWidth(seg);
-            int pointidx = 0;
-            SKPath? path = null;
-
-            foreach (XMLVector3 v in seg.Points)
-            {
-                SKPoint currentPoint = new(v.X, -v.Z);
-                if (lastPoint != null)
-                {
-                    path!.LineTo(currentPoint);
-
-
-                }
-                else
-                {
-                    path = new SKPath();
-                    path.MoveTo(currentPoint);
-                }
-                lastPoint = currentPoint;
-                pointidx++;
-            }
+            SKPath path = RoadGeometry.CreatePath(seg);
             var cmdBorder = new PathDrawCommand
             {
                 Path = path,
-                StrokePaintFunc = GetStrokeFunc(wt, width, true)
+                StrokePaintFunc = GetStrokeFunc(wt, width, true, GetImportance(seg), IsNarrow(seg))
             };
 
             var cmdFill = new PathDrawCommand
             {
                 Path = path,
-                StrokePaintFunc = GetStrokeFunc(wt, width, false)
+                StrokePaintFunc = GetStrokeFunc(wt, width, false, GetImportance(seg), IsNarrow(seg))
             };
 
             ResultLayer.DrawCommands.Add(cmdBorder);
@@ -282,141 +285,47 @@ public class CS1RoadLayerBuilder
 
         foreach (XMLSegment s in junction.Connection)
         {
+            if (s.Points.Count < 2) continue;
+            if (s.StartNodeId == junction.Id) DrawEnd(true);
+            if (s.EndNodeId == junction.Id) DrawEnd(false);
 
-            XMLVector3? toPointStart = null;
-            XMLVector3? toPointStart2 = null;
-            XMLVector3? toPointEnd = null;
-            XMLVector3? toPointEnd2 = null;
-            if (s.Points[0].Equals(junction.Position))
+            void DrawEnd(bool fromStart)
             {
-                toPointStart = s.Points[1];
-                if (s.Points.Count > 2)
+                SKPath path = RoadGeometry.CreateJunctionPath(s, fromStart);
+                if (path.IsEmpty)
                 {
-                    toPointStart2 = s.Points[2];
+                    path.Dispose();
+                    return;
                 }
-            }
-            if (s.Points[^1].Equals(junction.Position))
-            {
-                toPointEnd = s.Points[^2];
-                if (s.Points.Count > 2)
+                ResultLayer.DrawCommands.Add(new PathDrawCommand
                 {
-                    toPointEnd2 = s.Points[^3];
-                }
-            }
-
-            if (toPointStart == null && toPointEnd == null)
-            {
-                //   Log.Warn($"Junction Connection Not Found node={junction.Id}");
-                return;
-            }
-
-            var color = WayTypeToColor(SegmentManager.GetWayType(s), false);
-
-
-
-            DrawAction(toPointStart, toPointStart2);
-            DrawAction(toPointEnd, toPointEnd2);
-
-            void DrawAction(XMLVector3? p1, XMLVector3? p2)
-            {
-                if (p1 != null)
-                {
-                    float width = GetDrawingWidth(s);
-
-
-                    //直線
-                    double distanceSqr = (junction.Position.X - p1.X) * (junction.Position.X - p1.X) + (junction.Position.Z - p1.Z) * (junction.Position.Z - p1.Z);
-                    if (distanceSqr > 900)
-                    {
-                        double angle = AngleXZ(junction.Position, p1);
-                        p1 = SlidePointXZ(junction.Position, angle, 30);
-                        p2 = null;
-                    }
-
-                    SKPath path = new();
-                    path.MoveTo(junction.Position.ToMapSpace());
-                    path.LineTo(p1.ToMapSpace());
-
-                    if (p2 != null)
-                    {
-                        distanceSqr = (p2.X - p1.X) * (p2.X - p1.X) + (p2.Z - p1.Z) * (p2.Z - p1.Z);
-                        if (distanceSqr > 400)
-                        {
-                            double angle = AngleXZ(p1, p2);
-                            p2 = SlidePointXZ(p1, angle, 20);
-                        }
-                        path.LineTo(p2.ToMapSpace());
-
-
-                    }
-                    var cmd = new PathDrawCommand
-                    {
-                        Path = path,
-                        StrokePaintFunc = GetStrokeFunc(SegmentManager.GetWayType(s), width, false)
-                    };
-                    ResultLayer.DrawCommands.Add(cmd);
-
-                }
+                    Path = path,
+                    StrokePaintFunc = GetStrokeFunc(SegmentManager.GetWayType(s), GetDrawingWidth(s), false, GetImportance(s), IsNarrow(s))
+                });
             }
         }
     }
 
-    private static void AddToLineDic(Dictionary<float, List<SKPath>> lineDic, float width, SKPath pf)
+    private static void AddToLineDic(Dictionary<(RoadImportance Importance, float Width, bool Narrow), List<SKPath>> lineDic,
+        (RoadImportance Importance, float Width, bool Narrow) key, SKPath pf)
     {
-        if (lineDic.TryGetValue(width, out var list))
+        if (lineDic.TryGetValue(key, out var list))
         {
             list.Add(pf);
         }
         else
         {
-            lineDic.Add(width, [pf]);
+            lineDic.Add(key, [pf]);
         }
     }
 
     private List<Junction> DrawWaysAll(List<XMLSegment> list, List<Junction> junctionList, WayType wt)
     {
         List<Junction> renderTarget = [];
-        Dictionary<float, List<SKPath>> lineDic = [];
+        Dictionary<(RoadImportance Importance, float Width, bool Narrow), List<SKPath>> lineDic = [];
         foreach (XMLSegment seg in list)
         {
-            SKPoint? lastPoint = null;
-            SKPath path = new();
-
-            float lastWidth = float.NaN;
-            foreach (XMLVector3 v in seg.Points)
-            {
-                SKPoint currentPoint = v.ToMapSpace();
-                if (lastPoint.HasValue)
-                {
-                    float width = GetDrawingWidth(seg);
-                    if (double.IsNaN(lastWidth) || width == lastWidth)
-                    {
-                        //  LineSegment line = new LineSegment(RContext.TranslateFromXML(v), true);
-                        //  pf.Segments.Add(line);
-                        path.LineTo(currentPoint);
-
-                    }
-                    else
-                    {
-                        AddToLineDic(lineDic, lastWidth, path);
-                        path = new SKPath();
-                        path.MoveTo(lastPoint.Value);
-                        path.LineTo(currentPoint);
-
-                    }
-
-                    lastWidth = width;
-                }
-                else
-                {
-                    path.MoveTo(currentPoint);
-                }
-                lastPoint = currentPoint;
-            }
-            AddToLineDic(lineDic, lastWidth, path);
-
-
-
+            AddToLineDic(lineDic, (GetImportance(seg), GetDrawingWidth(seg), IsNarrow(seg)), RoadGeometry.CreatePath(seg));
 
             Junction? temp = junctionList.FirstOrDefault(j => j.Id == seg.StartNodeId);
             if (temp?.AddRenderedSegment(seg) ?? false)
@@ -430,23 +339,23 @@ public class CS1RoadLayerBuilder
             }
         }
 
-        foreach (var t in lineDic.OrderBy(t => t.Key))
+        foreach (var t in lineDic.OrderBy(t => t.Key.Importance).ThenBy(t => t.Key.Width))
         {
-            var width = t.Key;
+            var width = t.Key.Width;
             var pathes = t.Value;
             foreach (var p in pathes)
             {
-                var dc = new PathDrawCommand { Path = p, StrokePaintFunc = GetStrokeFunc(wt, width, true) };
+                var dc = new PathDrawCommand { Path = p, StrokePaintFunc = GetStrokeFunc(wt, width, true, t.Key.Importance, t.Key.Narrow) };
                 ResultLayer.DrawCommands.Add(dc);
             }
         }
-        foreach (var t in lineDic.OrderBy(t => t.Key))
+        foreach (var t in lineDic.OrderBy(t => t.Key.Importance).ThenBy(t => t.Key.Width))
         {
-            var width = t.Key;
+            var width = t.Key.Width;
             var pathes = t.Value;
             foreach (var p in pathes)
             {
-                var dc = new PathDrawCommand { Path = p, StrokePaintFunc = GetStrokeFunc(wt, width, false) };
+                var dc = new PathDrawCommand { Path = p, StrokePaintFunc = GetStrokeFunc(wt, width, false, t.Key.Importance, t.Key.Narrow) };
                 ResultLayer.DrawCommands.Add(dc);
             }
         }
