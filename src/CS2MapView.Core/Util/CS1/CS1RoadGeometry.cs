@@ -16,12 +16,15 @@ internal sealed class CS1RoadGeometry
         foreach (var segment in xml.SegmentList)
         {
             if (!manager.GetWayType(segment).HasBit(WayType.Road)) continue;
-            _pieces[segment] = TryRecover(segment.Points, out var curve) ? [curve] : Lines(segment.Points);
+            _pieces[segment] = OriginalPieces(segment.Points);
         }
     }
 
     internal IReadOnlyList<RoadCurvePiece> Pieces(XMLSegment segment)
         => _pieces.TryGetValue(segment, out var pieces) ? pieces : [];
+
+    internal static List<RoadCurvePiece> OriginalPieces(IReadOnlyList<XMLVector3> points)
+        => TryRecover(points, out var curve) ? [curve] : Lines(points);
 
     // The simplifier reverses copied segments while assembling display chains.
     // Keep each original piece and its endpoint tangents in that same order.
@@ -83,7 +86,7 @@ internal sealed class CS1RoadGeometry
         {
             var start = points[i - 1].ToMapSpace();
             var end = points[i].ToMapSpace();
-            result.Add(new(start, start, end, end, false));
+            result.Add(new(start, start, end, end, false, points[i - 1].Y, points[i - 1].Y, points[i].Y, points[i].Y));
         }
         return result;
     }
@@ -103,17 +106,18 @@ internal sealed class CS1RoadGeometry
         double dy = Residual(a.Y, q.Y, m.Y, r.Y, d.Y);
         double dz = Residual(a.Z, q.Z, m.Z, r.Z, d.Z);
         if (dx * dx + dy * dy + dz * dz > SampleToleranceMetres * SampleToleranceMetres) return false;
-        static float First(double a, double q, double r, double d) => (float)((-10 * a + 24 * q - 8 * r + 3 * d) / 9);
-        static float Second(double a, double q, double r, double d) => (float)((3 * a - 8 * q + 24 * r - 10 * d) / 9);
-        var c1 = new SKPoint(First(a.X, q.X, r.X, d.X), -First(a.Z, q.Z, r.Z, d.Z));
-        var c2 = new SKPoint(Second(a.X, q.X, r.X, d.X), -Second(a.Z, q.Z, r.Z, d.Z));
+        static double First(double a, double q, double r, double d) => (-10 * a + 24 * q - 8 * r + 3 * d) / 9;
+        static double Second(double a, double q, double r, double d) => (3 * a - 8 * q + 24 * r - 10 * d) / 9;
+        var c1 = new SKPoint((float)First(a.X, q.X, r.X, d.X), (float)-First(a.Z, q.Z, r.Z, d.Z));
+        var c2 = new SKPoint((float)Second(a.X, q.X, r.X, d.X), (float)-Second(a.Z, q.Z, r.Z, d.Z));
         if (!float.IsFinite(c1.X) || !float.IsFinite(c1.Y) || !float.IsFinite(c2.X) || !float.IsFinite(c2.Y)) return false;
-        curve = new(a.ToMapSpace(), c1, c2, d.ToMapSpace(), true);
+        curve = new(a.ToMapSpace(), c1, c2, d.ToMapSpace(), true, a.Y, First(a.Y, q.Y, r.Y, d.Y), Second(a.Y, q.Y, r.Y, d.Y), d.Y);
         return true;
     }
 }
 
-internal readonly record struct RoadCurvePiece(SKPoint Start, SKPoint Control1, SKPoint Control2, SKPoint End, bool IsCubic)
+internal readonly record struct RoadCurvePiece(SKPoint Start, SKPoint Control1, SKPoint Control2, SKPoint End, bool IsCubic,
+    double StartHeight = 0, double Control1Height = 0, double Control2Height = 0, double EndHeight = 0)
 {
-    internal RoadCurvePiece Reversed() => new(End, Control2, Control1, Start, IsCubic);
+    internal RoadCurvePiece Reversed() => new(End, Control2, Control1, Start, IsCubic, EndHeight, Control2Height, Control1Height, StartHeight);
 }

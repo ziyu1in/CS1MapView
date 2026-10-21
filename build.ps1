@@ -25,9 +25,9 @@ if (!$dotnet) { throw 'Install .NET SDK 8 or newer with Windows desktop support.
 
 $referenceMap = $null
 if ($SmokeTest) {
-    $referencePath = if ($MapFile) { $MapFile } else { Join-Path $repoRoot 'samples/Springdale-20260927-124147.cslmap.gz' }
+    $referencePath = if ($MapFile) { $MapFile } else { Join-Path $repoRoot 'samples/reference.cslmap.gz' }
     if (!(Test-Path -LiteralPath $referencePath -PathType Leaf)) {
-        throw 'Full checks need the private Springdale reference export. Supply -MapFile <path>; see samples/README.md.'
+        throw 'Full checks require a local integration-test export. Supply -MapFile <path>.'
     }
     $referenceMap = (Resolve-Path -LiteralPath $referencePath).Path
 }

@@ -33,7 +33,7 @@ internal static class RoadWidthChecks
     {
         var type = new XMLSegmentType { Name = "Custom Mod Highway", Highway = true };
         type.Lanes.Add(Lane("Vehicle", "Car", 0, 4.25f));
-        type.Lanes.Add(Lane("Vehicle", "None", 0, 22)); // Actual Springdale trigger.
+        type.Lanes.Add(Lane("Vehicle", "None", 0, 22)); // Actual Reference map trigger.
         type.Lanes.Add(Lane("None", "None", 0, 32)); // Tunnel/helper metadata.
         type.Lanes.Add(Lane("Vehicle", null, 0, 100));
         var xml = new CSLExportXML { FileVersion = "4.1" };

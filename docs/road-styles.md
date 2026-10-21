@@ -58,8 +58,8 @@ a warm, light palette.
 
 Positron draws physically narrow roads up to 12 m wide as muted gray lines, with
 matching fill and outline colors. Wider roads remain white even when they have
-only two lanes or run one-way. Springdale's two-lane one-way city roads are 16 m
-wide and therefore remain white. Lane count controls the outline hierarchy of
+only two lanes or run one-way. For example, a 16 m wide two-lane one-way
+street remains white. Lane count controls the outline hierarchy of
 the wider roads. Highways retain their separate white, outlined styling at every
 width. Its land, water, buildings and greenery form a cooler, quieter
 background. Tunnel fills are slightly muted in both styles; tunnels retain

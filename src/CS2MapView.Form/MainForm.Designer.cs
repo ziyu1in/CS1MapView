@@ -47,7 +47,7 @@
             panel1 = new Panel();
             HScrollBar = new HScrollBar();
             VScrollBar = new VScrollBar();
-            SkiaControl = new SkiaSharp.Views.Desktop.SKGLControl();
+            SkiaControl = new MapGLControl();
             MainStatusStrip.SuspendLayout();
             menuStrip1.SuspendLayout();
             panel1.SuspendLayout();

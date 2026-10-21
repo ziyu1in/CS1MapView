@@ -175,29 +175,29 @@ internal static class RoadCurveChecks
         }
     }
 
-    internal static void RunSpringdale(CSLExportXML raw, string reports)
+    internal static void RunReferenceMap(CSLExportXML raw, string reports)
     {
         var manager = new CS1SegmentManager(raw);
         var roads = raw.SegmentList.Where(s => manager.GetWayType(s).HasBit(WayType.Road)).ToArray();
         var original = raw.SegmentList.Select(s => s.Points.Select(p => (p.X,p.Y,p.Z)).ToArray()).ToArray();
         int curves = roads.Count(s => CS1RoadGeometry.TryRecover(s.Points,out _));
-        Check(curves > 3000 && roads.Where(s => s.Points.Count == 5).All(s => CS1RoadGeometry.TryRecover(s.Points,out _)), "Springdale sampled road coverage is incomplete");
+        Check(curves > 3000 && roads.Where(s => s.Points.Count == 5).All(s => CS1RoadGeometry.TryRecover(s.Points,out _)), "Reference map sampled road coverage is incomplete");
         foreach (bool hierarchy in new[] { false, true })
         {
             var geometry = new CS1RoadGeometry();
             var view = CS1XMLImporter.CreateLabelView(raw,hierarchy,geometry);
             var displayed = view.SegmentList.Where(s => manager.GetWayType(s).HasBit(WayType.Road)).ToArray();
-            Check(displayed.Sum(s => geometry.Pieces(s).Count(p => p.IsCubic)) == curves, "Springdale display joining dropped reconstructed curves");
+            Check(displayed.Sum(s => geometry.Pieces(s).Count(p => p.IsCubic)) == curves, "Reference map display joining dropped reconstructed curves");
             foreach (var segment in displayed)
             {
                 var pieces = geometry.Pieces(segment);
-                Check(pieces.Count > 0 && pieces[0].Start == Map(segment.Points[0]) && pieces[^1].End == Map(segment.Points[^1]), "Springdale curve left its original endpoint nodes");
-                Check(pieces.Zip(pieces.Skip(1)).All(pair => pair.First.End == pair.Second.Start), "Springdale joined road has a curve discontinuity");
+                Check(pieces.Count > 0 && pieces[0].Start == Map(segment.Points[0]) && pieces[^1].End == Map(segment.Points[^1]), "Reference map curve left its original endpoint nodes");
+                Check(pieces.Zip(pieces.Skip(1)).All(pair => pair.First.End == pair.Second.Start), "Reference map joined road has a curve discontinuity");
             }
         }
         for (int i = 0; i < raw.SegmentList.Count; i++)
-            Check(original[i].SequenceEqual(raw.SegmentList[i].Points.Select(p => (p.X,p.Y,p.Z))), "Springdale raw geometry changed during curve recovery");
-        string report = $"PASS Springdale road curves: {curves} recovered cubics; original endpoints and piece continuity preserved through both display-joining policies; source geometry unchanged.";
+            Check(original[i].SequenceEqual(raw.SegmentList[i].Points.Select(p => (p.X,p.Y,p.Z))), "Reference map raw geometry changed during curve recovery");
+        string report = $"PASS Reference map road curves: {curves} recovered cubics; original endpoints and piece continuity preserved through both display-joining policies; source geometry unchanged.";
         File.WriteAllText(Path.Combine(reports,"road-curve-reconstruction.txt"),report);
         Console.WriteLine(report);
     }

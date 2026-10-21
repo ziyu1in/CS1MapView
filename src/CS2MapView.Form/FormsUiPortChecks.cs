@@ -102,7 +102,8 @@ internal static class FormsUiPortChecks
 
             var priorAreaAngle = main.Context.ViewContext.Angle;
             main.Context.ViewContext.Angle = (float)Math.PI / 12;
-            var chosenArea = SKRect.Create(660, 1780, 460, 340);
+            var referencePosition = raw.BuildingList.First(b => b.Points.Count > 0).Points[0];
+            var chosenArea = SKRect.Create(referencePosition.X - 230, -referencePosition.Z - 170, 460, 340);
             main.OutputArea = chosenArea;
             main.Context.ViewContext.Angle += (float)Math.PI / 2;
             var expectedArea = CS2MapView.Util.SKPathEx.GetTransformedRectBound(chosenArea, SKMatrix.CreateRotation((float)Math.PI / 2));
@@ -291,7 +292,8 @@ internal static class FormsUiPortChecks
             hidden.ViewerVisible = false;
             session.SaveRouteOverrides();
             var view = main.Context.ViewContext;
-            BetaOutput.SetView(view, SKRect.Create(660, 1780, 460, 460), (float)Math.PI / 12, 700, 700);
+            var selectedPosition = candidate.Stops[0].PositionOnSegment;
+            BetaOutput.SetView(view, SKRect.Create(selectedPosition.X - 230, -selectedPosition.Z - 230, 460, 460), (float)Math.PI / 12, 700, 700);
             var beforeView = view.ViewTransform;
             var beforeLayers = main.MapData!.Layers.ToArray();
             var beforeSelected = session.SelectedGroupId;

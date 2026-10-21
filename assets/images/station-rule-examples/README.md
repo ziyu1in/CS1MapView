@@ -59,37 +59,9 @@ This priority comes before the same-mode and marker length priorities.
 The selected pair has a 7 m alignment limit.
 The candidate pair has a 6 m alignment limit.
 
-## Export settings
+## Display settings
 
-All examples use a 90 m cluster search radius and a 0 m transfer link distance.
-Route lines are off.
-Station markers, rail tracks, and station areas are on.
-Map name labels are off.
-The style is `apple-light`.
-The map exports have a width of 1,000 pixels and no rotation.
-
-| Example | Crop in meters | Visible services |
-| --- | --- | --- |
-| Accepted alignment | `-3680,-2360,220,220` | Train services 76 and 105. |
-| Rejected alignment | `-2330,120,400,400` | All services. |
-| Same-mode priority | `-2330,120,400,400` | All services except train service 76. |
-| Opposite-direction priority | `-4120,-3740,240,240` | Train services 76 and 234. |
-
-Service numbers identify export records.
-See [examples.json](examples.json) for the physical positions, fitted axes, alignment errors, and pair counts.
-See the [source gallery record](../gallery.json) for the private export and its hash.
-The repository does not include the city export.
-
-Each example has a configuration and a service override file in [settings/](settings/).
-Use an isolated copy of the complete build output for these commands.
-
-```powershell
-$runtime = (Resolve-Path 'artifacts/gallery-runtime').Path
-$config = (Resolve-Path 'assets/images/station-rule-examples/settings/same-mode-priority.xml').Path
-Copy-Item 'assets/images/station-rule-examples/settings/same-mode-priority.routes.xml' "$runtime/CS1MapView.routes.xml" -Force
-& "$runtime/CS1MapView.exe" --render 'C:/path/to/city.cslmap.gz' --output 'artifacts/same-mode-priority.svg' --size 1000 --style apple-light --rotate 0 --config $config --crop '-2330,120,400,400'
-```
-
-Repeat with the other configurations, override files, and crops.
-Do not add `--transit` to these commands.
-The viewer exports the map without the annotations.
+The examples use Apple Light, a 90 m cluster search radius and a 0 m transfer
+link distance. Route lines and map-name labels are hidden. Station markers,
+railways and station areas are shown. A, B and C are local illustration labels.
+The bands, axes, measurements and direction arrows explain the selection rules.

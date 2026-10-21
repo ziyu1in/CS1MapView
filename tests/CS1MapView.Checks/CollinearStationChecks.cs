@@ -166,14 +166,14 @@ internal static class CollinearStationChecks
         Console.WriteLine("PASS collinear clusters: pairs/trios/quartets, multiple groups, order independence, radius bounds, nearest edges, minimum spanning lattice forest (24 links, no diagonals or loops), transfer policy, badge toggle and persistence");
     }
 
-    internal static void Springdale(TransportManager manager, string outputDirectory)
+    internal static void ReferenceMap(TransportManager manager, string outputDirectory)
     {
         var layout = manager.StationLayout;
         ForestChecks(layout);
         var original = manager.TransportList.Where(r => r.ViewerVisible && !r.HadLoadError).SelectMany(r => r.Stops).Select(s => s.TransportId + ":" + s.NodeId).Distinct().OrderBy(s => s);
         var displayed = layout.Clusters.SelectMany(c => c.Points).SelectMany(p => p.Stops).Select(s => s.TransportId + ":" + s.NodeId).OrderBy(s => s);
-        Check(original.SequenceEqual(displayed), "Display lost or duplicated a Springdale service/stop");
-        Check(layout.Clusters.All(c => c.Error <= c.Tolerance + .00001), "Springdale collinearity constraint violated");
+        Check(original.SequenceEqual(displayed), "Display lost or duplicated a Reference map service/stop");
+        Check(layout.Clusters.All(c => c.Error <= c.Tolerance + .00001), "Reference map collinearity constraint violated");
         var lines = layout.Clusters.Select(c => {
             var members = string.Join(";", c.Points.Select(p => string.Format(CultureInfo.InvariantCulture,
                 "{0:F3},{1:F3}[{2}]", p.Position.X, p.Position.Y, string.Join(",", p.Stops.Select(s => s.TransportId + ":" + s.NodeId)))));
@@ -183,6 +183,6 @@ internal static class CollinearStationChecks
         });
         Directory.CreateDirectory(outputDirectory);
         File.WriteAllLines(Path.Combine(outputDirectory, "collinear-stations.txt"), lines);
-        Console.WriteLine("PASS Springdale station display: " + layout.Points.Count + " physical positions, " + layout.CandidateCount + " candidates, " + layout.Clusters.Count + " symbols, " + layout.PointLinks.Count + " stop links / " + layout.Links.Count + " symbol links");
+        Console.WriteLine("PASS Reference map station display: " + layout.Points.Count + " physical positions, " + layout.CandidateCount + " candidates, " + layout.Clusters.Count + " symbols, " + layout.PointLinks.Count + " stop links / " + layout.Links.Count + " symbol links");
     }
 }

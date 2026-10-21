@@ -23,33 +23,9 @@ The top image pair changes the cluster radius.
 The bottom image pair changes the link distance.
 The viewer calculates the station markers and transfer links in each example.
 
-## Export settings
+## Display settings
 
-The crop is `-2330,120,400,400` in meters.
-The map export has a width of 1,000 pixels and no rotation.
-The circle annotations use the world-to-SVG scale from each export.
-The figure identifies physical stops at these map positions:
-
-| Stop | East | South |
-| --- | --- | --- |
-| A | -2132.69384765625 m | 316.49249267578125 m |
-| B | -2186.456298828125 m | 351.885498046875 m |
-
-See [examples.json](examples.json) for the measurements and layer selections.
-See the [source gallery record](../gallery.json) for the private export and its hash.
-The repository does not include the city export.
-
-Each example has a configuration in [settings/](settings/).
-The service override file leaves all services active.
-Use an isolated copy of the complete build output for these commands.
-
-```powershell
-$runtime = (Resolve-Path 'artifacts/gallery-runtime').Path
-$config = (Resolve-Path 'assets/images/distance-examples/settings/radius-30-link-150.xml').Path
-Copy-Item 'assets/images/distance-examples/settings/all-services.routes.xml' "$runtime/CS1MapView.routes.xml" -Force
-& "$runtime/CS1MapView.exe" --render 'C:/path/to/city.cslmap.gz' --output 'artifacts/radius-30-link-150.svg' --size 1000 --style apple-light --rotate 0 --config $config --crop '-2330,120,400,400'
-```
-
-Repeat with the other configurations.
-Do not add `--transit` to these commands.
-The viewer exports the map without the circle annotations.
+The panels use Apple Light with zero rotation. Route lines and map-name labels
+are hidden. Station markers, railways and station areas are shown. The circles
+are explanatory annotations; the viewer calculates the displayed markers and
+transfer links. A and B identify stops only within this illustration.

@@ -292,35 +292,35 @@ internal static class RoadHierarchyChecks
         Console.WriteLine("PASS parking-lot networks: excluded from lane-based emphasis in all elevation modes; physical widths/lanes, curbside-parking streets, custom names, highways and joining preserved");
     }
 
-    internal static void RunSpringdale(CSLExportXML raw, string outputDirectory)
+    internal static void RunReferenceMap(CSLExportXML raw, string outputDirectory)
     {
         var manager = new CS1SegmentManager(raw);
         var roads = raw.SegmentList.Where(segment => manager.GetWayType(segment).HasFlag(WayType.Road)
             && !manager.GetWayType(segment).HasFlag(WayType.Transport)
             && manager.GetRoadLanes(segment).Total > 0).ToArray();
-        Check(roads.Length > 0, "No physical motor-traffic roads were classified in Springdale");
+        Check(roads.Length > 0, "No physical motor-traffic roads were classified in Reference map");
         var groups = roads.GroupBy(manager.GetRoadImportance).OrderBy(group => group.Key).ToArray();
-        Check(groups.Length == 4, "Springdale road hierarchy is missing a class");
+        Check(groups.Length == 4, "Reference map road hierarchy is missing a class");
         var parking = roads.Where(segment => RoadLaneMetadata.IsParkingLotNetwork(segment.Name)).ToArray();
         Check(parking.Length == 37 && parking.Select(segment => segment.Name).Distinct().Count() == 5
             && parking.All(segment => manager.GetRoadImportance(segment) == RoadImportance.Minor),
-            "Springdale parking-lot network assets retained lane-based emphasis");
+            "Reference map parking-lot network assets retained lane-based emphasis");
         Check(parking.Count(segment => manager.GetRoadLanes(segment).Total >= 4) == 7,
-            "Springdale multi-aisle parking-lot coverage changed");
-        Console.WriteLine("PASS Springdale parking lots: all 37 segments across five assets stay minor; seven four/six-lane lot segments lose emphasis");
+            "Reference map multi-aisle parking-lot coverage changed");
+        Console.WriteLine("PASS Reference map parking lots: all 37 segments across five assets stay minor; seven four/six-lane lot segments lose emphasis");
         foreach (var road in roads.Where(segment => !manager.GetWayType(segment).HasFlag(WayType.Highway)
             && manager.GetRoadLanes(segment).Total < 4))
-            Check(manager.GetRoadImportance(road) == RoadImportance.Minor, "Springdale road with fewer than four total lanes received emphasis");
+            Check(manager.GetRoadImportance(road) == RoadImportance.Minor, "Reference map road with fewer than four total lanes received emphasis");
         foreach (var road in roads.Where(segment => segment.Name.StartsWith("1889646434.")))
             Check(manager.GetRoadLanes(road).BusiestDirection == 1 && manager.GetRoadImportance(road) == RoadImportance.Highway,
-                "Springdale 1L highway helper lane increased traffic lane count");
+                "Reference map 1L highway helper lane increased traffic lane count");
         var positron = BetaSettings.LoadStyle("carto-positron");
         var cityOneWays = roads.Where(segment => segment.Name.StartsWith("2253466511.BIG Urban Roads 2 Lane 1 Wa")).ToArray();
         Check(cityOneWays.Length > 0 && cityOneWays.All(segment => manager.GetRoadLanes(segment).Total == 2
             && manager.GetWidth(segment) == 16 && manager.GetWidth(segment) > positron.RoadHierarchy.NarrowRoadMaxWidth),
-            "Springdale's normal-width two-lane one-way streets were treated as physically narrow");
-        Console.WriteLine("PASS Springdale two-lane one-way streets: " + cityOneWays.Length + " segments at 16 m, above the gray-road width threshold");
+            "Reference map's normal-width two-lane one-way streets were treated as physically narrow");
+        Console.WriteLine("PASS Reference map two-lane one-way streets: " + cityOneWays.Length + " segments at 16 m, above the gray-road width threshold");
         File.WriteAllLines(Path.Combine(outputDirectory, "road-hierarchy.txt"), groups.Select(group => group.Key + ": " + group.Count() + " segments"));
-        Console.WriteLine("PASS Springdale road hierarchy: " + string.Join(", ", groups.Select(group => group.Key + "=" + group.Count())));
+        Console.WriteLine("PASS Reference map road hierarchy: " + string.Join(", ", groups.Select(group => group.Key + "=" + group.Count())));
     }
 }

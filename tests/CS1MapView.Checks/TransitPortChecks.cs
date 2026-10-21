@@ -26,7 +26,7 @@ internal static class TransitPortChecks
         Check(TransportMapBuilder.GetLinePenWidth(1, 0, false, .5) == 2 && TransportMapBuilder.GetLinePenWidth(1, 0, false, 2) == 3
             && Math.Abs(TransportMapBuilder.GetLinePenWidth(3, 2, true, 1) - 4.8) < 1e-9, "Transit stroke sizing changed");
     }
-    internal static void RunSpringdale(BetaMapSession session, CSLExportXML raw, string reports)
+    internal static void RunReferenceMap(BetaMapSession session, CSLExportXML raw, string reports)
     {
         var manager = session.TransportManager;
         Check(manager.TransportList.Count == 26 && manager.TransportList.Count == raw.TransportList.Count, "Service count changed");
@@ -47,8 +47,8 @@ internal static class TransitPortChecks
                 legs++;
             }
         }
-        StationClusterChecks.CheckSpringdale(manager, raw, reports);
-        CollinearStationChecks.Springdale(manager, reports);
+        StationClusterChecks.CheckReferenceMap(manager, raw, reports);
+        CollinearStationChecks.ReferenceMap(manager, reports);
         var layout = manager.StationLayout;
         Check(layout.Points.Count == 114 && layout.Clusters.Count == 79 && layout.CandidateCount == 188 && layout.Links.Count == 6 && layout.Stations.Count == 73,
             $"Station layout changed: {layout.Points.Count} points, {layout.CandidateCount} candidates, {layout.Clusters.Count} symbols, {layout.Links.Count} links, {layout.Stations.Count} groups");

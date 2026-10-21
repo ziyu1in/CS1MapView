@@ -107,20 +107,20 @@ internal static class BmStationPlatformChecks
         Console.WriteLine("PASS BM platforms: all four layouts, continuous center islands, light tracks, exported widths, curves, clipping, stop-track switch, duplicates and source preservation");
     }
 
-    internal static void RunSpringdale(CSLExportXML xml)
+    internal static void RunReferenceMap(CSLExportXML xml)
     {
         var types = xml.SegmentTypeList.ToDictionary(t => t.Name);
         int count = 0;
         foreach (var layout in Layouts)
         {
             var segments = xml.SegmentList.Where(s => s.Name == layout.Name && s.PathUnit == null).ToList();
-            Check(segments.Count > 0, "Springdale is missing a supported BM platform layout: " + layout.Name);
+            Check(segments.Count > 0, "Reference map is missing a supported BM platform layout: " + layout.Name);
             foreach (var segment in segments)
             {
                 using var platforms = BmStationPlatformGeometry.Build(segment, types[segment.Name], segment.Width);
                 using var footprint = NativeGeometry.Network(segment, segment.Width);
                 Check(!platforms.IsEmpty && StationPremisesPortChecks.Area(platforms) < StationPremisesPortChecks.Area(footprint) * .6,
-                    "Springdale BM platform tint still covers its whole station segment: " + segment.Id);
+                    "Reference map BM platform tint still covers its whole station segment: " + segment.Id);
                 var a = segment.Points[0]; var b = segment.Points[1];
                 double dx = b.X - a.X, dy = a.Z - b.Z, length = Math.Sqrt(dx * dx + dy * dy);
                 double x = (a.X + b.X) / 2d, y = -(a.Z + b.Z) / 2d;
@@ -128,14 +128,14 @@ internal static class BmStationPlatformChecks
                 {
                     double offset = (band.Min + band.Max) / 2;
                     Check(platforms.Contains((float)(x - dy * offset / length), (float)(y + dx * offset / length)),
-                        "Springdale BM platform projection missed a platform: " + segment.Id);
+                        "Reference map BM platform projection missed a platform: " + segment.Id);
                 }
                 Check(layout.Tracks.All(offset => !platforms.Contains((float)(x - dy * offset / length), (float)(y + dx * offset / length))),
-                    "Springdale BM platform projection darkened a metro track: " + segment.Id);
+                    "Reference map BM platform projection darkened a metro track: " + segment.Id);
                 count++;
             }
         }
-        Check(count == 33, "Springdale BM station segment coverage changed");
-        Console.WriteLine("PASS Springdale BM platform projections: " + count + " station segments across all four layouts; platform-only darker tint");
+        Check(count == 33, "Reference map BM station segment coverage changed");
+        Console.WriteLine("PASS Reference map BM platform projections: " + count + " station segments across all four layouts; platform-only darker tint");
     }
 }

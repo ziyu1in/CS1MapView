@@ -61,3 +61,9 @@ scripts/render-map.ps1
 scripts/render-map.ps1
 /samples
 /scripts
+
+# Private gallery source records and per-city service overrides stay local.
+/assets/images/gallery.json
+/assets/images/distance-examples/examples.json
+/assets/images/station-rule-examples/examples.json
+/assets/images/**/settings/*.routes.xml

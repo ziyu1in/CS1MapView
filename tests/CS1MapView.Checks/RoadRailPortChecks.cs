@@ -25,7 +25,7 @@ internal static class RoadRailPortChecks
         RailMetadataPortChecks.RunPolicies();
         StationPremisesPortChecks.RunPolicies();
     }
-    internal static void RunSpringdale(CSLExportXML raw, string outputDirectory)
+    internal static void RunReferenceMap(CSLExportXML raw, string outputDirectory)
     {
         var features = BetaSettings.Clone(BetaSettings.Config);
         features.CanvasSize = 4096; features.SelectedStyle = "apple-light"; features.RenderRail = true;
@@ -85,7 +85,7 @@ internal static class RoadRailPortChecks
                 "A simple network left its original centerline: " + mode);
         }
         var quad = rails.First(s => s.Name == "2619651082.R2USA GrWo 4x2_Data");
-        Check(counts[quad.Id] == 4, "Springdale quad asset lost its four track paths");
+        Check(counts[quad.Id] == 4, "Reference map quad asset lost its four track paths");
         Check(paths.Any(p => p.Tunnel), "Underground infrastructure disappeared");
         config.RenderRailTrain = false;
         var hiddenTrain = builder.BuildTrackPaths(raw);
@@ -116,7 +116,7 @@ internal static class RoadRailPortChecks
         Check(rails.All(s => s.Name == original[s.Id].Name && s.Points.First().Equals(original[s.Id].First)
             && s.Points.Last().Equals(original[s.Id].Last)), "Railway checks changed source assets");
         using var areas = CS1StationPremisesCollection.Collect(raw);
-        BmStationPlatformChecks.RunSpringdale(raw);
+        BmStationPlatformChecks.RunReferenceMap(raw);
         Check(areas.BuildingIds.Count == 162 && areas.StopTrackIds.Count == 92 && areas.PlatformIds.Count == 314 && areas.PassageIds.Count == 309,
             "Native station-area asset coverage changed");
         Check(raw.SegmentList.Where(s => areas.StationTrackIds.Contains(s.Id)).All(s =>
@@ -129,7 +129,7 @@ internal static class RoadRailPortChecks
             .All(s => areas.PassageIds.Contains(s.Id)), "Lane-less passage disappeared");
         var bmUndergroundMetro = raw.SegmentList.Where(s => s.Name == "2908783312.BM - 4 L Udrgrnd Station Track #01_Data").ToList();
         Check(bmUndergroundMetro.Count == 2 && bmUndergroundMetro.All(s => areas.UndergroundMetroStationIds.Contains(s.Id)),
-            "Springdale's BM underground metro station assets did not receive platform tint");
+            "Reference map's BM underground metro station assets did not receive platform tint");
         Check(areas.UndergroundMetroStationIds.All(id => areas.StationTrackIds.Contains(id)),
             "Deeper metro tint expanded station-area asset membership");
         config.RenderTransportRoute = config.RenderStationPremises = true;
@@ -177,7 +177,7 @@ internal static class RoadRailPortChecks
             "Passages: " + areas.PassageIds.Count + "; decorative platforms: " + areas.PlatformIds.Count,
             "Underground metro station networks with platform tint: " + areas.UndergroundMetroStationIds.Count
         }.Concat(report.Details));
-        Console.WriteLine("PASS native Springdale roads/rail/premises: " + widths + " widths; " + rails.Count
+        Console.WriteLine("PASS native Reference map roads/rail/premises: " + widths + " widths; " + rails.Count
             + " rail assets / " + paths.Count + " physical paths; rigid spacing, filtering, both appearances and native disjoint tints");
     }
 }

@@ -123,7 +123,7 @@ See the [track-count examples](assets/images/track-count-examples/README.md) for
 ## Supported Workshop assets
 
 The viewer recognizes the exported geometry of the following asset groups.
-The table gives selected examples present in the reference city export.
+The table lists supported asset examples.
 Workshop names and links were checked on 2026-10-13.
 
 Support refers to 2D map display.
@@ -141,7 +141,7 @@ Other assets can work when their exports contain the same usable metadata.
 | BVU Gravel Wooden Metro Tracks: [wired](https://steamcommunity.com/sharedfiles/filedetails/?id=2071010264), [third rail](https://steamcommunity.com/sharedfiles/filedetails/?id=2071006080); Station Tracks: [wired](https://steamcommunity.com/sharedfiles/filedetails/?id=2071009159), [third rail](https://steamcommunity.com/sharedfiles/filedetails/?id=2071005091) | Separate metro tracks. Tracks carrying stops can also have station areas. |
 | BM underground station tracks: [Double #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2463160214), [Center Platform #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2469645459), [Bypass #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2621140416), [4 L #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2908783312) | Metro tracks and station areas, including unused recognized station-track segments. Stronger tint follows the pedestrian platform widths, with paired center-platform paths joined. |
 | BM Station Pathways [#01](https://steamcommunity.com/sharedfiles/filedetails/?id=2372093501), [#02](https://steamcommunity.com/sharedfiles/filedetails/?id=2372093901), [#03](https://steamcommunity.com/sharedfiles/filedetails/?id=2372094372), [#04](https://steamcommunity.com/sharedfiles/filedetails/?id=2372094811), [#05](https://steamcommunity.com/sharedfiles/filedetails/?id=2372095863), and [Station Pathways #06 / #07](https://steamcommunity.com/sharedfiles/filedetails/?id=2870803975) | Passage areas associated with nearby stations or entrances. Pathway #05 is recognized even without exported lanes. |
-| [North American Platforms (network pack)](https://steamcommunity.com/sharedfiles/filedetails/?id=2740493387) | Decorative platform areas using exported network widths. The reference export contains 19 platform variants from this pack. |
+| [North American Platforms (network pack)](https://steamcommunity.com/sharedfiles/filedetails/?id=2740493387) | Decorative platform areas using exported network widths. Uses exported platform widths. |
 | BM [Entrance Buildings #01 (Right)](https://steamcommunity.com/sharedfiles/filedetails/?id=2463321976) and [Entrance Buildings #02](https://steamcommunity.com/sharedfiles/filedetails/?id=2870843227); FTP station anchors: [Double #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2463308917), [Center #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2469724915), [Bypass #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2621162431), [4 Tracks #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2908904669) | Surface entrance lots and nearby passage associations. Small invisible FTP anchors do not add station-lot rectangles. |
 | LRT tram tracks: [standard](https://steamcommunity.com/sharedfiles/filedetails/?id=1554363713), [single tracks](https://steamcommunity.com/sharedfiles/filedetails/?id=1559078925), [without fences](https://steamcommunity.com/sharedfiles/filedetails/?id=1707061991); station tracks: [#01](https://steamcommunity.com/sharedfiles/filedetails/?id=1564758436), [Elevated #01](https://steamcommunity.com/sharedfiles/filedetails/?id=2809013500) | Separate physical tram tracks. Tram station-track areas are excluded from the station area layer. |
 
@@ -254,6 +254,7 @@ Train route lines can stay visible without train markers.
 
 - Map styles include `apple-light`, `carto-voyager` and `carto-positron`.
 - Curved roads recover native Bézier geometry from compatible five-point exports, preserving endpoint nodes and original segment boundaries through display joining. Ground, elevated, tunnel and junction strokes follow the recovered curves in every style.
+- Road crossings receive a final local correction using exported heights at each overlap. Higher roads cover lower roads, including ramps whose relative height changes along their length. The correction is cached with the road layer and remains vector geometry in SVG exports. See [road crossings](docs/road-crossings.md).
 - Parking-lot networks and their service roads are excluded from lane-based road emphasis; ordinary streets with curbside parking retain their normal importance.
 - The two CARTO-inspired styles use total motor-traffic lane counts for road color and outline contrast: fewer than four lanes stays minor, four or five is intermediate, and six or more is major. Voyager uses yellow for intermediate and major roads, with deeper yellow highways; Positron uses gray for roads up to 12 m wide and white for wider roads, independently of lane count. See [road styles](docs/road-styles.md).
 - The viewer uses exported road widths.
@@ -265,15 +266,95 @@ Train route lines can stay visible without train markers.
 
 The project has no printer test results.
 
-## Build and start
+## Map rendering comparisons
+
+These close-ups show two anonymous interchanges.
+Each comparison uses the same city export, map extent and scale. Click an image to enlarge it.
+Interchange B includes contour lines, railway tracks and buildings in every panel.
+
+### Three map styles
+
+All three styles below use CS1MapView v0.1.3 with the same geometry and layers.
+**Apple Light** uses blue-gray highways and light streets.
+**CARTO Voyager** uses warm land colors and yellow to emphasize larger roads.
+**CARTO Positron** uses a muted palette with white or gray roads.
+Choose a style in the View menu or Options. See [road styles](docs/road-styles.md) for width and lane-count rules.
+
+**Interchange A**
+
+| Apple Light | CARTO Voyager | CARTO Positron |
+| --- | --- | --- |
+| [![Interchange A in Apple Light](assets/images/road-rendering-comparisons/styles-interchange-a-apple-light.png)](assets/images/road-rendering-comparisons/styles-interchange-a-apple-light.png) | [![Interchange A in CARTO Voyager](assets/images/road-rendering-comparisons/styles-interchange-a-carto-voyager.png)](assets/images/road-rendering-comparisons/styles-interchange-a-carto-voyager.png) | [![Interchange A in CARTO Positron](assets/images/road-rendering-comparisons/styles-interchange-a-carto-positron.png)](assets/images/road-rendering-comparisons/styles-interchange-a-carto-positron.png) |
+
+**Interchange B**
+
+| Apple Light | CARTO Voyager | CARTO Positron |
+| --- | --- | --- |
+| [![Interchange B in Apple Light with contours, railways and buildings](assets/images/road-rendering-comparisons/styles-interchange-b-apple-light.png)](assets/images/road-rendering-comparisons/styles-interchange-b-apple-light.png) | [![Interchange B in CARTO Voyager with contours, railways and buildings](assets/images/road-rendering-comparisons/styles-interchange-b-carto-voyager.png)](assets/images/road-rendering-comparisons/styles-interchange-b-carto-voyager.png) | [![Interchange B in CARTO Positron with contours, railways and buildings](assets/images/road-rendering-comparisons/styles-interchange-b-carto-positron.png)](assets/images/road-rendering-comparisons/styles-interchange-b-carto-positron.png) |
+
+### Smoothed road curves
+
+These road improvement panels use `apple-light`. The left column shows original CSLMapView;
+the middle and right columns compare an earlier CS1MapView build with v0.1.3.
+
+Compatible exported road samples are recovered as smooth Bézier curves.
+The original endpoint nodes and segment boundaries stay in place.
+The before images use the v0.1.2.2 build from before curve recovery was added;
+the after images show that improvement retained in v0.1.3.
+
+**Interchange A — curved ramps**
+
+| Original CSLMapView | Before: CS1MapView v0.1.2.2, before curve recovery | After: CS1MapView v0.1.3 |
+| --- | --- | --- |
+| [![Original CSLMapView: interchange A ramp bends](assets/images/road-rendering-comparisons/curves-interchange-a-original.png)](assets/images/road-rendering-comparisons/curves-interchange-a-original.png) | [![Before curve recovery: angular interchange A ramp bends](assets/images/road-rendering-comparisons/curves-interchange-a-before.png)](assets/images/road-rendering-comparisons/curves-interchange-a-before.png) | [![CS1MapView v0.1.3: smooth interchange A ramp bends](assets/images/road-rendering-comparisons/curves-interchange-a-after.png)](assets/images/road-rendering-comparisons/curves-interchange-a-after.png) |
+
+**Interchange B — loop ramp**
+
+Contours, railway tracks and buildings are enabled in all Interchange B panels.
+
+| Original CSLMapView | Before: CS1MapView v0.1.2.2, before curve recovery | After: CS1MapView v0.1.3 |
+| --- | --- | --- |
+| [![Original CSLMapView: Interchange B loop with contours, railways and station building](assets/images/road-rendering-comparisons/curves-interchange-b-original.png)](assets/images/road-rendering-comparisons/curves-interchange-b-original.png) | [![Before curve recovery: Interchange B loop with angular road samples](assets/images/road-rendering-comparisons/curves-interchange-b-before.png)](assets/images/road-rendering-comparisons/curves-interchange-b-before.png) | [![CS1MapView v0.1.3: smooth Interchange B loop with contours, railway tracks and station building](assets/images/road-rendering-comparisons/curves-interchange-b-after.png)](assets/images/road-rendering-comparisons/curves-interchange-b-after.png) |
+
+### Height-based road rendering
+
+At each road overlap, v0.1.3 uses the exported local heights to draw the higher road above the lower road.
+This also applies to ramps whose relative height changes along their length.
+The before images use the later v0.1.2.2 build with smooth curves but without the crossing correction.
+Railway tracks provide context; road-to-rail stacking remains unchanged.
+
+**Interchange A — overlapping roads**
+
+| Original CSLMapView | Before: CS1MapView v0.1.2.2, with smooth curves | After: CS1MapView v0.1.3 |
+| --- | --- | --- |
+| [![Original CSLMapView: road overlaps beside the interchange A](assets/images/road-rendering-comparisons/heights-interchange-a-original.png)](assets/images/road-rendering-comparisons/heights-interchange-a-original.png) | [![Before height correction: interchange A roads drawn in the earlier layer order](assets/images/road-rendering-comparisons/heights-interchange-a-before.png)](assets/images/road-rendering-comparisons/heights-interchange-a-before.png) | [![CS1MapView v0.1.3: interchange A road overlaps ordered by exported local height](assets/images/road-rendering-comparisons/heights-interchange-a-after.png)](assets/images/road-rendering-comparisons/heights-interchange-a-after.png) |
+
+**Interchange B — ramp crossing**
+
+| Original CSLMapView | Before: CS1MapView v0.1.2.2, with smooth curves | After: CS1MapView v0.1.3 |
+| --- | --- | --- |
+| [![Original CSLMapView: Interchange B crossing with contours, railways and buildings](assets/images/road-rendering-comparisons/heights-interchange-b-original.png)](assets/images/road-rendering-comparisons/heights-interchange-b-original.png) | [![Before height correction: Interchange B ramp crossing in the earlier layer order](assets/images/road-rendering-comparisons/heights-interchange-b-before.png)](assets/images/road-rendering-comparisons/heights-interchange-b-before.png) | [![CS1MapView v0.1.3: Interchange B road crossing corrected using local heights](assets/images/road-rendering-comparisons/heights-interchange-b-after.png)](assets/images/road-rendering-comparisons/heights-interchange-b-after.png) |
+
+See the [comparison settings and viewer versions](assets/images/road-rendering-comparisons/README.md)
+for the exact crops and layer choices, and [road crossings](docs/road-crossings.md) for the correction's scope.
+
+## Download and start
+
+1. Install [.NET Desktop Runtime 8 for Windows x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
+2. Download the Windows x64 ZIP from [Releases](https://github.com/ziyu1in/CS1MapView/releases).
+3. Extract the entire ZIP into a folder you can write to.
+4. Run `CS1MapView.exe` and open a `.cslmap` or `.cslmap.gz` city export.
+
+Keep the executable, DLLs and asset folders together. Use the CSLMapView mod in
+Cities: Skylines 1 to create an export from your city.
+
+### Build from source
 
 Build requirements:
 
 - Windows x64.
 - .NET SDK 8 or a subsequent version with Windows desktop components.
 - Network access for NuGet package downloads.
-
-.NET Desktop Runtime 8 is necessary to start the viewer.
 
 1. Build the viewer from the repository root.
 
@@ -316,8 +397,7 @@ The **Lists** menu has the line and building editors.
 
 ## Checks and exports
 
-The private reference export is necessary for the full checks.
-See the [fixture requirements](samples/README.md).
+Full integration checks require a separately supplied local test export.
 
 ```powershell
 ./build.ps1 -SmokeTest -MapFile 'C:/path/to/reference.cslmap.gz'

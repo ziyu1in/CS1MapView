@@ -40,19 +40,19 @@ Save image uses the inherited drawing-area selection dialog and supports PNG, JP
 Build with `build.ps1`, or include `-SmokeTest -MapFile <reference-save>` to run the full checks with the separately supplied private fixture. `.NET SDK 8` or newer is required to build; `.NET Desktop Runtime 8` is required for the framework-dependent application.
 
 ```powershell
-scripts/render-map.ps1 -InputFile samples/Springdale-20260927-124147.cslmap.gz `
-    -OutputFile renders/Springdale/beta-full.png -CanvasSize 4096 -Transit
+scripts/render-map.ps1 -InputFile C:/path/to/city.cslmap.gz `
+    -OutputFile renders/example/beta-full.png -CanvasSize 4096 -Transit
 
-scripts/render-map.ps1 -InputFile samples/Springdale-20260927-124147.cslmap.gz `
-    -OutputFile renders/Springdale/beta-detail.svgz -CanvasSize 1800 -Transit `
-    -Crop '200,1300,1500,1500' -Rotate 15 -Config artifacts/beta-renders/acceptance-config.xml
+scripts/render-map.ps1 -InputFile C:/path/to/city.cslmap.gz `
+    -OutputFile renders/example/beta-detail.svgz -CanvasSize 1800 -Transit `
+    -Crop '0,0,500,500' -Rotate 15 -Config artifacts/beta-renders/acceptance-config.xml
 ```
 
 Equivalent executable arguments:
 
 ```text
 CS1MapView.exe --render map.cslmap.gz --output map.png --size 4096 --style apple-light --transit
-CS1MapView.exe --render map.cslmap.gz --output detail.svgz --size 1800 --crop 200,1300,1500,1500 --rotate 15 --highlight 12345
+CS1MapView.exe --render map.cslmap.gz --output detail.svgz --size 1800 --crop 0,0,500,500 --rotate 15 --highlight 12345
 CS1MapView.exe --heightmap map.cslmap.gz --output heights.png
 ```
 

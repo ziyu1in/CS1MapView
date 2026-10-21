@@ -34,11 +34,11 @@ Transit modal tags group serving lines by mode. The letters use one vertical col
 
 ## Transit modal tag leaders
 
-`StationBadgeLayout` measures the text and chooses short leader lines that avoid station symbols, transfer links, earlier transit modal tags and earlier leaders. It tests both ends of a bar and several outward placements; dots use radial placements. This is a local placement heuristic, not a guarantee of an overlap-free layout in every possible city. All Springdale transit modal tags pass the station-symbol and modal tag overlap checks.
+`StationBadgeLayout` measures the text and chooses short leader lines that avoid station symbols, transfer links, earlier transit modal tags and earlier leaders. It tests both ends of a bar and several outward placements; dots use radial placements. This is a local placement heuristic, not a guarantee of an overlap-free layout in every possible city. Integration checks validate station-symbol and transit modal tag overlaps.
 
 Leaders are solid black, 0.3 render-scale units thick (1.2 pixels on a 16384 canvas), compared with 5.2 pixels for transfer-link outlines. Dot attachment is radial, perpendicular to the tangent of the circle. Bar attachment is at the closest rounded tip, using the actual cubic cap extent. The other endpoint meets the rounded transit modal tag border. Leaders are painted behind station symbols and transit modal tags; they never run through a symbol's white interior.
 
-With splitting on, transit modal tag membership comes only from the visible routes stopping at that cluster. For example, Pennsylvania has separate teal M, train T and purple/gold M transit modal tags, plus a combined M/MR transit modal tag for the shared metro/monorail bar. Turning splitting off restores one transit modal tag for the local selection group with one leader to a nearby member. Both modes keep the existing multimodal highlight group. Clicking a transit modal tag or its leader selects that same group. Hiding fallback mode letters removes their leaders too; explicit line shorthands retain their transit modal tags and leaders.
+With splitting on, transit modal tag membership comes only from the visible routes stopping at that cluster. For example, separate train and metro clusters receive their own transit modal tags, while a shared metro/monorail cluster can receive a combined modal tag. Turning splitting off restores one transit modal tag for the local selection group with one leader to a nearby member. Both modes keep the existing multimodal highlight group. Clicking a transit modal tag or its leader selects that same group. Hiding fallback mode letters removes their leaders too; explicit line shorthands retain their transit modal tags and leaders.
 
 The split toggle redraws labels without rebuilding routes or clusters. Older configuration files default to splitting on. To render the off state, set `RouteMapConfig.SplitStationBadgesByCluster` to false in a render configuration and pass it to `scripts/render-map.ps1 -Config <configuration-file>`.
 
@@ -48,14 +48,17 @@ The split toggle redraws labels without rebuilding routes or clusters. Older con
 
 Linked symbols share a highlight target when all their modes are mutually eligible and every pair of points is within twice the larger distance setting. They also share a transit modal tag when splitting is off. This bounds selection ownership on a long city-wide chain; links across the bound remain visible. Clicking either half of such a connecting link selects the corresponding local group. This selection bound never removes a transfer edge.
 
-## Validation and renders
+## Validation
 
-`build.ps1 -NoRestore -SmokeTest -MapFile samples/Springdale-20260927-124147.cslmap.gz` passes.
+Policy checks cover subset enumeration, alignment tolerances, direction and
+same-mode ranking, missing direction data, multiple groups in one neighborhood,
+input-order independence and setting persistence. Forest checks validate
+connectivity, absence of cycles and shortest-edge selection. Integration checks
+use a separately supplied local export to validate complete route paths, display
+membership, transforms, selection and modal tag ownership.
 
-Checks cover subset enumeration, the three tolerances, same-line/direction and same-mode ranking, missing directions, multiple groups in one circle, input-order independence, dense straight rows, setting persistence/live apply, nearest-edge attachment and mode exclusions. Forest checks prove connectivity and absence of cycles, and verify that no discarded edge is shorter than the longest retained edge on the corresponding path. Existing click tests cover four rotations, three zoom levels and two crop sizes. All 16 Springdale monorail legs retain their full asset paths.
+```powershell
+./build.ps1 -SmokeTest -MapFile 'C:/path/to/reference.cslmap.gz'
+```
 
-With all Springdale transit modes enabled: 114 physical positions, 188 candidate groups, 79 displayed symbols, 57 eligible physical stop-pair candidates, 6 displayed connectors and 73 selectable groups. Internal candidates are represented by bars. Pennsylvania has same-mode train and metro pairs; Primrose prioritizes the opposite-direction teal-line pair.
-
-Transit modal tag checks also verify serving-route ownership, radial dot attachment, nearest bar tips, modal tag/leader hit targets, persistence, legacy defaults, mode letters off and the split-only live redraw. Springdale produces 79 transit modal tags with splitting on and 73 with it off.
-
-Fresh Apple-light exports are under `renders/Springdale/badge-leaders-20261010/`: full-map PNG/SVG, Pennsylvania, Primrose and Prospect details, and a Pennsylvania comparison with splitting off. Close-ups preserve the actual viewer SVG drawing and change only its root viewport/output size. Station-area tint is enabled. Earlier renders remain in their previous directory.
+Source exports, fixture checksums and generated reports remain local.

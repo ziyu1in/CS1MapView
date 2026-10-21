@@ -16,8 +16,9 @@ internal static class Program
         try
         {
             var root = Path.GetFullPath(args[0]);
-            var map = args.Length > 1 ? Path.GetFullPath(args[1]) : Path.Combine(root, "samples", "Springdale-20260927-124147.cslmap.gz");
+            var map = args.Length > 1 ? Path.GetFullPath(args[1]) : Path.Combine(root, "samples", "reference.cslmap.gz");
             var reports = Path.Combine(root, "artifacts", "checks"); Directory.CreateDirectory(reports);
+            if (args.Contains("--road-opengl-only")) return RoadOpenGLChecks.Run(map, reports);
             LocalizationChecks.Run(root, reports);
             if (args.Contains("--localization-only")) return 0;
             // Existing acceptance checks use English control captions. The
@@ -26,7 +27,9 @@ internal static class Program
             CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.CurrentUICulture;
             string Hash(string path) { using var file = File.OpenRead(path); return Convert.ToHexString(SHA256.HashData(file)); }
             var before = Hash(map);
-            Require(before == "C9EBCB5BA1371BAE962FB536649AFD482F91BCC523B4B7471B91E01F3921F718", "Reference save changed before CS1MapView checks");
+            var expectedHash = Environment.GetEnvironmentVariable("CS1MAPVIEW_REFERENCE_SHA256");
+            Require(string.IsNullOrWhiteSpace(expectedHash) || string.Equals(before, expectedHash, StringComparison.OrdinalIgnoreCase),
+                "Reference export does not match the locally configured checksum");
             ProjectIdentityChecks.Run();
             BetaSettings.Load(Path.Combine(root, "CSLMapViewConfig.xml"));
             BuildingPreferenceMigrationChecks.Run();
@@ -38,6 +41,18 @@ internal static class Program
             config.RouteMapConfig.RenderBusStop = config.RouteMapConfig.RenderTramStop = config.RouteMapConfig.RenderBlimpStop = config.RouteMapConfig.RenderFerryHarbor = true;
             config.RouteMapConfig.UseCustomTransferModes = true;
             config.RenderForest = true; config.SelectedStyle = "apple-light"; config.CanvasSize = 4096;
+            if (args.Contains("--road-crossings-only") || args.Contains("--road-crossings-preview"))
+            {
+                CS2MapView.Drawing.Roads.CS1.CS1RoadCrossingPostProcessor.DiagnosticProgress = Console.WriteLine;
+                RoadCrossingChecks.RunPolicies();
+                using var crossingHost = new BetaOutputHost(UserSettings.Default, config);
+                BetaOutput.ApplyFeatureSettings(crossingHost.Context.UserSettings, config);
+                Require(new ExportFileImporter(crossingHost).ImportAsync(map).GetAwaiter().GetResult() == null, "Crossing source import failed");
+                RoadCrossingChecks.RunReferenceMap(((CS1MapType)crossingHost.Context.SourceMapType!).GetImportData(), reports,
+                    args.Contains("--road-crossings-preview") ? 300 : 4096);
+                Require(Hash(map) == before, "Crossing checks changed the reference save");
+                return 0;
+            }
             if (args.Contains("--ui-only"))
             {
                 using var uiHost = new BetaOutputHost(UserSettings.Default, config);
@@ -51,28 +66,30 @@ internal static class Program
             RoadRailPortChecks.RunPolicies();
             RoadHierarchyChecks.RunPolicies();
             RoadCurveChecks.RunPolicies();
+            RoadCrossingChecks.RunPolicies();
             var settings = UserSettings.Default;
             BetaOutput.ApplyFeatureSettings(settings, config);
             using var host = new BetaOutputHost(settings, config);
             Require(new ExportFileImporter(host).ImportAsync(map).GetAwaiter().GetResult() == null, "GZip import failed");
             var source = (CS1MapType)host.Context.SourceMapType!;
             var raw = source.GetImportData();
-            RoadHierarchyChecks.RunSpringdale(raw, reports);
-            RoadCurveChecks.RunSpringdale(raw, reports);
+            RoadHierarchyChecks.RunReferenceMap(raw, reports);
+            RoadCurveChecks.RunReferenceMap(raw, reports);
+            RoadCrossingChecks.RunReferenceMap(raw, reports);
             var session = BetaMapSession.Get(host, raw);
             FoundationPortChecks.Run(host, raw);
             TerrainDisplayChecks.Run(raw, reports);
             var ids = raw.SegmentList.Select(s => s.Id).ToArray();
             using (session.BuildStationCommand(host.Context.ViewContext)) { }
-            TransitPortChecks.RunSpringdale(session, raw, reports);
-            RoadRailPortChecks.RunSpringdale(raw, reports);
+            TransitPortChecks.RunReferenceMap(session, raw, reports);
+            RoadRailPortChecks.RunReferenceMap(raw, reports);
             TransitPortChecks.CheckStaleLayerAnchor(host);
             FormsUiPortChecks.Run(host, raw, reports);
             Require(ids.SequenceEqual(raw.SegmentList.Select(s => s.Id)), "Base-map build mutated raw segment IDs");
             Require(!typeof(CS1MapType).Assembly.GetTypes().Any(t => t.FullName!.Contains("CS2MapDataDeserializer") || t.FullName.Contains("CS2MapDataSet")), "CS2 import dependency survived pruning");
             Require(!typeof(CS1MapType).Assembly.GetReferencedAssemblies().Any(a => a.Name is "CSLMapView" or "PresentationCore" or "PresentationFramework" or "WindowsBase"), "Legacy/WPF dependency survived native port");
             Require(Hash(typeof(CSLMapView.XML.CSLExportXML).Assembly.Location) == "5870FEBB658D13122DB380B61D765F5A5F99004D16532C7D0E898E32EEA19B62", "Published XML dependency was changed");
-            var plain = Path.Combine(reports, "Springdale.cslmap");
+            var plain = Path.Combine(reports, "reference.cslmap");
             using (var input = new GZipStream(File.OpenRead(map), CompressionMode.Decompress))
             using (var output = File.Create(plain)) input.CopyTo(output);
             using var plainHost = new BetaOutputHost(UserSettings.Default, config);

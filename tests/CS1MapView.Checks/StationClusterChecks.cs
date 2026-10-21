@@ -73,7 +73,7 @@ internal static class StationClusterChecks
         Console.WriteLine("PASS station clusters: one stop per line, indirect conflicts, nearest matches, stable ordering, shared nodes and repeated visits");
     }
 
-    internal static void CheckSpringdale(TransportManager manager, CSLExportXML raw, string outputDirectory)
+    internal static void CheckReferenceMap(TransportManager manager, CSLExportXML raw, string outputDirectory)
     {
         UniqueServices(manager.MergedStations);
         var lines = new List<string>();
@@ -92,6 +92,6 @@ internal static class StationClusterChecks
         }
         Directory.CreateDirectory(outputDirectory);
         File.WriteAllLines(Path.Combine(outputDirectory, "monorail-paths.txt"), lines);
-        Console.WriteLine("PASS Springdale: all " + manager.MergedStations.Count + " clusters have one stop per line; all " + lines.Count + " monorail legs retain their full asset paths");
+        Console.WriteLine("PASS Reference map: all " + manager.MergedStations.Count + " clusters have one stop per line; all " + lines.Count + " monorail legs retain their full asset paths");
     }
 }

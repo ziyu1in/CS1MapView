@@ -23,6 +23,7 @@ public class CS1RoadLayerBuilder
 
     private CS1SegmentManager SegmentManager { get; init; }
     private CS1RoadGeometry RoadGeometry { get; } = new();
+    internal RoadCrossingReport CrossingReport { get; private set; } = new();
     private BasicLayer ResultLayer { get; init; }
     private Dictionary<(WayType, float, bool, RoadImportance, bool), Func<float, float, SKPaintCache.StrokeKey?>> StrokeKeyFuncs { get; init; }
     /// <summary>
@@ -118,6 +119,24 @@ public class CS1RoadLayerBuilder
             }
 
             DrawWaysSequentially(elevatedList, junctionList);
+
+            // Append road-only corrections after every original road and
+            // junction pass. Keep raw segment boundaries and their Y profiles.
+            var crossingRoads = new List<RoadCrossingSource>();
+            foreach (var segment in RawXML.SegmentList)
+            {
+                if (segment.Points.Count < 2 || !segment.Points.All(p => float.IsFinite(p.X) && float.IsFinite(p.Y) && float.IsFinite(p.Z))) continue;
+                var way = SegmentManager.GetWayType(segment);
+                if (!way.HasBit(WayType.Road) || Session.Config.IgnoreSegments.IsHidden(segment.Name, segment.ItemClass)) continue;
+                var width = GetDrawingWidth(segment);
+                if (width <= 0) continue;
+                crossingRoads.Add(new(segment,
+                    GetStrokeFunc(way, width, true, GetImportance(segment), IsNarrow(segment))(1, 1),
+                    GetStrokeFunc(way, width, false, GetImportance(segment), IsNarrow(segment))(1, 1),
+                    SegmentManager.GetWidth(segment)));
+            }
+            CrossingReport = CS1RoadCrossingPostProcessor.Append(crossingRoads, ResultLayer.DrawCommands,
+                refinementMetres: Math.Max(0.25, 17280d / Session.Config.CanvasSize / 2));
 
             loadProgressInfo?.Progress(this, LoadProgressInfo.Process.BuildRoads, 1f, null);
 
